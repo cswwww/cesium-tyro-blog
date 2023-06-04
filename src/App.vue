@@ -1,14 +1,16 @@
 <script setup>
-import { onMounted } from 'vue'
-import { CesiumMap } from '@/utils/createCesium.js'
+import { onMounted } from "vue";
+import { CesiumMap } from "@/utils/createCesium.js";
+import { darkImagery } from "@/utils/ImageryLayer/loadImagery.js";
 
 onMounted(() => {
-  new CesiumMap('cesiumContainer')
-})
+  new CesiumMap("cesiumContainer");
+  darkImagery();
+});
 </script>
 
 <template>
-  <div id="cesiumContainer"/>
+  <div id="cesiumContainer" />
 </template>
 
 <style scoped>
