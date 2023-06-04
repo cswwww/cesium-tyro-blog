@@ -1,6 +1,6 @@
 /*
  * @Date: 2023-02-09 14:57:52
- * @LastEditTime: 2023-05-31 17:04:01
+ * @LastEditTime: 2023-06-04 13:59:16
  * @FilePath: \cesium-tyro-blog\src\utils\createCesium.js
  * @Description: 创建地图单例
  */
@@ -49,12 +49,13 @@ const viewerOption = {
  * @return {*}
  */
 class CesiumMap {
-  constructor (target, Option = viewerOption) {
+  constructor(target, Option = viewerOption) {
     // 首次使用构造器实例
     if (!CesiumMap.instance) {
       this.target = target // Type: Element | String
       this.viewer = new Cesium.Viewer(target, Option)
       this.viewer.imageryLayers.removeAll() // 移除所有图层，只显示蓝色地球
+
 
       // 修改场景环境,关闭相关特效
       this.viewer.scene.debugShowFramesPerSecond = true// 显示fps
@@ -62,11 +63,17 @@ class CesiumMap {
       this.viewer.scene.fog.enabled = false// 雾
       this.viewer.scene.sun.show = false// 太阳
       this.viewer.scene.skyBox.show = true// 天空盒
-      this.viewer.scene.globe.enableLighting = false // 激活基于太阳位置的光照（场景光照
+      this.viewer.scene.skyAtmosphere.show = false; // 隐藏天空大气
       this.viewer.resolutionScale = 1.0// 画面细度，默认值为1.0
 
+      // 地球相关配置
+      this.viewer.scene.globe.enableLighting = false // 激活基于太阳位置的光照（场景光照
+      // this.viewer.scene.globe.baseColor = Cesium.Color.TRANSPARENT // 基础色，默认是蓝色 Cesium.Color.BLUE
+      // this.viewer.scene.globe.translucency.enabled = true // 一定要为 true，否则 undergroundColor 设置无效
+      // this.viewer.scene.globe.undergroundColor = Cesium.Color.TRANSPARENT // 地下色，默认是黑色 Cesium.Color.BLACK
+
       viewer = this.viewer
-      
+
       // 将this挂载到CesiumMap这个类的instance属性上
       CesiumMap.instance = this
     }
@@ -74,4 +81,4 @@ class CesiumMap {
   }
 }
 
-export {CesiumMap, viewer}
+export { CesiumMap, viewer }
