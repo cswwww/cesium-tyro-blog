@@ -9,11 +9,13 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "eslint": "^8.42.0",
     "vue": "^3.2.47"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.1.0",
     "cesium": "^1.105.2",
+    "eslint-plugin-vue": "^9.14.1",
     "vite": "^4.3.9",
     "vite-plugin-cesium": "^1.2.22"
   }
