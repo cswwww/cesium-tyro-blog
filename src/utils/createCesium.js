@@ -1,6 +1,6 @@
 /*
  * @Date: 2023-02-09 14:57:52
- * @LastEditTime: 2023-06-04 13:59:16
+ * @LastEditTime: 2023-06-07 12:26:51
  * @FilePath: \cesium-tyro-blog\src\utils\createCesium.js
  * @Description: 创建地图单例
  */
@@ -78,6 +78,25 @@ class CesiumMap {
       CesiumMap.instance = this
     }
     return CesiumMap.instance
+  }
+  
+  // 地形切换
+  changeTerrain(key) {
+    switch (key) {
+      case 1:
+        viewer.terrainProvider = Cesium.createWorldTerrain() // 使用Cesium在线Ion地形
+        break
+      case 2:
+        viewer.terrainProvider = new Cesium.CesiumTerrainProvider({
+          url: 'https://tiles.geovis.online/base/v1/terrain?token=fd2cddddcf70866a1a334a47b78b8cba1941af00c93b3a97e49c65ab5182922a',
+          requestWaterMask: true,
+          requestVertexNormals: true
+        })
+        break
+      default:
+        viewer.terrainProvider = new Cesium.EllipsoidTerrainProvider() // 不使用地形
+        break
+    }
   }
 }
 
