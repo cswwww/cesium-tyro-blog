@@ -39,6 +39,8 @@ export const loadImagery = {
     return layer
   },
   // Cesium ION 服務
+  // 3812:Black Marble 影像服务
+  // 3845:World Imagery 影像服务
   ion: (option, id = 3812) => {
     const layer = new Cesium.ImageryLayer(
       new Cesium.IonImageryProvider({ assetId: id }),

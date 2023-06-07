@@ -7,6 +7,7 @@
 -->
 <script setup>
 import { ref, onMounted } from 'vue'
+import SplitImagery from '@/components/SplitImagery.vue'
 
 onMounted(() => {
 })
@@ -14,7 +15,7 @@ onMounted(() => {
 
 <template>
   <div class="bar-container">
-    <slot></slot>
+    <SplitImagery />
   </div>
 </template>
 

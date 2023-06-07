@@ -2,19 +2,17 @@
 import { onMounted } from "vue";
 import { CesiumMap, viewer } from "@/utils/createCesium.js";
 import { loadImagery } from "@/utils/ImageryLayer/loadImagery.js";
-import SplitImagery from '@/components/SplitImagery.vue'
 import ToolBar from "./layouts/ToolBar.vue";
+
 onMounted(() => {
   new CesiumMap("cesiumContainer");
-  const cartoDark = loadImagery.cartoDark();
+  loadImagery.cartoVoyager();
 });
 </script>
 
 <template>
   <div id="cesiumContainer" />
-  <ToolBar>
-    <SplitImagery />
-  </ToolBar>
+  <ToolBar />
 </template>
 
 <style scoped>

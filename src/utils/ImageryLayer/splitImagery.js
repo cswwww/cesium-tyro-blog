@@ -1,7 +1,7 @@
 /*
  * @Date: 2023-06-04 10:41:29
  * @LastEditors: ReBeX  420659880@qq.com
- * @LastEditTime: 2023-06-07 11:10:42
+ * @LastEditTime: 2023-06-07 16:43:00
  * @FilePath: \cesium-tyro-blog\src\utils\ImageryLayer\splitImagery.js
  * @Description: 影像图层卷帘功能（下面包含两个版本）
  */
@@ -55,7 +55,6 @@ export class splitImagery {
     this.leftImagery = layer
     // viewer.imageryLayers.add(layer)
     this.leftImagery.splitDirection = Cesium.SplitDirection.LEFT // 分割方向
-    console.log('this.leftImagery: ', this.leftImagery);
   }
 
   // 设置分割线右侧展示的影像
@@ -72,8 +71,6 @@ export class splitImagery {
   saveImageryLayers() {
     const layers = viewer.imageryLayers;
     for (let i = 0; i < layers.length; i++) {
-      console.log('layers.get(i): ', layers.get(i));
-
       this.imageryLayers.push(layers.get(i));
     }
 
