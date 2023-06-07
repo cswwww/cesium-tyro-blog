@@ -2,16 +2,19 @@
 import { onMounted } from "vue";
 import { CesiumMap, viewer } from "@/utils/createCesium.js";
 import { loadImagery } from "@/utils/ImageryLayer/loadImagery.js";
-
+import SplitImagery from '@/components/SplitImagery.vue'
+import ToolBar from "./layouts/ToolBar.vue";
 onMounted(() => {
   new CesiumMap("cesiumContainer");
   const cartoDark = loadImagery.cartoDark();
-  console.log("获取图层的索引号: ", viewer.imageryLayers.indexOf(cartoDark));
 });
 </script>
 
 <template>
   <div id="cesiumContainer" />
+  <ToolBar>
+    <SplitImagery />
+  </ToolBar>
 </template>
 
 <style scoped>
