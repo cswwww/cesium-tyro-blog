@@ -1,7 +1,7 @@
 /*
  * @Date: 2023-06-04 10:41:29
  * @LastEditors: ReBeX  420659880@qq.com
- * @LastEditTime: 2023-06-04 15:26:06
+ * @LastEditTime: 2023-06-08 16:09:12
  * @FilePath: \cesium-tyro-blog\src\utils\ImageryLayer\loadImagery.js
  * @Description: 加载影像图层
  */
@@ -11,14 +11,14 @@ import * as Cesium from 'cesium'
 // 图层相关配置
 const layerOption = {
   show: true, // 图像层是否可见
-  alpha: 1, // 透明度
-  nightAlpha: 1, // 地球夜晚一侧的透明度
-  dayAlpha: 1, // 地球白天一侧的透明度
-  brightness: 1, // 亮度
-  contrast: 1, // 对比度
-  hue: 0, // 色调
-  saturation: 1, // 饱和度
-  gamma: 1, // 伽马校正
+  alpha: 1, // 透明度（0，1）
+  nightAlpha: 1, // 地球夜晚一侧的透明度（0，1）
+  dayAlpha: 1, // 地球白天一侧的透明度（0，1）
+  brightness: 1, // 亮度（-1，1）
+  contrast: 1, // 对比度（0，3）
+  hue: 0, // 色调（0，360）
+  saturation: 1, // 饱和度（0，3）
+  gamma: 1, // 伽马校正（0.01，5）
 }
 
 export const loadImagery = {
@@ -46,6 +46,7 @@ export const loadImagery = {
       new Cesium.IonImageryProvider({ assetId: id }),
       option
     )
+    layer.id = 'Cesium ION ' + id
     viewer.imageryLayers.add(layer)
     return layer
   },
@@ -55,6 +56,7 @@ export const loadImagery = {
       new Cesium.OpenStreetMapImageryProvider({ url: 'https://a.tile.openstreetmap.org/' }),
       option
     )
+    layer.id = 'OpenStreetMap'
     viewer.imageryLayers.add(layer)
     return layer
   },
@@ -64,6 +66,7 @@ export const loadImagery = {
       new Cesium.UrlTemplateImageryProvider({ url: 'https://tile-{s}.openstreetmap.fr/hot/{z}/{x}/{y}.png', subdomains: ['a', 'b', 'c'] }),
       option
     )
+    layer.id = 'HumanitarianOpenStreetMap'
     viewer.imageryLayers.add(layer)
     return layer
   },
@@ -73,6 +76,8 @@ export const loadImagery = {
       new Cesium.UrlTemplateImageryProvider({ url: 'https://basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png' }),
       option
     )
+    layer.id = 'CartoVoyager'
+    // layer.defaultOption = option || layerOption
     viewer.imageryLayers.add(layer)
     return layer
   },
@@ -82,6 +87,7 @@ export const loadImagery = {
       new Cesium.UrlTemplateImageryProvider({ url: 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png', subdomains: ['a', 'b', 'c', 'd'] }),
       option
     )
+    layer.id = 'CartoDark'
     viewer.imageryLayers.add(layer)
     return layer
   },
@@ -91,6 +97,7 @@ export const loadImagery = {
       new Cesium.UrlTemplateImageryProvider({ url: 'https://stamen-tiles.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.png' }),
       option
     )
+    layer.id = 'StamenWater'
     viewer.imageryLayers.add(layer)
     return layer
   }

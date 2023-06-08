@@ -3,6 +3,8 @@ import { onMounted } from "vue";
 import { CesiumMap, viewer } from "@/utils/createCesium.js";
 import { loadImagery } from "@/utils/ImageryLayer/loadImagery.js";
 import ToolBar from "./layouts/ToolBar.vue";
+import PopUps from "./layouts/PopUps.vue";
+
 
 onMounted(() => {
   new CesiumMap("cesiumContainer");
@@ -13,6 +15,7 @@ onMounted(() => {
 <template>
   <div id="cesiumContainer" />
   <ToolBar />
+  <PopUps />
 </template>
 
 <style scoped>

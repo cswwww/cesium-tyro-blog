@@ -1,7 +1,7 @@
 /*
  * @Date: 2023-06-04 10:41:29
  * @LastEditors: ReBeX  420659880@qq.com
- * @LastEditTime: 2023-06-07 16:43:00
+ * @LastEditTime: 2023-06-08 17:40:21
  * @FilePath: \cesium-tyro-blog\src\utils\ImageryLayer\splitImagery.js
  * @Description: 影像图层卷帘功能（下面包含两个版本）
  */
@@ -70,6 +70,7 @@ export class splitImagery {
   // 获取当前场景中所有的影像图层并保存到数组中
   saveImageryLayers() {
     const layers = viewer.imageryLayers;
+    this.imageryLayers = []
     for (let i = 0; i < layers.length; i++) {
       this.imageryLayers.push(layers.get(i));
     }

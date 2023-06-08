@@ -1,6 +1,6 @@
 /*
  * @Date: 2023-02-09 14:57:52
- * @LastEditTime: 2023-06-07 12:26:51
+ * @LastEditTime: 2023-06-07 17:53:57
  * @FilePath: \cesium-tyro-blog\src\utils\createCesium.js
  * @Description: 创建地图单例
  */
@@ -58,7 +58,7 @@ class CesiumMap {
 
 
       // 修改场景环境,关闭相关特效
-      this.viewer.scene.debugShowFramesPerSecond = true// 显示fps
+      this.viewer.scene.debugShowFramesPerSecond = false// 显示fps
       this.viewer.scene.moon.show = false// 月亮
       this.viewer.scene.fog.enabled = false// 雾
       this.viewer.scene.sun.show = false// 太阳
