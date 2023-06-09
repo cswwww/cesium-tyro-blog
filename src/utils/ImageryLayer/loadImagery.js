@@ -1,9 +1,10 @@
 /*
  * @Date: 2023-06-04 10:41:29
  * @LastEditors: ReBeX  420659880@qq.com
- * @LastEditTime: 2023-06-08 16:09:12
+ * @LastEditTime: 2023-06-09 12:08:07
  * @FilePath: \cesium-tyro-blog\src\utils\ImageryLayer\loadImagery.js
  * @Description: 加载影像图层
+ * 各个provider的参考：https://zhuanlan.zhihu.com/p/340669216
  */
 import { viewer } from '@/utils/createCesium.js' // 引入地图对象
 import * as Cesium from 'cesium'
@@ -35,12 +36,12 @@ export const loadImagery = {
     const layer = new Cesium.ImageryLayer(imageryProvider, option)
     // viewer.imageryLayers.add(layer, index) // 可以为图层设置index
     viewer.imageryLayers.add(layer)
-    console.log(viewer.imageryLayers.indexOf(layer)); // 显示地图的加载层级
     return layer
   },
   // Cesium ION 服務
   // 3812:Black Marble 影像服务
   // 3845:World Imagery 影像服务
+  // 3954:Bing Maps
   ion: (option, id = 3812) => {
     const layer = new Cesium.ImageryLayer(
       new Cesium.IonImageryProvider({ assetId: id }),
@@ -98,6 +99,26 @@ export const loadImagery = {
       option
     )
     layer.id = 'StamenWater'
+    viewer.imageryLayers.add(layer)
+    return layer
+  },
+  // 加载网格（调试用）
+  debugGrid: (option) => {
+    const layer = new Cesium.ImageryLayer(
+      new Cesium.GridImageryProvider(),
+      option
+    )
+    layer.id = 'debugGrid'
+    viewer.imageryLayers.add(layer)
+    return layer
+  },
+  // 加载瓦片序号（调试用）
+  debugTile: (option) => {
+    const layer = new Cesium.ImageryLayer(
+      new Cesium.TileCoordinatesImageryProvider(),
+      option
+    )
+    layer.id = 'debugTile'
     viewer.imageryLayers.add(layer)
     return layer
   }
