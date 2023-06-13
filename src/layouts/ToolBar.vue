@@ -24,7 +24,7 @@ function showIM() {
       <SplitImagery />
     </div>
     <div>
-      <el-button type="text" @click="showIM">图层管理</el-button>
+      <el-button text @click="showIM">图层管理</el-button>
     </div>
   </el-card>
 </template>

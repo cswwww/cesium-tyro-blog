@@ -5,6 +5,7 @@
  * @FilePath: \cesium-tyro-blog\src\utils\ImageryLayer\loadTianditu.js
  * @Description: 加载天地图影像图层
  * 天地图地图服务：http://lbs.tianditu.gov.cn/server/MapService.html
+ * import {loadTianditu } from '@/utils/ImageryLayer/loadTianditu.js'
  */
 import { viewer } from '@/utils/createCesium.js' // 引入地图对象
 import * as Cesium from 'cesium'

@@ -1,6 +1,6 @@
 /*
  * @Date: 2023-02-09 14:57:52
- * @LastEditTime: 2023-06-07 17:53:57
+ * @LastEditTime: 2023-06-09 18:34:30
  * @FilePath: \cesium-tyro-blog\src\utils\createCesium.js
  * @Description: 创建地图单例
  */
@@ -79,18 +79,26 @@ class CesiumMap {
     }
     return CesiumMap.instance
   }
-  
+
   // 地形切换
   changeTerrain(key) {
+    // 水面、法向量、光照相关
     switch (key) {
       case 1:
         viewer.terrainProvider = Cesium.createWorldTerrain() // 使用Cesium在线Ion地形
         break
       case 2:
         viewer.terrainProvider = new Cesium.CesiumTerrainProvider({
-          url: 'https://tiles.geovis.online/base/v1/terrain?token=fd2cddddcf70866a1a334a47b78b8cba1941af00c93b3a97e49c65ab5182922a',
-          requestWaterMask: true,
-          requestVertexNormals: true
+          // url: 'https://tiles.geovis.online/base/v1/terrain?token=fd2cddddcf70866a1a334a47b78b8cba1941af00c93b3a97e49c65ab5182922a',
+          url: Cesium.IonResource.fromAssetId(3956),
+          requestWaterMask: true,  // 请求水体效果所需要的海岸线数据
+          requestVertexNormals: true // 请求地形照明数据
+        })
+        break
+      case 3:
+        viewer.terrainProvider = new Cesium.ArcGISTiledElevationTerrainProvider({
+          url: "https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer",
+          token: "KED1aF_I4UzXOHy3BnhwyBHU4l5oY6rO6walkmHoYqGp4XyIWUd5YZUC1ZrLAzvV40pR6gBXQayh0eFA8m6vPg..",
         })
         break
       default:
