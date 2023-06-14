@@ -1,7 +1,7 @@
 <!--
  * @Date: 2023-06-06 16:17:18
  * @LastEditors: ReBeX  420659880@qq.com
- * @LastEditTime: 2023-06-14 15:05:25
+ * @LastEditTime: 2023-06-14 23:12:52
  * @FilePath: \cesium-tyro-blog\src\components\LoadTileset.vue
  * @Description: 加载3D Tiles
 -->
@@ -22,7 +22,7 @@ function action() {
       text: '加载中...',
       background: 'rgba(255, 255, 255, 0.5)',
     })
-    const modelPromise = addThreeDTiles(Cesium.IonResource.fromAssetId(75343))
+    const modelPromise = addThreeDTiles(75343)
     modelPromise.then(model => {
       Tileset = model
       loading.close()

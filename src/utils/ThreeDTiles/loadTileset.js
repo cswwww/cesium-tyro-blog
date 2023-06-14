@@ -1,12 +1,12 @@
 /*
  * @Date: 2023-05-23 10:45:33
  * @LastEditors: ReBeX  420659880@qq.com
- * @LastEditTime: 2023-06-14 19:35:48
+ * @LastEditTime: 2023-06-14 23:24:54
  * @FilePath: \cesium-tyro-blog\src\utils\ThreeDTiles\loadTileset.js
  * @Description:  从给定 URL 加载 3D 模型，添加到场景中，并自动定位到模型所在位置
  * import { addThreeDTiles } from '@/utils/ThreeDTiles/loadTileset.js'
- * e.g.: addThreeDTiles('/model/Tileset/示例建筑/tileset.json')
- * const modelPromise = addThreeDTiles(Cesium.IonResource.fromAssetId(75343))
+ * const modelPromise = addThreeDTiles('/model/Tileset/示例建筑/tileset.json')
+ * const modelPromise = addThreeDTiles(69380)
  * modelPromise.then(model => {
  *   console.log('tileset: ', model)
  * })
@@ -38,7 +38,7 @@ export async function addThreeDTiles(url, option) {
   // ! 写法一：将在 1.107 版本后不支持，options.url和Cesium3DTileset.readyPromise将被移除
   return new Promise(resolve => { // 返回 Promise 对象
     const tileset = new Cesium.Cesium3DTileset({
-      url // 模型切瓦后的瓦片索引文件地址或者Cesium Resource
+      url // 模型切瓦后的瓦片索引文件地址或者Cesium Resource: Cesium.IonResource.fromAssetId(75343)
     })
     tileset.readyPromise.then(() => {
       viewer.scene.primitives.add(tileset)
@@ -48,10 +48,13 @@ export async function addThreeDTiles(url, option) {
   */
 
   // ! 写法二：
-  if (typeof url !== 'string') { // 如果传入的url不是一个json索引文件地址，而是Cesium.IonResource，则需要处理：
-    url = await url;
+  let tileset = {}
+  if (typeof url == 'number') {
+    tileset = await Cesium.Cesium3DTileset.fromIonAssetId(url, option);
+  } else {
+    tileset = await Cesium.Cesium3DTileset.fromUrl(url, option);
   }
-  const tileset = await Cesium.Cesium3DTileset.fromUrl(url, option);
+
   viewer.scene.primitives.add(tileset);
   // 定位到模型
   viewer.zoomTo(
