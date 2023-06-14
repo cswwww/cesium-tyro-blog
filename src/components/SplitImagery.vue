@@ -27,5 +27,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <el-button text @click="action">二维分割</el-button>
+  <div>
+    <el-button text @click="action">二维分割</el-button>
+  </div>
 </template>

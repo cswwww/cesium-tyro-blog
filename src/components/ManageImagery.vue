@@ -1,7 +1,7 @@
 <!--
  * @Date: 2023-06-07 17:33:49
  * @LastEditors: ReBeX  420659880@qq.com
- * @LastEditTime: 2023-06-13 18:33:22
+ * @LastEditTime: 2023-06-13 18:45:36
  * @FilePath: \cesium-tyro-blog\src\components\ManageImagery.vue
  * @Description: 影像图层管理
 -->
@@ -13,8 +13,8 @@ import { viewer } from "@/utils/createCesium.js";
 import { ElMessage } from 'element-plus'
 import { loadTianditu, layerKey } from '@/utils/ImageryLayer/loadTianditu.js'
 
-const activeNames = ref(['99']) // 激活的列表项
-const activeNames2 = ref(['1']) // 激活的列表项
+const activeNames = ref(['99']) // 图层列表折叠面板激活的列表项
+const activeNames2 = ref(['1']) // 天地图折叠面板激活的列表项
 
 const imageryLayers = ref([]) // 图层集信息
 const isRotating = ref(false) // 刷新按钮转不转

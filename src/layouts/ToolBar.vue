@@ -1,7 +1,7 @@
 <!--
  * @Date: 2023-06-06 18:31:24
  * @LastEditors: ReBeX  420659880@qq.com
- * @LastEditTime: 2023-06-08 17:44:43
+ * @LastEditTime: 2023-06-14 14:41:29
  * @FilePath: \cesium-tyro-blog\src\layouts\ToolBar.vue
  * @Description: 工具栏界面组件（用来放功能按钮的
 -->
@@ -9,7 +9,7 @@
 import { ref, onMounted } from 'vue'
 import SplitImagery from '@/components/SplitImagery.vue'
 import EventBus from '@/common/EventBus.js'
-
+import LoadTileset from '@/components/LoadTileset.vue'
 onMounted(() => {
 })
 
@@ -20,12 +20,9 @@ function showIM() {
 
 <template>
   <el-card class="bar-container">
-    <div>
-      <SplitImagery />
-    </div>
-    <div>
-      <el-button text @click="showIM">图层管理</el-button>
-    </div>
+    <el-button text @click="showIM">图层管理</el-button>
+    <SplitImagery />
+    <LoadTileset />
   </el-card>
 </template>
 
