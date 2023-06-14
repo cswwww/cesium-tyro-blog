@@ -1,10 +1,16 @@
 /*
  * @Date: 2023-02-09 14:57:52
- * @LastEditTime: 2023-06-09 18:34:30
+ * @LastEditTime: 2023-06-14 22:29:22
  * @FilePath: \cesium-tyro-blog\src\utils\createCesium.js
  * @Description: 创建地图单例
  */
 import * as Cesium from 'cesium'
+import tycho2t380px from '@/assets/images/tycho2t3_80_px.jpg'
+import tycho2t380mx from '@/assets/images/tycho2t3_80_mx.jpg'
+import tycho2t380py from '@/assets/images/tycho2t3_80_py.jpg'
+import tycho2t380my from '@/assets/images/tycho2t3_80_my.jpg'
+import tycho2t380pz from '@/assets/images/tycho2t3_80_pz.jpg'
+import tycho2t380mz from '@/assets/images/tycho2t3_80_mz.jpg'
 
 let viewer = {} // 地图对象
 
@@ -41,6 +47,16 @@ const viewerOption = {
   mapProjection: new Cesium.WebMercatorProjection(), // 地图投影体系
   dataSources: new Cesium.DataSourceCollection(), // 需要进行可视化的数据源的集合
   creditContainer: document.createElement('div'), // 创建空div，可实现移除版权信息的效果
+  // skyBox: new Cesium.SkyBox({ // 天空盒
+  //   sources: {
+  //     positiveX: tycho2t380px,
+  //     negativeX: tycho2t380mx,
+  //     positiveY: tycho2t380py,
+  //     negativeY: tycho2t380my,
+  //     positiveZ: tycho2t380pz,
+  //     negativeZ: tycho2t380mz
+  //   }
+  // })
 }
 
 /**
