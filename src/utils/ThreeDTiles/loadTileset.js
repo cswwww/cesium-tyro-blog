@@ -1,14 +1,14 @@
 /*
  * @Date: 2023-05-23 10:45:33
  * @LastEditors: ReBeX  420659880@qq.com
- * @LastEditTime: 2023-06-14 23:24:54
+ * @LastEditTime: 2023-06-15 09:20:34
  * @FilePath: \cesium-tyro-blog\src\utils\ThreeDTiles\loadTileset.js
  * @Description:  从给定 URL 加载 3D 模型，添加到场景中，并自动定位到模型所在位置
  * import { addThreeDTiles } from '@/utils/ThreeDTiles/loadTileset.js'
  * const modelPromise = addThreeDTiles('/model/Tileset/示例建筑/tileset.json')
  * const modelPromise = addThreeDTiles(69380)
- * modelPromise.then(model => {
- *   console.log('tileset: ', model)
+ * modelPromise.then(tileset => {
+ *   console.log('tileset: ', tileset)
  * })
  */
 import { viewer } from '@/utils/createCesium.js' // 引入地图对象

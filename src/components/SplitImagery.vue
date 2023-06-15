@@ -1,7 +1,7 @@
 <!--
  * @Date: 2023-06-06 16:17:18
  * @LastEditors: ReBeX  420659880@qq.com
- * @LastEditTime: 2023-06-09 16:43:14
+ * @LastEditTime: 2023-06-15 09:35:33
  * @FilePath: \cesium-tyro-blog\src\components\SplitImagery.vue
  * @Description: 影像图层卷帘（分割）的功能（按钮）组件
 -->
@@ -14,15 +14,15 @@ let splitInstance = ref(0)
 
 function action() {
   if (flag.value) {
-    splitInstance.actionSplit()
+    splitInstance.value.actionSplit()
   } else {
-    splitInstance.stopSplit()
+    splitInstance.value.stopSplit()
   }
   flag.value = !flag.value
 }
 
 onMounted(() => {
-  splitInstance = new splitImagery()
+  splitInstance.value = new splitImagery()
 })
 </script>
 

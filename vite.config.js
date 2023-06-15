@@ -2,7 +2,6 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import cesium from 'vite-plugin-cesium'; // 引入插件
 import path from 'path'
-import { defineConfig } from 'vite'
 import eslint from 'vite-plugin-eslint'
 
 

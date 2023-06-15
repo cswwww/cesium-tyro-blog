@@ -1,7 +1,7 @@
 <!--
  * @Date: 2023-06-07 17:33:49
  * @LastEditors: ReBeX  420659880@qq.com
- * @LastEditTime: 2023-06-13 18:45:36
+ * @LastEditTime: 2023-06-15 09:35:02
  * @FilePath: \cesium-tyro-blog\src\components\ManageImagery.vue
  * @Description: 影像图层管理
 -->
@@ -111,7 +111,7 @@ onMounted(() => {
       </div>
     </template>
     <el-collapse v-model="activeNames">
-      <el-collapse-item v-for="(item, index) in imageryLayers" :name="index">
+      <el-collapse-item v-for="(item, index) in imageryLayers" :name="index" :key="index">
         <template #title>
           {{ item.id }}
           <el-tooltip :content="item.show ? ' 展示图层' : '隐藏图层'" placement="bottom" effect="light">
@@ -194,7 +194,7 @@ onMounted(() => {
     <el-collapse v-model="activeNames2">
       <el-collapse-item title="天地图" name="1">
         <el-checkbox-group v-model="checked1" @change="addChange">
-          <el-checkbox v-for="(value, key) in layerKey" :label="key">
+          <el-checkbox v-for="(value, key) in layerKey" :label="key" :key="key">
             {{ value }}</el-checkbox>
         </el-checkbox-group>
       </el-collapse-item>
