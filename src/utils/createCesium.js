@@ -68,6 +68,8 @@ class CesiumMap {
   constructor(target, Option = viewerOption) {
     // 首次使用构造器实例
     if (!CesiumMap.instance) {
+      // Cesium.Ion.defaultAccessToken='你的token';
+
       this.target = target // Type: Element | String
       this.viewer = new Cesium.Viewer(target, Option)
       this.viewer.imageryLayers.removeAll() // 移除所有图层，只显示蓝色地球

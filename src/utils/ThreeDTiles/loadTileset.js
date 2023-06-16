@@ -13,6 +13,7 @@
  */
 import { viewer } from '@/utils/createCesium.js' // 引入地图对象
 import * as Cesium from 'cesium'
+import { ElLoading } from 'element-plus'
 
 /**
  * @function addThreeDTiles
@@ -29,6 +30,12 @@ const tilesetOption = {
   cullWithChildrenBounds: true
 }
 export async function addThreeDTiles(url, option) {
+  // 开启加载动画
+  const loading = ElLoading.service({
+    lock: true,
+    text: '加载中...',
+    background: 'rgba(255, 255, 255, 0.5)',
+  })
   // 开启地形深度检测:
   // 控制在渲染场景时，相机是否进行深度测试以避免将被遮挡的物体绘制在前景
   // true: 相机会根据地形高度信息进行深度测试，避免将低于地面的物体绘制在地面之上
@@ -65,5 +72,6 @@ export async function addThreeDTiles(url, option) {
       tileset.boundingSphere.radius * 2.0 // 模型的包围球半径的2倍
     )
   )
+  loading.close()
   return tileset // 返回模型对象
 }
