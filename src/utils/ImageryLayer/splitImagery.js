@@ -1,7 +1,7 @@
 /*
  * @Date: 2023-06-04 10:41:29
  * @LastEditors: ReBeX  420659880@qq.com
- * @LastEditTime: 2023-06-08 17:40:21
+ * @LastEditTime: 2023-06-16 14:58:39
  * @FilePath: \cesium-tyro-blog\src\utils\ImageryLayer\splitImagery.js
  * @Description: 影像图层卷帘功能（下面包含两个版本）
  */
@@ -9,12 +9,14 @@ import { viewer } from '@/utils/createCesium.js' // 引入地图对象
 import * as Cesium from 'cesium'
 import { loadImagery } from "@/utils/ImageryLayer/loadImagery.js";
 
+let leftImagery // 左边的影像
+let rightImagery // 右边的影像
+
 export class splitImagery {
   slider // 滑动分割线的div元素
   sliderWidth // 分割线的宽度
   target // 渲染cesium场景的元素
-  leftImagery // 左边的影像
-  rightImagery // 右边的影像
+
   moveActive = false // 开启分割线位移
   imageryLayers = [] // 当前场景已有的影像图层
 
@@ -49,22 +51,22 @@ export class splitImagery {
 
   // 设置分割线左侧展示的影像
   setLeftImagery(layer = loadImagery.ion('', 3812)) {
-    if (this.leftImagery) { // 如果已经有图层了则销毁旧的加载新的
-      viewer.imageryLayers.remove(this.leftImagery, true); // 移除图层
+    if (leftImagery) { // 如果已经有图层了则销毁旧的加载新的
+      viewer.imageryLayers.remove(leftImagery, true); // 移除图层
     }
-    this.leftImagery = layer
+    leftImagery = layer
     // viewer.imageryLayers.add(layer)
-    this.leftImagery.splitDirection = Cesium.SplitDirection.LEFT // 分割方向
+    leftImagery.splitDirection = Cesium.SplitDirection.LEFT // 分割方向
   }
 
   // 设置分割线右侧展示的影像
   setRightImagery(layer = loadImagery.ion('', 3845)) {
-    if (this.rightImagery) {
-      viewer.imageryLayers.remove(this.rightImagery, true); // 移除图层
+    if (rightImagery) {
+      viewer.imageryLayers.remove(rightImagery, true); // 移除图层
     }
-    this.rightImagery = layer
+    rightImagery = layer
     // viewer.imageryLayers.add(layer)
-    this.rightImagery.splitDirection = Cesium.SplitDirection.RIGHT // 分割方向
+    rightImagery.splitDirection = Cesium.SplitDirection.RIGHT // 分割方向
   }
 
   // 获取当前场景中所有的影像图层并保存到数组中
@@ -81,7 +83,14 @@ export class splitImagery {
   // 重新加载之前保存的影像图层
   reloadImageryLayers() {
     const layers = viewer.imageryLayers;
-    layers.removeAll(false) // 移除所有 ImageryLayer
+    // layers.removeAll(false) // 移除所有 ImageryLayer
+    if (leftImagery) {
+      viewer.imageryLayers.remove(leftImagery, true); // 移除图层
+    }
+    if (rightImagery) {
+      viewer.imageryLayers.remove(rightImagery, true); // 移除图层
+    }
+
     for (let i = 0; i < this.imageryLayers.length; i++) {
       layers.add(this.imageryLayers[i]);
     }
