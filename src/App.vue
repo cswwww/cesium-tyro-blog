@@ -4,15 +4,22 @@ import { CesiumMap, viewer } from "@/utils/createCesium.js";
 import { loadImagery } from "@/utils/ImageryLayer/loadImagery.js";
 import ToolBar from "./layouts/ToolBar.vue";
 import PopUps from "./layouts/PopUps.vue";
-import {loadGeoJSON} from '@/utils/VectorData/loadGeoJSON.js'
-import {Polygon} from '@/utils/VectorData/setEntity.js'
+import { loadGeoJSON, CesiumGeoJSON } from '@/utils/VectorData/loadGeoJSON.js'
+import { Polygon } from '@/utils/VectorData/setEntity.js'
+import pointSample from '@/assets/geojson/point.json' // 示例点要素
+import collectionSample from '@/assets/geojson/collection.json' // 示例要素集合
 
 onMounted(() => {
   new CesiumMap("cesiumContainer");
   loadImagery.cartoVoyager();
-  loadGeoJSON().then(data => {
-    Polygon(data)
-  })
+  // loadGeoJSON().then(data => {
+  //   Polygon(data)
+  // })
+  const jsonInstance = new CesiumGeoJSON(collectionSample);
+
+  setTimeout(() => {
+    jsonInstance.update(pointSample) // 更新数据
+  }, 2000);
 });
 </script>
 
