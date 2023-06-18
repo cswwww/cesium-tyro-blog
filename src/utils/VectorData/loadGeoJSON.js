@@ -1,7 +1,7 @@
 /*
  * @Date: 2023-06-16 15:27:53
  * @LastEditors: ReBeX  420659880@qq.com
- * @LastEditTime: 2023-06-17 23:50:06
+ * @LastEditTime: 2023-06-18 20:49:19
  * @FilePath: \cesium-tyro-blog\src\utils\VectorData\loadGeoJSON.js
  * @Description: 加载GeoJson或者TopoJSON格式数据
  * const vectorPromise = loadGeoJSON(pointSample)
@@ -45,7 +45,7 @@ async function loadGeoJSON(data, options) {
 
   viewer.dataSources.add(dataSource)
   viewer.zoomTo(dataSource) // 定位过去
-  
+
   return dataSource
 }
 
@@ -93,13 +93,15 @@ class CesiumGeoJSON {
       throw new Error('矢量数据未加载或已被销毁');
     }
 
-    // 使用 Cesium.Resource 对象创建一个新的 GeoJSON 数据源，这么做才能触发changeEvent
-    const resource = new Cesium.Resource({
-      url: URL.createObjectURL(new Blob([JSON.stringify(newData)], { type: 'application/json' }))
-    });
-
-    // 重新加载数据源
-    return await this.dataSource.load(resource, options);
+    if (typeof newData == 'object') {
+      // 使用 Cesium.Resource 对象创建一个新的 GeoJSON 数据源，这么做才能触发changeEvent
+      const resource = new Cesium.Resource({
+        url: URL.createObjectURL(new Blob([JSON.stringify(newData)], { type: 'application/json' }))
+      });
+      return await this.dataSource.load(resource, options)
+    } else {
+      return await this.dataSource.load(newData, options)
+    }
   }
 
   // 新增（不替换已有的数据）数据源
@@ -108,13 +110,15 @@ class CesiumGeoJSON {
       throw new Error('矢量数据未加载或已被销毁');
     }
 
-    // 使用 Cesium.Resource 对象创建一个新的 GeoJSON 数据源，这么做才能触发changeEvent
-    const resource = new Cesium.Resource({
-      url: URL.createObjectURL(new Blob([JSON.stringify(newData)], { type: 'application/json' }))
-    });
-
-    // 重新加载数据源
-    return await this.dataSource.process(resource, options);
+    if (typeof newData == 'object') {
+      // 使用 Cesium.Resource 对象创建一个新的 GeoJSON 数据源，这么做才能触发changeEvent
+      const resource = new Cesium.Resource({
+        url: URL.createObjectURL(new Blob([JSON.stringify(newData)], { type: 'application/json' }))
+      });
+      return await this.dataSource.process(resource, options)
+    } else {
+      return await this.dataSource.process(newData, options)
+    }
   }
 
   // TODO 未完成：将数据源更新到提供的时间
