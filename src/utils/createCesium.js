@@ -1,6 +1,6 @@
 /*
  * @Date: 2023-02-09 14:57:52
- * @LastEditTime: 2023-06-14 22:29:22
+ * @LastEditTime: 2023-06-19 18:45:51
  * @FilePath: \cesium-tyro-blog\src\utils\createCesium.js
  * @Description: 创建地图单例
  */
@@ -47,6 +47,7 @@ const viewerOption = {
   mapProjection: new Cesium.WebMercatorProjection(), // 地图投影体系
   dataSources: new Cesium.DataSourceCollection(), // 需要进行可视化的数据源的集合
   creditContainer: document.createElement('div'), // 创建空div，可实现移除版权信息的效果
+  // terrainProvider: Cesium.createWorldTerrain(),
   // skyBox: new Cesium.SkyBox({ // 天空盒
   //   sources: {
   //     positiveX: tycho2t380px,
@@ -108,9 +109,9 @@ class CesiumMap {
       case 2:
         viewer.terrainProvider = new Cesium.CesiumTerrainProvider({
           // url: 'https://tiles.geovis.online/base/v1/terrain?token=fd2cddddcf70866a1a334a47b78b8cba1941af00c93b3a97e49c65ab5182922a',
-          url: Cesium.IonResource.fromAssetId(3956),
+          url: Cesium.IonResource.fromAssetId(3956), // 1
           requestWaterMask: true,  // 请求水体效果所需要的海岸线数据
-          requestVertexNormals: true // 请求地形照明数据
+          requestVertexNormals: true // 请求地形照明数据:增加法线提高光照效果
         })
         break
       case 3:

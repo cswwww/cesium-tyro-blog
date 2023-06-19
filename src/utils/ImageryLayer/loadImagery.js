@@ -1,7 +1,7 @@
 /*
  * @Date: 2023-06-04 10:41:29
  * @LastEditors: ReBeX  420659880@qq.com
- * @LastEditTime: 2023-06-09 12:08:07
+ * @LastEditTime: 2023-06-19 18:05:53
  * @FilePath: \cesium-tyro-blog\src\utils\ImageryLayer\loadImagery.js
  * @Description: 加载影像图层
  * 各个provider的参考：https://zhuanlan.zhihu.com/p/340669216
@@ -24,6 +24,7 @@ const layerOption = {
 
 export const loadImagery = {
   // 加载arcgis地图服务
+  // 'http://server.arcgisonline.com/arcgis/rest/services/World_Topo_Map/MapServer'
   arcgis: (url, option) => {
     const imageryProvider = new Cesium.ArcGisMapServerImageryProvider({
       url,
@@ -112,7 +113,7 @@ export const loadImagery = {
     viewer.imageryLayers.add(layer)
     return layer
   },
-  // 加载瓦片序号（调试用）
+  // 加载瓦片信息图层：显示瓦片层级、行列号（调试用）
   debugTile: (option) => {
     const layer = new Cesium.ImageryLayer(
       new Cesium.TileCoordinatesImageryProvider(),
@@ -121,5 +122,49 @@ export const loadImagery = {
     layer.id = 'debugTile'
     viewer.imageryLayers.add(layer)
     return layer
-  }
+  },
+  // TODO 未完成：加载WMTS
+  wmts: () => {
+    const imageryProvider = new Cesium.WebMapTileServiceImageryProvider({
+      url: "https://gibs.earthdata.nasa.gov/wmts/epsg4326/best/MODIS_Terra_CorrectedReflectance_TrueColor/default/{Time}/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}.jpg",
+      layer: "MODIS_Terra_CorrectedReflectance_TrueColor", // 要显示图层
+      credit: '', // 于表示影像图层的来源及版权信息
+      style: 'default',
+      tileMatrixSetID: "250m",
+      maximumLevel: 5,
+      format: "image/jpeg",
+      clock: viewer.clock,
+    })
+    const layer = new Cesium.ImageryLayer(imageryProvider, option)
+    // viewer.imageryLayers.add(layer, index) // 可以为图层设置index
+    viewer.imageryLayers.add(layer)
+    return layer
+  },
+  // TODO 未完成：加载WMS
+  wms: () => {
+    const imageryProvider = new Cesium.WebMapServiceImageryProvider({
+      url: "https://nationalmap.gov.au/proxy/http://geoserver.nationalmap.nicta.com.au/geotopo_250k/ows",
+      layers: "Hydrography:bores",
+      parameters: {
+        service: "WMS",
+        format: "image/png",
+        transparent: true
+      },
+    })
+    const layer = new Cesium.ImageryLayer(imageryProvider, option)
+    // viewer.imageryLayers.add(layer, index) // 可以为图层设置index
+    viewer.imageryLayers.add(layer)
+    return layer
+  },
+  mapbox: () => {
+    const imageryProvider = new Cesium.MapboxStyleImageryProvider({
+      username: "你的账号名称",
+      styleId: '你的地图Id',
+      accessToken: '你的accessToken',
+    })
+    const layer = new Cesium.ImageryLayer(imageryProvider, option)
+    // viewer.imageryLayers.add(layer, index) // 可以为图层设置index
+    viewer.imageryLayers.add(layer)
+    return layer
+  },
 }
