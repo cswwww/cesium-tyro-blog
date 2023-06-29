@@ -1,9 +1,11 @@
 /*
  * @Date: 2023-06-04 10:41:29
  * @LastEditors: ReBeX  420659880@qq.com
- * @LastEditTime: 2023-06-16 14:58:39
+ * @LastEditTime: 2023-06-28 19:28:10
  * @FilePath: \cesium-tyro-blog\src\utils\ImageryLayer\splitImagery.js
  * @Description: 影像图层卷帘功能（下面包含两个版本）
+ * 博客参考：https://blog.csdn.net/weixin_45782925/article/details/123121883
+ * 沙盒示例：https://sandcastle.cesium.com/?src=Imagery%20Layers%20Split.html
  */
 import { viewer } from '@/utils/createCesium.js' // 引入地图对象
 import * as Cesium from 'cesium'

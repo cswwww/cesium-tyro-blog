@@ -21,6 +21,8 @@ import { ElLoading } from 'element-plus'
  * @param {Object} [option] - 选项对象（可选） https://cesium.com/learn/cesiumjs/ref-doc/Cesium3DTileset.html#.ConstructorOptions
  */
 const tilesetOption = {
+  show: true,
+  modelMatrix: Cesium.Matrix4.IDENTITY, // 单位矩阵
   maximumMemoryUsage: 100, // 不可设置太高，目标机子空闲内存值以内，防止浏览器过于卡
   maximumScreenSpaceError: 32, // 用于驱动细节细化级别的最大屏幕空间错误;较高的值可提供更好的性能，但视觉质量较低。
   shadows: false, // 是否显示阴影
