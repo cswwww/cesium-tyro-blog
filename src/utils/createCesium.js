@@ -1,6 +1,6 @@
 /*
  * @Date: 2023-02-09 14:57:52
- * @LastEditTime: 2023-06-19 18:45:51
+ * @LastEditTime: 2023-07-04 14:59:51
  * @FilePath: \cesium-tyro-blog\src\utils\createCesium.js
  * @Description: 创建地图单例
  */
@@ -69,7 +69,7 @@ class CesiumMap {
   constructor(target, Option = viewerOption) {
     // 首次使用构造器实例
     if (!CesiumMap.instance) {
-      // Cesium.Ion.defaultAccessToken='你的token';
+      Cesium.Ion.defaultAccessToken='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI1ODRiMTU0NS05NmJlLTRhNzYtYjA3OS02N2JmY2RhMDE0NDgiLCJpZCI6MTA3OTM5LCJpYXQiOjE2NjMxMjk1Nzd9.XmVmA2d7T2qG6y4vAcQrmb9msWbnLxCe5qYtnlK8h5k';
 
       this.target = target // Type: Element | String
       this.viewer = new Cesium.Viewer(target, Option)

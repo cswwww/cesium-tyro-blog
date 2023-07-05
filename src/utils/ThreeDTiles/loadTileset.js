@@ -1,11 +1,11 @@
 /*
  * @Date: 2023-05-23 10:45:33
  * @LastEditors: ReBeX  420659880@qq.com
- * @LastEditTime: 2023-06-19 17:52:21
+ * @LastEditTime: 2023-07-04 20:01:22
  * @FilePath: \cesium-tyro-blog\src\utils\ThreeDTiles\loadTileset.js
  * @Description:  从给定 URL 加载 3D 模型，添加到场景中，并自动定位到模型所在位置
  * import { addThreeDTiles } from '@/utils/ThreeDTiles/loadTileset.js'
- * const modelPromise = addThreeDTiles('/model/Tileset/示例建筑/tileset.json')
+ * const modelPromise = addThreeDTiles('/model/Tileset/sampleBuilding/tileset.json')
  * const modelPromise = addThreeDTiles(69380) // 75343、8564、40866
  * modelPromise.then(tileset => {
  *   console.log('tileset: ', tileset)
@@ -13,7 +13,7 @@
  */
 import { viewer } from '@/utils/createCesium.js' // 引入地图对象
 import * as Cesium from 'cesium'
-import { ElLoading } from 'element-plus'
+import { ElLoading, ElMessage } from 'element-plus'
 
 /**
  * @function addThreeDTiles
@@ -65,21 +65,25 @@ export async function addThreeDTiles(url, option) {
 
   // ! 写法二：
   let tileset = {}
-  if (typeof url == 'number') {
-    tileset = await Cesium.Cesium3DTileset.fromIonAssetId(url, option);
-  } else {
-    tileset = await Cesium.Cesium3DTileset.fromUrl(url, option);
+  try {
+    if (typeof url == 'number') {
+      tileset = await Cesium.Cesium3DTileset.fromIonAssetId(url, option);
+    } else {
+      tileset = await Cesium.Cesium3DTileset.fromUrl(url, option);
+    }
+  } catch (error) {
+    loading.close()
+    ElMessage.error('发生错误' + error)
   }
-
   viewer.scene.primitives.add(tileset);
   // 定位到模型
   viewer.zoomTo(
     tileset,
-    new Cesium.HeadingPitchRange(
-      0.0,
-      -0.5,
-      tileset.boundingSphere.radius * 2.0 // 模型的包围球半径的2倍
-    )
+    // new Cesium.HeadingPitchRange(
+    //   0.0,
+    //   -0.5,
+    //   tileset.boundingSphere.radius * 2.0 // 模型的包围球半径的2倍
+    // )
   )
   loading.close()
   return tileset // 返回模型对象

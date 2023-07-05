@@ -5,12 +5,9 @@ import { loadImagery } from "@/utils/ImageryLayer/loadImagery.js";
 import ToolBar from "./layouts/ToolBar.vue";
 import PopUps from "./layouts/PopUps.vue";
 
-import {add} from '@/utils/Entity/model.js'
-
 onMounted(() => {
   new CesiumMap("cesiumContainer");
   loadImagery.cartoVoyager();
-  const point = add()
 });
 </script>
 
