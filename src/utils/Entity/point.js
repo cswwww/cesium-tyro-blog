@@ -1,7 +1,7 @@
 /*
  * @Date: 2023-06-19 19:30:19
  * @LastEditors: ReBeX  420659880@qq.com
- * @LastEditTime: 2023-06-28 10:13:47
+ * @LastEditTime: 2023-07-05 16:01:09
  * @FilePath: \cesium-tyro-blog\src\utils\Entity\point.js
  * @Description: 实体类中点的相关函数
  */
@@ -9,6 +9,13 @@
 import { viewer } from '@/utils/createCesium.js' // 引入地图对象
 import * as Cesium from 'cesium'
 
+/**
+ * Adds a point entity to the viewer at the specified position.
+ *
+ * @param {number} x - The x-coordinate of the position in degrees.
+ * @param {number} y - The y-coordinate of the position in degrees.
+ * @return {Entity} The newly created point entity.
+ */
 function add(x = 122, y = 23) {
   const position = Cesium.Cartesian3.fromDegrees(x, y);
   const options = {
@@ -33,6 +40,32 @@ function add(x = 122, y = 23) {
   return entity
 }
 
+/**
+ * Registers a screen click event and adds a point to the viewer.
+ */
+function draw() {
+  // 注册屏幕点击事件
+  const handler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas)
+  handler.setInputAction(function (event) {
+    // 转换为不包含地形的笛卡尔坐标
+    const clickPosition = viewer.scene.camera.pickEllipsoid(event.position)
+    // 转经纬度（弧度）坐标
+    const radiansPos = Cesium.Cartographic.fromCartesian(clickPosition)
+    // 转角度
+    console.log('经度：' + Cesium.Math.toDegrees(radiansPos.longitude) + ', 纬度：' + Cesium.Math.toDegrees(radiansPos.latitude))
+
+    // 添加点
+    viewer.entities.add({
+      position: clickPosition,
+      point: {
+        color: Cesium.Color.YELLOW,
+        pixelSize: 30
+      }
+    })
+  }, Cesium.ScreenSpaceEventType.LEFT_CLICK)
+}
+
 export {
   add,
+  draw
 }

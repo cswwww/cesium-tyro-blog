@@ -1,7 +1,7 @@
 <!--
  * @Date: 2023-06-07 17:33:49
  * @LastEditors: ReBeX  420659880@qq.com
- * @LastEditTime: 2023-07-04 20:37:55
+ * @LastEditTime: 2023-07-05 16:17:39
  * @FilePath: \cesium-tyro-blog\src\components\ManageTileset.vue
  * @Description: 3D Tiles管理
 -->
@@ -11,9 +11,9 @@ import EventBus from '@/common/EventBus.js'
 import { ref } from 'vue'
 import { viewer } from "@/utils/createCesium.js";
 import { ElMessage } from 'element-plus'
-import { loadTianditu, layerKey } from '@/utils/ImageryLayer/loadTianditu.js'
 import * as Cesium from 'cesium'
 import { addThreeDTiles } from '@/utils/ThreeDTiles/loadTileset.js'
+import { planeClipping } from '@/utils/ThreeDTiles/clipTileset.js'
 
 const activeNames = ref(['99']) // 图层列表折叠面板激活的列表项
 
@@ -44,7 +44,6 @@ const add = () => {
 // 确认新增
 const confirm = () => {
   if (/^\d/.test(input.value)) {
-    console.log("字符串以数字开头");
     input.value = parseInt(input.value)
   }
   const modelPromise = addThreeDTiles(input.value)
@@ -71,8 +70,6 @@ const refresh = () => {
       tilesetArray.value.push(primitive);
     }
   }
-  console.log('tilesetArray.value: ', tilesetArray.value);
-
 }
 
 // 控制显隐
@@ -80,22 +77,22 @@ const showLayer = (layer) => {
   layer.show = !layer.show
 }
 
-// 在视图上，将图层上移一层（本质上是将图层序号降低,序号低的在底层
-const raiseLayer = (index) => {
-  const layer = viewer.imageryLayers.get(index)
-  viewer.imageryLayers.lower(layer);
-  refresh()
+// 裁剪模型
+const clipping = (item) => {
+  if (item.clippingZ) {
+    planeClipping(item)
+  }
 }
 
-// 将图层下移一层
-const lowerLayer = (index, item) => {
-  const layer = viewer.imageryLayers.get(index)
-  viewer.imageryLayers.raise(layer)
-  refresh()
+const zoomToTileset = (item) => {
+  viewer.zoomTo(item)
 }
 
 onMounted(() => {
   refresh()
+  if (tilesetArray.value.length == 0) {
+    showAdd.value = true
+  }
 });
 </script>
 
@@ -122,11 +119,11 @@ onMounted(() => {
       </div>
     </template>
     <el-collapse v-model="activeNames" v-if="tilesetArray.length != 0">
-      <el-collapse-item v-for="(item, index) in tilesetArray" :name="index" :key="index">
+      <el-collapse-item v-for="(item, index) in tilesetArray" :name="index" :key="index" @click="zoomToTileset(item)">
         <template #title>
-          <el-tooltip :content="item.basePath" placement="bottom" effect="light">
+          <el-tooltip :content="item._url" placement="bottom" effect="light">
             <div class="collapse-name">
-              {{ item.basePath }}
+              {{ item._url }}
             </div>
           </el-tooltip>
           <el-tooltip :content="item.show ? ' 展示' : '隐藏'" placement="bottom" effect="light">
@@ -137,7 +134,7 @@ onMounted(() => {
           </el-tooltip>
         </template>
         <div>
-
+          <span>Z轴平面裁剪：</span><el-switch @change="clipping(item)" v-model="item.clippingZ" />
         </div>
       </el-collapse-item>
     </el-collapse>
@@ -197,37 +194,8 @@ onMounted(() => {
   align-items: center;
 }
 
-.text {
-  font-size: 14px;
-}
-
-.item {
-  margin-bottom: 18px;
-}
-
 :deep(.el-card__body) {
   padding: 0 20px;
-}
-
-.slider-box {
-  display: flex;
-  align-items: center;
-}
-
-.slider-box .demonstration {
-  font-size: 14px;
-  color: var(--el-text-color-secondary);
-  line-height: 44px;
-  flex: 1;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  margin-bottom: 0;
-}
-
-.slider-box .demonstration+.el-slider {
-  margin-right: 12px;
-  flex: 0 0 60%;
 }
 
 .rotate {
@@ -257,6 +225,7 @@ onMounted(() => {
 :deep(.el-popper) {
   max-width: 90vw;
 }
+
 :deep(.el-autocomplete) {
   width: 100%;
 }
