@@ -1,6 +1,6 @@
 /*
  * @Date: 2023-02-09 14:57:52
- * @LastEditTime: 2023-07-04 14:59:51
+ * @LastEditTime: 2023-07-08 17:38:04
  * @FilePath: \cesium-tyro-blog\src\utils\createCesium.js
  * @Description: 创建地图单例
  */
@@ -15,11 +15,11 @@ import tycho2t380mz from '@/assets/images/tycho2t3_80_mz.jpg'
 let viewer = {} // 地图对象
 
 const viewerOption = {
+  homeButton: false, // 是否显示Home按钮
   animation: false, // 是否创建动画小器件，左下角仪表
   baseLayerPicker: false, // 是否显示图层选择器
   fullscreenButton: false, // 是否显示全屏按钮
   geocoder: false, // 是否显示geocoder小器件，右上角查询按钮
-  homeButton: false, // 是否显示Home按钮
   infoBox: false, // 是否显示信息框
   sceneMode: Cesium.SceneMode.SCENE3D, // 初始场景模式, SCENE2D | SCENE3D | COLUMBUS_VIEW
   sceneModePicker: false, // 是否显示3D/2D选择器
@@ -69,7 +69,7 @@ class CesiumMap {
   constructor(target, Option = viewerOption) {
     // 首次使用构造器实例
     if (!CesiumMap.instance) {
-      Cesium.Ion.defaultAccessToken='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI1ODRiMTU0NS05NmJlLTRhNzYtYjA3OS02N2JmY2RhMDE0NDgiLCJpZCI6MTA3OTM5LCJpYXQiOjE2NjMxMjk1Nzd9.XmVmA2d7T2qG6y4vAcQrmb9msWbnLxCe5qYtnlK8h5k';
+      Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI1ODRiMTU0NS05NmJlLTRhNzYtYjA3OS02N2JmY2RhMDE0NDgiLCJpZCI6MTA3OTM5LCJpYXQiOjE2NjMxMjk1Nzd9.XmVmA2d7T2qG6y4vAcQrmb9msWbnLxCe5qYtnlK8h5k';
 
       this.target = target // Type: Element | String
       this.viewer = new Cesium.Viewer(target, Option)
@@ -79,10 +79,16 @@ class CesiumMap {
       // 修改场景环境,关闭相关特效
       this.viewer.scene.debugShowFramesPerSecond = false// 显示fps
       this.viewer.scene.moon.show = false// 月亮
-      this.viewer.scene.fog.enabled = false// 雾
       this.viewer.scene.sun.show = false// 太阳
       this.viewer.scene.skyBox.show = true// 天空盒
       this.viewer.scene.skyAtmosphere.show = false; // 隐藏天空大气
+      // this.this.scene.skyAtmosphere.atmosphereLightIntensity=50//天空大气效果亮度
+      this.viewer.scene.fog.enabled = false// 雾
+      // this.viewer.scene.fog.minimumBrightness = 0.1//雾效果最小亮度
+      // this.viewer.scene.fog.density = 0.0003//浓度
+      // this.viewer.scene.backgroundColor = Cesium.Color.GREEN;
+      // this.viewer.scene.highDynamicRange=true //HDR效果
+
       this.viewer.resolutionScale = 1.0// 画面细度，默认值为1.0
 
       // 地球相关配置
@@ -90,6 +96,8 @@ class CesiumMap {
       // this.viewer.scene.globe.baseColor = Cesium.Color.TRANSPARENT // 基础色，默认是蓝色 Cesium.Color.BLUE
       // this.viewer.scene.globe.translucency.enabled = true // 一定要为 true，否则 undergroundColor 设置无效
       // this.viewer.scene.globe.undergroundColor = Cesium.Color.TRANSPARENT // 地下色，默认是黑色 Cesium.Color.BLACK
+      // this.viewer.scene.globe.showGroundAtmosphere = true//开启地表大气效果
+      // this.viewer.scene.globe.atmosphereLightIntensity = 10//设置地表大气亮度
 
       viewer = this.viewer
 

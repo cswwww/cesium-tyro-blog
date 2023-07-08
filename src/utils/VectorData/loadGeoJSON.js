@@ -1,7 +1,7 @@
 /*
  * @Date: 2023-06-16 15:27:53
  * @LastEditors: ReBeX  420659880@qq.com
- * @LastEditTime: 2023-06-18 20:49:19
+ * @LastEditTime: 2023-07-05 18:13:57
  * @FilePath: \cesium-tyro-blog\src\utils\VectorData\loadGeoJSON.js
  * @Description: 加载GeoJson或者TopoJSON格式数据
  * const vectorPromise = loadGeoJSON(pointSample)
@@ -164,6 +164,39 @@ class CesiumGeoJSON {
   }
 }
 
+// TODO 未完成
+function loadGeoJSONInPrimitive(features) {
+  const instances = [];
+  for (let i = 0; i < features.length; i++) {
+    for (let j = 0; j < features[i].geometry.coordinates.length; j++) {
+      const polygonArr = features[i].geometry.coordinates[j].toString().split(',');
+      const polygon = new Cesium.PolygonGeometry({
+        polygonHierarchy: new Cesium.PolygonHierarchy(
+          Cesium.Cartesian3.fromDegreesArray(polygonArr)
+        ),
+        vertexFormat: Cesium.PerInstanceColorAppearance.VERTEX_FORMAT
+      });
+      const geometry = Cesium.PolygonGeometry.createGeometry(polygon);
+      instances.push(new Cesium.GeometryInstance({
+        geometry: geometry,
+        attributes: {
+          color: Cesium.ColorGeometryInstanceAttribute.fromColor(Cesium.Color.fromRandom({ alpha: 0.7 })),
+        },
+      }));
+    }
+  }
+
+  const primitive = new Cesium.Primitive({
+    geometryInstances: instances,
+    appearance: new Cesium.PerInstanceColorAppearance({ // 为每个instance着色
+      translucent: true,
+      closed: false
+    }),
+    asynchronous: false,  // 确定基元是异步创建还是阻塞直到准备就绪
+  });
+
+  scene.primitives.add(primitive);
+}
 export {
   loadGeoJSON,
   CesiumGeoJSON

@@ -1,16 +1,16 @@
 /*
  * @Date: 2023-06-19 19:30:19
  * @LastEditors: ReBeX  420659880@qq.com
- * @LastEditTime: 2023-06-27 17:43:44
- * @FilePath: \cesium-tyro-blog\src\utils\Entity\billboard.js
+ * @LastEditTime: 2023-07-08 09:02:17
+ * @FilePath: \cesium-tyro-blog\src\utils\Entity\Graphics\billboard.js
  * @Description: 实体类中广告牌的相关函数
  */
 
 import { viewer } from '@/utils/createCesium.js' // 引入地图对象
 import * as Cesium from 'cesium'
 import img from "../../assets/images/meme.jpg"
-function add(x = 122, y = 23) {
-  const position = Cesium.Cartesian3.fromDegrees(x, y);
+function add(x = 122, y = 23, z=100) {
+  const position = Cesium.Cartesian3.fromDegrees(x, y, z);
   const options = {
     show: true,
     image: img, // A Property specifying the Image, URI, or Canvas to use for the billboard.

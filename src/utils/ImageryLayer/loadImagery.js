@@ -1,7 +1,7 @@
 /*
  * @Date: 2023-06-04 10:41:29
  * @LastEditors: ReBeX  420659880@qq.com
- * @LastEditTime: 2023-06-19 18:05:53
+ * @LastEditTime: 2023-07-08 17:22:24
  * @FilePath: \cesium-tyro-blog\src\utils\ImageryLayer\loadImagery.js
  * @Description: 加载影像图层
  * 各个provider的参考：https://zhuanlan.zhihu.com/p/340669216
@@ -25,18 +25,38 @@ const layerOption = {
 export const loadImagery = {
   // 加载arcgis地图服务
   // 'http://server.arcgisonline.com/arcgis/rest/services/World_Topo_Map/MapServer'
-  arcgis: (url, option) => {
+  // 'https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer'
+  arcgis: (url, option, callback) => {
     const imageryProvider = new Cesium.ArcGisMapServerImageryProvider({
       url,
       token: '',
-      layers: '', // 要显示的子图层 ID 数组
+      layers: '', // 要显示的子图层 ID 数组,有多个就用逗号隔开：'0,1'
       credit: '', // 于表示影像图层的来源及版权信息
-      enablePickFeatures: true, // 是否应该返回用于选择的附加要素数据
+      // rectangle:window.Cesium.Rectangle.fromDegrees(117.26344486210633, 36.67686347861695, 117.273444862106332,  36.68686347861695), // 地图显示范围，弧度制[东,南,西,北]
+      maximumLevel: 18,
+      enablePickFeatures: true, // 是否应该返回用于选择的附加要素数据，服务需支持Identify操作
       usePreCachedTilesIfAvailable: true, // 如果为 true，则使用服务器的预缓存切片（如果可用）。如果为 false，则忽略任何预缓存的切片并使用'导出'服务。
     })
     const layer = new Cesium.ImageryLayer(imageryProvider, option)
     // viewer.imageryLayers.add(layer, index) // 可以为图层设置index
-    viewer.imageryLayers.add(layer)
+
+    // !选取要素信息
+    if (callback) {
+      viewer.screenSpaceEventHandler.setInputAction(async function onLeftClick(event) {
+        // 获取鼠标点击位置的屏幕坐标
+        const position = event.position;
+        const cartographic = window.Cesium.Cartographic.fromCartesian(window.viewer.scene.pickPosition(position))
+
+        // 使用pickFeatures方法获取选择的要素信息
+        // pickFeatures的条件比较苛刻，比如输入18，则缩放必须处于18级才能点选
+        const promise = imageryProvider.pickFeatures(position.x, position.y, 18, cartographic.longitude, cartographic.latitude);
+        const features = await promise
+
+        callback(features) // 触发回调函数
+      }, window.Cesium.ScreenSpaceEventType.LEFT_CLICK);
+    }
+
+    viewer.imageryLayers.add(layer) // (layer,index)
     return layer
   },
   // Cesium ION 服務

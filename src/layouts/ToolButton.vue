@@ -1,7 +1,7 @@
 <!--
  * @Date: 2023-06-06 16:17:18
  * @LastEditors: ReBeX  420659880@qq.com
- * @LastEditTime: 2023-07-04 16:40:49
+ * @LastEditTime: 2023-07-08 17:46:18
  * @FilePath: \cesium-tyro-blog\src\layouts\ToolButton.vue
  * @Description: ****的按钮
 -->
@@ -12,6 +12,7 @@ import EventBus from '@/common/EventBus.js'
 // 功能组件
 import ManageImagery from '../components/ManageImagery.vue';
 import ManageTileset from '../components/ManageTileset.vue';
+import GlobalConfig from '../components/GlobalConfig.vue';
 
 const functionList = ref([
   {
@@ -20,6 +21,9 @@ const functionList = ref([
   }, {
     name: '3D Tiles',
     component: ManageTileset
+  }, {
+    name: '全局配置',
+    component: GlobalConfig
   }
 ])
 
