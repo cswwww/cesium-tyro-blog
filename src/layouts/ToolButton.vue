@@ -1,7 +1,7 @@
 <!--
  * @Date: 2023-06-06 16:17:18
  * @LastEditors: ReBeX  420659880@qq.com
- * @LastEditTime: 2023-07-08 17:46:18
+ * @LastEditTime: 2023-07-09 17:56:05
  * @FilePath: \cesium-tyro-blog\src\layouts\ToolButton.vue
  * @Description: ****的按钮
 -->
@@ -16,14 +16,15 @@ import GlobalConfig from '../components/GlobalConfig.vue';
 
 const functionList = ref([
   {
+    name: '全局配置',
+    component: GlobalConfig
+  },
+  {
     name: '图层管理',
     component: ManageImagery
   }, {
     name: '3D Tiles',
     component: ManageTileset
-  }, {
-    name: '全局配置',
-    component: GlobalConfig
   }
 ])
 
