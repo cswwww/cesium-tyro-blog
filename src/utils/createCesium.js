@@ -1,6 +1,6 @@
 /*
  * @Date: 2023-02-09 14:57:52
- * @LastEditTime: 2023-07-08 17:38:04
+ * @LastEditTime: 2023-07-10 18:07:56
  * @FilePath: \cesium-tyro-blog\src\utils\createCesium.js
  * @Description: 创建地图单例
  */
@@ -30,7 +30,7 @@ const viewerOption = {
   navigationHelpButton: false, // 是否显示右上角的帮助按钮
   baselLayerPicker: false, // 将图层选择的控件关掉，才能添加其他影像数据
   shadows: false, // 是否显示背影
-  shouldAnimate: true,
+  shouldAnimate: true, // 开启动画
   clock: new Cesium.Clock(), // 用于控制当前时间的时钟对象
   imageryProvider: undefined, // 不添加默认影像图层
   selectedImageryProviderViewModel: undefined, // 当前图像图层的显示模型，仅baseLayerPicker设为true有意义
@@ -98,6 +98,24 @@ class CesiumMap {
       // this.viewer.scene.globe.undergroundColor = Cesium.Color.TRANSPARENT // 地下色，默认是黑色 Cesium.Color.BLACK
       // this.viewer.scene.globe.showGroundAtmosphere = true//开启地表大气效果
       // this.viewer.scene.globe.atmosphereLightIntensity = 10//设置地表大气亮度
+
+      // 泛光效果
+      const bloom = this.viewer.scene.postProcessStages.bloom;
+      bloom.enabled = false;
+      //设置泛光效果
+      // bloom.uniforms.glowOnly = false;
+      // bloom.uniforms.contrast = 128;
+      // bloom.uniforms.brightness = -0.3;
+      //泛光区域叠加模糊效果
+      // bloom.uniforms.delta = 1;
+      // bloom.uniforms.sigma = 2;
+      // bloom.uniforms.stepSize = 1;
+
+      // 自定义光源
+      // viewer.scene.light = new Cesium.DirectionalLight({
+      //   direction: Cesium.Cartesian3.fromElements(-0.2, -0.5, -0.8),
+      //   intensity: 1
+      // })
 
       viewer = this.viewer
 

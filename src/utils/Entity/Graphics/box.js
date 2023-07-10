@@ -1,8 +1,8 @@
 /*
  * @Date: 2023-06-19 19:30:19
  * @LastEditors: ReBeX  420659880@qq.com
- * @LastEditTime: 2023-06-27 18:27:18
- * @FilePath: \cesium-tyro-blog\src\utils\Entity\box.js
+ * @LastEditTime: 2023-07-10 17:41:55
+ * @FilePath: \cesium-tyro-blog\src\utils\Entity\Graphics\box.js
  * @Description: 实体类中盒子的相关函数
  * https://cesium.com/learn/cesiumjs/ref-doc/BoxGraphics.html#.ConstructorOptions 
  */
@@ -27,7 +27,8 @@ function add(x = 122, y = 23) {
 
     // type:ShadowMode  default:ShadowMode.DISABLED
     // DISABLED	对象不投射或接收阴影；ENABLED	对象投射并接收阴影；CAST_ONLY	对象仅投射阴影；RECEIVE_ONLY 该对象仅接收阴影。
-    shadows: Cesium.ShadowMode.DISABLED,
+    // viewer.shadows = true 时才生效
+    shadows: Cesium.ShadowMode.DISABLED, // Cesium.ShadowMode.ENABLED
     // 设置1000米和2000米之间可见  type:DistanceDisplayCondition
     // distanceDisplayCondition: new Cesium.DistanceDisplayCondition(
     //   1.0e3,

@@ -1,7 +1,7 @@
 <!--
  * @Date: 2023-06-07 17:33:49
  * @LastEditors: ReBeX  420659880@qq.com
- * @LastEditTime: 2023-07-10 09:12:01
+ * @LastEditTime: 2023-07-10 17:30:37
  * @FilePath: \cesium-tyro-blog\src\components\GlobalConfig.vue
  * @Description: 全局配置组件：场景、地球
 -->
@@ -63,6 +63,11 @@ const switchList = ref([
     state: viewer.scene.globe.showGroundAtmosphere, // 状态
     bind: viewer.scene.globe, // 对应的对象
     type: 'showGroundAtmosphere', // 对应的属性名
+  }, {
+    label: '泛光效果',
+    state: viewer.scene.postProcessStages.bloom.enabled, // 状态
+    bind: viewer.scene.postProcessStages.bloom, // 对应的对象
+    type: 'enabled', // 对应的属性名
   }
 ])
 

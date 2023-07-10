@@ -1,7 +1,7 @@
 /*
  * @Date: 2023-06-19 19:30:19
  * @LastEditors: ReBeX  420659880@qq.com
- * @LastEditTime: 2023-07-08 09:02:17
+ * @LastEditTime: 2023-07-10 17:21:54
  * @FilePath: \cesium-tyro-blog\src\utils\Entity\Graphics\billboard.js
  * @Description: 实体类中广告牌的相关函数
  */
@@ -9,7 +9,7 @@
 import { viewer } from '@/utils/createCesium.js' // 引入地图对象
 import * as Cesium from 'cesium'
 import img from "../../assets/images/meme.jpg"
-function add(x = 122, y = 23, z=100) {
+function add(x = 122, y = 23, z = 100) {
   const position = Cesium.Cartesian3.fromDegrees(x, y, z);
   const options = {
     show: true,
@@ -17,8 +17,8 @@ function add(x = 122, y = 23, z=100) {
     scale: 2.0, // default: 1.0
     //像素偏移    type: Cartesian2    default:Cartesian2.ZERO
     pixelOffset: new Cesium.Cartesian2(0, -50),
-    //眼睛偏移    type: Cartesian3    default:Cartesian3.ZERO
-    eyeOffset: new Cesium.Cartesian3(0.0, 0.0, 0.0),
+    //眼睛偏移    type: Cartesian3    default:Cartesian3.ZERO z值越大，视觉上越靠前
+    eyeOffset: new Cesium.Cartesian3(0.0, 0.0, 10.0),
     // 水平对齐方式  type: HorizontalOrigin  default:HorizontalOrigin.CENTER
     // CENTER 原点在对象的水平中心；LEFT 原点在对象的左侧；RIGHT 原点在对象的右侧
     horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
@@ -63,7 +63,10 @@ function add(x = 122, y = 23, z=100) {
     // ),
     // 获取或设置与相机的距离，在深度处禁用深度测试，例如，以防止剪切地形。
     // 设置为零时，将始终应用深度测试。设置为Number.POSITIVE_INFINITY时，永远不会应用深度测试。
-    disableDepthTestDistance: Number.POSITIVE_INFINITY,
+    disableDepthTestDistance: Number.POSITIVE_INFINITY, // 2000，设置2000时将在2000米内禁用深度检测
+
+    // imageSubRegion: new Cesium.BoundingRectangle(1, 1, 30, 50) // 裁剪仅显示部分图片，左下角开始计算x,y, 并给出宽、高
+
   }
   const entity = viewer.entities.add({
     // id: "",
