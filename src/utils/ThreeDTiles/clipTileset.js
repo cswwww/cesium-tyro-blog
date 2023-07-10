@@ -1,7 +1,7 @@
 /*
  * @Date: 2023-07-05 12:10:52
  * @LastEditors: ReBeX  420659880@qq.com
- * @LastEditTime: 2023-07-05 15:25:55
+ * @LastEditTime: 2023-07-10 14:20:15
  * @FilePath: \cesium-tyro-blog\src\utils\ThreeDTiles\clipTileset.js
  * @Description: 平面裁剪
  * import { planeClipping } from '@/utils/ThreeDTiles/clipTileset.js'
@@ -50,22 +50,25 @@ export function planeClipping(tileset) {
   }
 
   let selectedPlane // 当前选中的裁剪平面
-
-  // 鼠标操作句柄
-  const mouseHandler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas)
+  const mouseHandler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas) // 鼠标操作句柄
+  
   mouseHandler.setInputAction(function (movement) {
     // 拾取裁剪面实体
     const pickedObject = viewer.scene.pick(movement.position)
 
     if (pickedObject?.id?.plane) {
       // 鼠标左键按下，并拾取到裁剪平面实体时，设置裁剪平面实体的颜色，边线
-      pickedObject.id.plane.material = Cesium.Color.WHITE.withAlpha(0.05);
+      selectedPlane = pickedObject.id.plane
+      selectedPlane.material = Cesium.Color.WHITE.withAlpha(0.05)
+
       viewer.scene.screenSpaceCameraController.enableInputs = false; // 将相机控制输入关闭
     }
 
   }, Cesium.ScreenSpaceEventType.LEFT_DOWN)
 
   mouseHandler.setInputAction(function () {
+    console.log('selectedPlane: ', selectedPlane);
+
     if (Cesium.defined(selectedPlane)) {
       // 鼠标左键抬起时，设置裁剪平面实体的颜色、边线、销毁当前选中的裁剪平面实体
       selectedPlane.material = planeFillColor
@@ -81,4 +84,12 @@ export function planeClipping(tileset) {
       targetY += deltaY
     }
   }, Cesium.ScreenSpaceEventType.MOUSE_MOVE)
+}
+
+export function removePlaneClipping(tileset) {
+  console.log('tileset.clippingPlanes: ', viewer.entities);
+
+  viewer.entities.removeAll()
+  tileset.clippingPlanes.removeAll()
+  viewer.scene.screenSpaceCameraController.enableInputs = true // 恢复相机控制
 }

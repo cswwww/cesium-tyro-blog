@@ -1,7 +1,7 @@
 <!--
  * @Date: 2023-06-07 17:33:49
  * @LastEditors: ReBeX  420659880@qq.com
- * @LastEditTime: 2023-07-05 16:17:39
+ * @LastEditTime: 2023-07-10 15:53:40
  * @FilePath: \cesium-tyro-blog\src\components\ManageTileset.vue
  * @Description: 3D Tiles管理
 -->
@@ -10,10 +10,11 @@ import { onMounted, watch } from "vue";
 import EventBus from '@/common/EventBus.js'
 import { ref } from 'vue'
 import { viewer } from "@/utils/createCesium.js";
-import { ElMessage } from 'element-plus'
+import { ElMessage, ElMessageBox } from 'element-plus'
 import * as Cesium from 'cesium'
 import { addThreeDTiles } from '@/utils/ThreeDTiles/loadTileset.js'
-import { planeClipping } from '@/utils/ThreeDTiles/clipTileset.js'
+import { planeClipping, removePlaneClipping } from '@/utils/ThreeDTiles/clipTileset.js'
+import { getClickFeature, removeClickFeature } from '@/utils/ThreeDTiles/pickTilesetFeature.js'
 
 const activeNames = ref(['99']) // 图层列表折叠面板激活的列表项
 
@@ -81,9 +82,24 @@ const showLayer = (layer) => {
 const clipping = (item) => {
   if (item.clippingZ) {
     planeClipping(item)
+  } else {
+    removePlaneClipping(item)
   }
 }
 
+const picking = (item) => {
+  if (item.pickingZ) {
+    getClickFeature((feature) => {
+      ElMessageBox.alert('_batchId:' + feature._batchId, '要素信息', {
+        // autofocus: false,
+        closeOnClickModal: true,
+        confirmButtonText: 'OK',
+      })
+    })
+  } else {
+    removeClickFeature()
+  }
+}
 const zoomToTileset = (item) => {
   viewer.zoomTo(item)
 }
@@ -121,7 +137,7 @@ onMounted(() => {
     <el-collapse v-model="activeNames" v-if="tilesetArray.length != 0">
       <el-collapse-item v-for="(item, index) in tilesetArray" :name="index" :key="index" @click="zoomToTileset(item)">
         <template #title>
-          <el-tooltip :content="item._url" placement="bottom" effect="light">
+          <el-tooltip :content="item._url" placement="top" effect="light">
             <div class="collapse-name">
               {{ item._url }}
             </div>
@@ -133,8 +149,11 @@ onMounted(() => {
             </el-icon>
           </el-tooltip>
         </template>
-        <div>
+        <div class="card-item">
           <span>Z轴平面裁剪：</span><el-switch @change="clipping(item)" v-model="item.clippingZ" />
+        </div>
+        <div class="card-item">
+          <span>要素点选：</span><el-switch @change="picking(item)" v-model="item.pickingZ" />
         </div>
       </el-collapse-item>
     </el-collapse>
@@ -173,9 +192,19 @@ onMounted(() => {
   </el-card>
 </template>
 
-<style scoped>
+<style scoped lang="less">
 .box-card {
   width: 340px;
+
+  .card-item {
+    display: flex;
+    justify-content: space-between;
+
+    .card-label {
+      display: inline-block;
+      color: #717070;
+    }
+  }
 }
 
 .card-title {

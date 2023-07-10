@@ -1,7 +1,7 @@
 <!--
  * @Date: 2023-06-06 16:17:18
  * @LastEditors: ReBeX  420659880@qq.com
- * @LastEditTime: 2023-07-09 17:56:05
+ * @LastEditTime: 2023-07-10 14:28:49
  * @FilePath: \cesium-tyro-blog\src\layouts\ToolButton.vue
  * @Description: ****的按钮
 -->
@@ -20,7 +20,7 @@ const functionList = ref([
     component: GlobalConfig
   },
   {
-    name: '图层管理',
+    name: '影像图层',
     component: ManageImagery
   }, {
     name: '3D Tiles',
@@ -45,7 +45,7 @@ onMounted(() => {
   </div>
 </template>
 
-<style scoped>
+<style scoped lang="less">
 .button-group {
   display: flex;
   flex-direction: column;

@@ -1,7 +1,7 @@
 /*
  * @Date: 2023-06-28 19:35:03
  * @LastEditors: ReBeX  420659880@qq.com
- * @LastEditTime: 2023-06-30 09:50:21
+ * @LastEditTime: 2023-07-10 10:05:04
  * @FilePath: \cesium-tyro-blog\src\utils\ThreeDTiles\translateTileset.js
  * @Description: 平移（Translation）：将Tileset在三维场景中沿着指定的方向平移
  * 
@@ -54,7 +54,6 @@ function setPosition(tileset, lng, lat, h) {
   viewer.zoomTo(tileset);
 }
 
-
 /**
  * Resets the position of a tileset to a specified model matrix or the identity matrix if none is provided.
  *
@@ -66,7 +65,29 @@ function serMatrix(tileset, matrix) {
   viewer.zoomTo(tileset);
 }
 
+function setScale(tileset) {
+  // 计算出模型包围球的中心点(弧度制)，从世界坐标转弧度制
+  const cartographic = Cesium.Cartographic.fromCartesian(tileset.boundingSphere.center)
+  const { longitude, latitude, height } = cartographic
+
+
+  const surface = Cesium.Cartesian3.fromRadians(
+    longitude,
+    latitude,
+    height
+  )
+
+  const m = Cesium.Transforms.eastNorthUpToFixedFrame(surface);
+  const scale = Cesium.Matrix4.fromUniformScale(3); // 缩放比例，大于1放大，小于1缩小
+
+  Cesium.Matrix4.multiply(m, scale, m)
+  tileset._root.transform = m;
+
+  viewer.zoomTo(tileset);
+}
+
 export {
   setPosition,
-  serMatrix
+  serMatrix,
+  setScale
 }
