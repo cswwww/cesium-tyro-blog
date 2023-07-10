@@ -13,4 +13,14 @@ export default defineConfig({
       '@': path.resolve(__dirname, 'src')
     }
   },
+  css: {
+    preprocessorOptions: {
+      less: {
+        // modifyVars: {
+        //   hack: `true; @import (reference) "${path.resolve("src/assets/css/base.less")}";`,
+        // },
+        javascriptEnabled: true,
+      },
+    },
+  },
 })
