@@ -65,7 +65,67 @@ function clickToPick(callback) {
   }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
 }
 
+// 获取椭球体表面的经纬度
+function getEllipsoid(callback) {
+  const handler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas); // 交互句柄
+  handler.setInputAction(function (event) {
+    // 屏幕坐标转世界坐标:将屏幕坐标（event.position）转换为椭球体上的笛卡尔坐标 Cartesian3 {x: 400390.1022929887, y: -4875636.113124782, z: 4078770.7805720475}
+    const cartesian = viewer.camera.pickEllipsoid(event.position, viewer.scene.globe.ellipsoid);
+    // 将笛卡尔坐标转换为地理坐标 Cartographic {longitude: -1.4888595972327463, latitude: 0.6982928317144053, height: 1.3222238854040097e-9}
+    const cartographic = Cesium.Cartographic.fromCartesian(cartesian);
+    // 将弧度转为度
+    const lon = Cesium.Math.toDegrees(cartographic.longitude);
+    const lat = Cesium.Math.toDegrees(cartographic.latitude);
+    // 输出经纬度
+    console.log('[lon,lat]:', [lon, lat]);
+    callback?.([lon, lat]); // 将选中的要素暴露给回调函数
+  }, Cesium.ScreenSpaceEventType.LEFT_CLICK)
+}
+
+// 获取地形表面经纬度和高度
+function getTerrain(callback) {
+  const handler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas); // 交互句柄
+  handler.setInputAction(function (event) {
+    const ray = viewer.camera.getPickRay(event.position);
+    const cartesian = viewer.scene.globe.pick(ray, viewer.scene);
+    if (Cesium.defined(cartesian)) {
+      // 将笛卡尔坐标转换为地理坐标 Cartographic {longitude: -1.4888595972327463, latitude: 0.6982928317144053, height: 1.3222238854040097e-9}
+      const cartographic = Cesium.Cartographic.fromCartesian(cartesian);
+      const lon = Cesium.Math.toDegrees(cartographic.longitude);
+      const lat = Cesium.Math.toDegrees(cartographic.latitude);
+      const height1 = viewer.scene.globe.getHeight(cartographic); // 使用 Cesium 的地球场景对象 globe 的 getHeight 方法来获取地形表面上某一点的高度。这个方法会考虑到地形的高程数据，比如地形瓦片、地形数据源等，来计算准确的高度
+      const height = cartographic.height;
+      callback?.(lon, lat, height);
+    }
+  }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
+}
+
+// 实时获取鼠标经纬度
+function getMouse() {
+  let selft = this;
+  const scene = this.viewer.scene;
+  var canvas = scene.canvas;
+  var handler = new Cesium.ScreenSpaceEventHandler(scene.canvas);
+  handler.setInputAction(function (movement) {
+    var cartesian = scene.camera.pickEllipsoid(movement.endPosition, ellipsoid);
+    var ellipsoid = scene.globe.ellipsoid;
+    if (cartesian) { //能获取，显示坐标
+      var cartographic = ellipsoid.cartesianToCartographic(cartesian);
+      var coords = '经度' + Cesium.Math.toDegrees(cartographic.longitude).toFixed(2) + ', ' + '纬度' + Cesium.Math.toDegrees(
+        cartographic.latitude).toFixed(2) + '高度 ' + Math.ceil(selft.viewer.camera.positionCartographic.height);
+      console.log(coords);
+
+    } else { //不能获取不显示
+
+    }
+  }, Cesium.ScreenSpaceEventType.MOUSE_MOVE);
+
+}
+
 export {
   getDefaultClickEvent,
-  clickToPick
+  clickToPick,
+  getEllipsoid,
+  getTerrain,
+  getMouse
 }
