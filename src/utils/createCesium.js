@@ -1,6 +1,6 @@
 /*
  * @Date: 2023-02-09 14:57:52
- * @LastEditTime: 2023-07-10 18:07:56
+ * @LastEditTime: 2023-07-11 10:49:50
  * @FilePath: \cesium-tyro-blog\src\utils\createCesium.js
  * @Description: 创建地图单例
  */
@@ -116,6 +116,11 @@ class CesiumMap {
       //   direction: Cesium.Cartesian3.fromElements(-0.2, -0.5, -0.8),
       //   intensity: 1
       // })
+
+      // 开启地形深度检测:
+      // 控制在渲染场景时，相机是否进行深度测试以避免将被遮挡的物体绘制在前景
+      // true: 相机会根据地形高度信息进行深度测试，避免将低于地面的物体绘制在地面之上
+      this.viewer.scene.globe.depthTestAgainstTerrain = true
 
       viewer = this.viewer
 

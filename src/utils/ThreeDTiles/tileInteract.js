@@ -39,8 +39,6 @@ export function tileInteract (tileset, event = '左键单击', reaction = '信�
     alert('浏览器不支持位置拾取')
   }
 
-  // viewer.scene.globe.depthTestAgainstTerrain = true // 开启地形深度检测
-
   // 创建文字标签集合类，方便统一管理
   const annotations = viewer.scene.primitives.add(new Cesium.LabelCollection())
 
