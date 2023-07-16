@@ -1,6 +1,6 @@
 /*
  * @Date: 2023-02-09 14:57:52
- * @LastEditTime: 2023-07-11 10:49:50
+ * @LastEditTime: 2023-07-16 14:35:18
  * @FilePath: \cesium-tyro-blog\src\utils\createCesium.js
  * @Description: 创建地图单例
  */
@@ -126,6 +126,8 @@ class CesiumMap {
 
       // 将this挂载到CesiumMap这个类的instance属性上
       CesiumMap.instance = this
+
+      this.changeTerrain(3)
     }
     return CesiumMap.instance
   }
