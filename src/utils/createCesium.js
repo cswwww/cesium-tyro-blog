@@ -1,6 +1,6 @@
 /*
  * @Date: 2023-02-09 14:57:52
- * @LastEditTime: 2023-07-16 14:35:18
+ * @LastEditTime: 2023-07-17 09:06:51
  * @FilePath: \cesium-tyro-blog\src\utils\createCesium.js
  * @Description: 创建地图单例
  */
@@ -35,6 +35,10 @@ const viewerOption = {
   imageryProvider: undefined, // 不添加默认影像图层
   selectedImageryProviderViewModel: undefined, // 当前图像图层的显示模型，仅baseLayerPicker设为true有意义
   imageryProviderViewModels: Cesium.createDefaultImageryProviderViewModels(), // 可供BaseLayerPicker选择的图像图层ProviderViewModel数组
+  // terrain: Cesium.Terrain.fromWorldTerrain({
+  //   requestWaterMask: true,
+  //   requestVertexNormals: true
+  // }),
   selectedTerrainProviderViewModel: undefined, // 当前地形图层的显示模型，仅baseLayerPicker设为true有意义
   terrainProviderViewModels: Cesium.createDefaultTerrainProviderViewModels(), // 可供BaseLayerPicker选择的地形图层ProviderViewModel数组
   terrainProvider: new Cesium.EllipsoidTerrainProvider(), // 地形图层提供者，仅baseLayerPicker设为false有意义
@@ -47,7 +51,7 @@ const viewerOption = {
   mapProjection: new Cesium.WebMercatorProjection(), // 地图投影体系
   dataSources: new Cesium.DataSourceCollection(), // 需要进行可视化的数据源的集合
   creditContainer: document.createElement('div'), // 创建空div，可实现移除版权信息的效果
-  // terrainProvider: Cesium.createWorldTerrain(),
+
   // skyBox: new Cesium.SkyBox({ // 天空盒
   //   sources: {
   //     positiveX: tycho2t380px,
@@ -127,7 +131,7 @@ class CesiumMap {
       // 将this挂载到CesiumMap这个类的instance属性上
       CesiumMap.instance = this
 
-      this.changeTerrain(3)
+      // this.changeTerrain(3)
     }
     return CesiumMap.instance
   }

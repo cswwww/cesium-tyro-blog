@@ -1,7 +1,7 @@
 <!--
  * @Date: 2023-06-07 17:33:49
  * @LastEditors: ReBeX  420659880@qq.com
- * @LastEditTime: 2023-07-16 21:29:10
+ * @LastEditTime: 2023-07-17 08:37:28
  * @FilePath: \cesium-tyro-blog\src\components\DrawPolyline.vue
  * @Description: 全局配置组件：场景、地球
 -->
@@ -28,7 +28,6 @@ onMounted(() => {
   ElMessage({
     showClose: true,
     message: '鼠标左键添加点、右键完成绘制',
-    duration: 0
   })
   lineEntityCollection.value = polylineDrawer.lineCollection.entities.values
 });

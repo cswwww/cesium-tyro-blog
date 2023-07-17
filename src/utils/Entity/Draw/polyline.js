@@ -1,7 +1,7 @@
 /*
  * @Date: 2023-07-12 18:47:18
  * @LastEditors: ReBeX  420659880@qq.com
- * @LastEditTime: 2023-07-16 20:56:46
+ * @LastEditTime: 2023-07-17 08:58:47
  * @FilePath: \cesium-tyro-blog\src\utils\Entity\Draw\polyline.js
  * @Description: 绘制多段线
  */
@@ -14,6 +14,11 @@ export class PolylineDrawer {
   activeLine // 动态线
   activePoint // 动态点
   constructor(callback) {
+    if (!Cesium.Entity.supportsPolylinesOnTerrain(viewer.scene)) {
+      window.alert(
+        "This browser does not support polylines on terrain."
+      );
+    }
     if (!PolylineDrawer.instance) { // 首次使用构造器实例
       this.callback = callback
       // 新建DataSource用来管理entities
@@ -38,7 +43,7 @@ export class PolylineDrawer {
     this.activePoint.position.setValue(undefined); // 隐藏指针点
 
     let pointList = []; // 初始化当前的线坐标数组
-    // 绘制打点时的事件
+    // 事件：新增点
     this.addHandler.setInputAction(event => {
       // 获取地形表面经纬度和高度
       const ray = viewer.camera.getPickRay(event.position || event.endPosition);
@@ -62,7 +67,7 @@ export class PolylineDrawer {
       }
     }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
 
-    // 鼠标移动时的事件
+    // 事件：鼠标移动
     this.moveHandler.setInputAction(event => {
       if (Cesium.defined(this.activePoint)) {
         // 获取地形表面经纬度和高度
@@ -82,7 +87,7 @@ export class PolylineDrawer {
       }
     }, Cesium.ScreenSpaceEventType.MOUSE_MOVE);
 
-    // 完成绘制时的事件
+    // 事件：完成绘制
     this.finHandler.setInputAction(event => {
       if (pointList.length < 2) { // 一个节点都没添加
         alert('请至少选2个点')
@@ -103,7 +108,7 @@ export class PolylineDrawer {
     this.finHandler.removeInputAction(Cesium.ScreenSpaceEventType.RIGHT_CLICK)
     viewer.entities.remove(this.activeLine); // 移除动态线
     viewer.entities.remove(this.activePoint); // 移除动态点
-    
+
     this.callback && this.callback(this.lineCollection) // 如果需要，就把线集合给回调函数
   }
 
