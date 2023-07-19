@@ -1,0 +1,57 @@
+.box-card {
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .card-title {
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  // 右侧功能弹窗中的slider样式
+  // <div class="slider-box">
+  //   <span class="demonstration">高度：</span>
+  //   <el-slider v-model="item.heightZ" :max="1000" :step="1" />
+  // </div>
+  .slider-box {
+    display: flex;
+    align-items: center;
+
+    .demonstration {
+      font-size: 14px;
+      color: var(--el-text-color-secondary);
+      line-height: 44px;
+      flex: 1;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      margin-bottom: 0;
+    }
+
+    .demonstration+.el-slider {
+      margin-right: 12px;
+      flex: 0 0 60%;
+    }
+  }
+
+  // 右侧功能弹窗中的switch选择器样式
+  // <div class="card-item" v-for="(item, index) in switchList" :key="index">
+  //   <div class="card-label">{{ item.label }}</div>
+  //   <el-switch v-model="item.state" />
+  // </div>
+  .card-item {
+    display: flex;
+    justify-content: space-between;
+
+    .card-label {
+      display: inline-block;
+      font-size: 14px;
+      color: var(--el-text-color-secondary);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+}

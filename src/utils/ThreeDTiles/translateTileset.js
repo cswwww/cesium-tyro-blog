@@ -1,7 +1,7 @@
 /*
  * @Date: 2023-06-28 19:35:03
  * @LastEditors: ReBeX  420659880@qq.com
- * @LastEditTime: 2023-07-10 10:05:04
+ * @LastEditTime: 2023-07-19 11:58:33
  * @FilePath: \cesium-tyro-blog\src\utils\ThreeDTiles\translateTileset.js
  * @Description: 平移（Translation）：将Tileset在三维场景中沿着指定的方向平移
  * 
@@ -27,9 +27,11 @@ function setPosition(tileset, lng, lat, h) {
     tileset.boundingSphere.center
   )
   const { longitude, latitude, height } = cartographic
+  console.log('h: ', h);
+  console.log('height: ', height);
 
   // 模型包围球的中心点坐标，输出以笛卡尔坐标系表示的三维坐标点
-  const current = Cesium.Cartesian3.fromRadians(
+  const surface = Cesium.Cartesian3.fromRadians(
     longitude,
     latitude,
     height
@@ -39,19 +41,19 @@ function setPosition(tileset, lng, lat, h) {
   const offset = Cesium.Cartesian3.fromDegrees(
     lng || Cesium.Math.toDegrees(longitude),
     lat || Cesium.Math.toDegrees(latitude),
-    h || height
+    height + h || height
   );
 
   // 计算差向量：计算tileset的平移量，并将其应用到modelMatrix中
   const translation = Cesium.Cartesian3.subtract(
     offset,
-    current,
+    surface,
     new Cesium.Cartesian3()
   )
 
   // 修改模型的变换矩阵，通过四维矩阵
   tileset.modelMatrix = Cesium.Matrix4.fromTranslation(translation);
-  viewer.zoomTo(tileset);
+  // viewer.zoomTo(tileset);
 }
 
 /**

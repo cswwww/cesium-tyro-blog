@@ -1,7 +1,7 @@
 <!--
  * @Date: 2023-06-07 17:33:49
  * @LastEditors: ReBeX  420659880@qq.com
- * @LastEditTime: 2023-06-15 09:35:02
+ * @LastEditTime: 2023-07-19 14:24:07
  * @FilePath: \cesium-tyro-blog\src\components\ManageImagery.vue
  * @Description: 影像图层管理
 -->
@@ -202,58 +202,21 @@ onMounted(() => {
   </el-card>
 </template>
 
-<style scoped>
+<style scoped lang="less">
 .box-card {
   width: 340px;
+  .box-card();
 }
 
-.card-title {
-  display: flex;
-  align-items: center;
-}
 
 .refresh-icon {
   margin-left: 5px;
   cursor: pointer;
 }
 
-.card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.text {
-  font-size: 14px;
-}
-
-.item {
-  margin-bottom: 18px;
-}
 
 :deep(.el-card__body) {
   padding: 0 20px;
-}
-
-.slider-box {
-  display: flex;
-  align-items: center;
-}
-
-.slider-box .demonstration {
-  font-size: 14px;
-  color: var(--el-text-color-secondary);
-  line-height: 44px;
-  flex: 1;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  margin-bottom: 0;
-}
-
-.slider-box .demonstration+.el-slider {
-  margin-right: 12px;
-  flex: 0 0 60%;
 }
 
 .rotate {

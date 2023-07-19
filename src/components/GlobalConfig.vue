@@ -1,7 +1,7 @@
 <!--
  * @Date: 2023-06-07 17:33:49
  * @LastEditors: ReBeX  420659880@qq.com
- * @LastEditTime: 2023-07-10 17:30:37
+ * @LastEditTime: 2023-07-19 14:14:51
  * @FilePath: \cesium-tyro-blog\src\components\GlobalConfig.vue
  * @Description: 全局配置组件：场景、地球
 -->
@@ -108,30 +108,9 @@ onMounted(() => {
 
 <style scoped lang="less">
 .box-card {
+  .box-card();
   width: 340px;
-
-  .card-item {
-    display: flex;
-    justify-content: space-between;
-
-    .card-label {
-      display: inline-block;
-      color: #717070;
-    }
-  }
-
-  .card-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    .card-title {
-      display: flex;
-      align-items: center;
-    }
-  }
 }
-
 
 :deep(.el-card__body) {
   padding: 0 20px;

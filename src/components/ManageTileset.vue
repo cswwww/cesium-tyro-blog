@@ -1,7 +1,7 @@
 <!--
  * @Date: 2023-06-07 17:33:49
  * @LastEditors: ReBeX  420659880@qq.com
- * @LastEditTime: 2023-07-10 15:53:40
+ * @LastEditTime: 2023-07-19 14:22:00
  * @FilePath: \cesium-tyro-blog\src\components\ManageTileset.vue
  * @Description: 3D Tiles管理
 -->
@@ -15,6 +15,7 @@ import * as Cesium from 'cesium'
 import { addThreeDTiles } from '@/utils/ThreeDTiles/loadTileset.js'
 import { planeClipping, removePlaneClipping } from '@/utils/ThreeDTiles/clipTileset.js'
 import { getClickFeature, removeClickFeature } from '@/utils/ThreeDTiles/pickTilesetFeature.js'
+import { setPosition } from '@/utils/ThreeDTiles/translateTileset.js'
 
 const activeNames = ref(['99']) // 图层列表折叠面板激活的列表项
 
@@ -135,10 +136,10 @@ onMounted(() => {
       </div>
     </template>
     <el-collapse v-model="activeNames" v-if="tilesetArray.length != 0">
-      <el-collapse-item v-for="(item, index) in tilesetArray" :name="index" :key="index" @click="zoomToTileset(item)">
+      <el-collapse-item v-for="(item, index) in tilesetArray" :name="index" :key="index">
         <template #title>
           <el-tooltip :content="item._url" placement="top" effect="light">
-            <div class="collapse-name">
+            <div class="collapse-name" @click="zoomToTileset(item)">
               {{ item._url }}
             </div>
           </el-tooltip>
@@ -150,10 +151,17 @@ onMounted(() => {
           </el-tooltip>
         </template>
         <div class="card-item">
-          <span>Z轴平面裁剪：</span><el-switch @change="clipping(item)" v-model="item.clippingZ" />
+          <div class="card-label">Z轴平面裁剪：</div>
+          <el-switch @change="clipping(item)" v-model="item.clippingZ" />
         </div>
         <div class="card-item">
-          <span>要素点选：</span><el-switch @change="picking(item)" v-model="item.pickingZ" />
+          <div class="card-label">要素点选：</div>
+          <el-switch @change="picking(item)" v-model="item.pickingZ" />
+        </div>
+        <div class="slider-box">
+          <div class="demonstration">高度：</div>
+          <el-slider v-model="item.heightZ" @input="setPosition(item, undefined, undefined, item.heightZ)" :min="-1000"
+            :max="1000" :step="1" />
         </div>
       </el-collapse-item>
     </el-collapse>
@@ -194,34 +202,16 @@ onMounted(() => {
 
 <style scoped lang="less">
 .box-card {
+  .box-card();
   width: 340px;
-
-  .card-item {
-    display: flex;
-    justify-content: space-between;
-
-    .card-label {
-      display: inline-block;
-      color: #717070;
-    }
-  }
 }
 
-.card-title {
-  display: flex;
-  align-items: center;
-}
 
 .refresh-icon {
   margin-left: 5px;
   cursor: pointer;
 }
 
-.card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
 
 :deep(.el-card__body) {
   padding: 0 20px;

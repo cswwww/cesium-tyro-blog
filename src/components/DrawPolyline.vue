@@ -75,26 +75,7 @@ const polylineDrawer = new PolylineDrawer(getLineCollection);
 <style scoped lang="less">
 .box-card {
   width: 340px;
-
-  .card-item {
-    display: flex;
-    justify-content: space-between;
-
-    .card-label {
-      color: #717070;
-    }
-  }
-
-  .card-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    .card-title {
-      display: flex;
-      align-items: center;
-    }
-  }
+  .box-card();
 }
 
 

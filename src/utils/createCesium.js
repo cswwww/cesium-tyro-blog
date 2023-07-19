@@ -1,6 +1,6 @@
 /*
  * @Date: 2023-02-09 14:57:52
- * @LastEditTime: 2023-07-17 09:06:51
+ * @LastEditTime: 2023-07-19 13:23:06
  * @FilePath: \cesium-tyro-blog\src\utils\createCesium.js
  * @Description: 创建地图单例
  */
@@ -102,18 +102,6 @@ class CesiumMap {
       // this.viewer.scene.globe.undergroundColor = Cesium.Color.TRANSPARENT // 地下色，默认是黑色 Cesium.Color.BLACK
       // this.viewer.scene.globe.showGroundAtmosphere = true//开启地表大气效果
       // this.viewer.scene.globe.atmosphereLightIntensity = 10//设置地表大气亮度
-
-      // 泛光效果
-      const bloom = this.viewer.scene.postProcessStages.bloom;
-      bloom.enabled = false;
-      //设置泛光效果
-      // bloom.uniforms.glowOnly = false;
-      // bloom.uniforms.contrast = 128;
-      // bloom.uniforms.brightness = -0.3;
-      //泛光区域叠加模糊效果
-      // bloom.uniforms.delta = 1;
-      // bloom.uniforms.sigma = 2;
-      // bloom.uniforms.stepSize = 1;
 
       // 自定义光源
       // viewer.scene.light = new Cesium.DirectionalLight({

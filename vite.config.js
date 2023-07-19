@@ -16,6 +16,8 @@ export default defineConfig({
   css: {
     preprocessorOptions: {
       less: {
+        charset: false,
+        additionalData: '@import "./src/style/mixin.less";',
         // modifyVars: {
         //   hack: `true; @import (reference) "${path.resolve("src/assets/css/base.less")}";`,
         // },
