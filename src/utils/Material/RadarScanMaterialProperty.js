@@ -1,6 +1,13 @@
+/*
+ * @Date: 2023-07-19 17:46:24
+ * @LastEditors: ReBeX  420659880@qq.com
+ * @LastEditTime: 2023-07-21 15:21:27
+ * @FilePath: \cesium-tyro-blog\src\utils\Material\RadarScanMaterialProperty.js
+ * @Description: 扫描材质
+ */
 import * as Cesium from 'cesium'
 
-class RadarScanMaterialProperty {
+export default class RadarScanMaterialProperty {
   constructor(options) {
     this._definitionChanged = new Cesium.Event();
     this._color = undefined;
@@ -93,7 +100,12 @@ Cesium.Material._materialCache.addMaterial(Cesium.Material.RadarScanMaterialType
     return true;
   }
 })
+console.log('成功加载雷达扫描材质');
 
-export {
-  RadarScanMaterialProperty
-}
+// ? 如何使用
+// import RadarScanMaterialProperty from '@/utils/Material/RadarScanMaterialProperty.js'
+//
+// material: new RadarScanMaterialProperty({
+//   color: new Cesium.Color(1.0, 1.0, 0.0, 0.2),
+//   speed: 20.0,
+// }),

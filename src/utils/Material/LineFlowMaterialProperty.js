@@ -1,6 +1,13 @@
+/*
+ * @Date: 2023-07-19 11:15:22
+ * @LastEditors: ReBeX  420659880@qq.com
+ * @LastEditTime: 2023-07-21 15:21:13
+ * @FilePath: \cesium-tyro-blog\src\utils\Material\LineFlowMaterialProperty.js
+ * @Description: 流动线材质
+ */
 import * as Cesium from 'cesium'
 
-class LineFlowMaterialProperty {
+export default class LineFlowMaterialProperty {
   constructor(options) {
     this._definitionChanged = new Cesium.Event();
     this._color = undefined;
@@ -94,4 +101,15 @@ Cesium.Material._materialCache.addMaterial(Cesium.Material.LineFlowMaterialType,
     return true;
   }
 })
-console.log('Cesium.Material: ', Cesium.Material);
+console.log('成功加载流动线材质');
+
+
+// ? 如何使用
+// import LineFlowMaterialProperty from '@/utils/Material/LineFlowMaterialProperty.js'
+
+// material: new LineFlowMaterialProperty({
+//   color: new Cesium.Color(1.0, 1.0, 0.0, 0.8),
+//   speed: 15 * Math.random(),
+//   percent: 0.1,
+//   gradient: 0.01
+// })
