@@ -1,9 +1,10 @@
 /*
  * @Date: 2023-07-19 11:15:22
  * @LastEditors: ReBeX  420659880@qq.com
- * @LastEditTime: 2023-07-21 15:21:13
+ * @LastEditTime: 2023-07-24 15:46:11
  * @FilePath: \cesium-tyro-blog\src\utils\Material\LineFlowMaterialProperty.js
- * @Description: 流动线材质
+ * @Description: 飞线材质
+ * 参考：https://blog.csdn.net/weixin_45782925/article/details/123299042
  */
 import * as Cesium from 'cesium'
 
@@ -101,7 +102,7 @@ Cesium.Material._materialCache.addMaterial(Cesium.Material.LineFlowMaterialType,
     return true;
   }
 })
-console.log('成功加载流动线材质');
+console.log('成功加载飞线材质');
 
 
 // ? 如何使用

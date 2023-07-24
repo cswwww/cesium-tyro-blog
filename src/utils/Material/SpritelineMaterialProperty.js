@@ -1,9 +1,10 @@
 /*
  * @Date: 2023-07-20 19:08:08
  * @LastEditors: ReBeX  420659880@qq.com
- * @LastEditTime: 2023-07-21 15:21:02
+ * @LastEditTime: 2023-07-24 15:33:27
  * @FilePath: \cesium-tyro-blog\src\utils\Material\SpritelineMaterialProperty.js
  * @Description: 穿梭线材质
+ * 参考：https://blog.csdn.net/weixin_45782925/article/details/122559827
  */
 import * as Cesium from 'cesium'
 
