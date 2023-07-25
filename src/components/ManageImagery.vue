@@ -1,7 +1,7 @@
 <!--
  * @Date: 2023-06-07 17:33:49
  * @LastEditors: ReBeX  420659880@qq.com
- * @LastEditTime: 2023-07-19 14:24:07
+ * @LastEditTime: 2023-07-25 12:00:44
  * @FilePath: \cesium-tyro-blog\src\components\ManageImagery.vue
  * @Description: 影像图层管理
 -->
@@ -120,13 +120,13 @@ onMounted(() => {
               <Hide v-else />
             </el-icon>
           </el-tooltip>
-          <el-tooltip content="图层上移" placement="bottom" effect="light">
-            <el-icon v-if="index !== 0" class="layer-view" @click.stop="raiseLayer(index)">
+          <el-tooltip v-if="index !== 0" content="图层上移" placement="bottom" effect="light">
+            <el-icon class="layer-view" @click.stop="raiseLayer(index)">
               <Top />
             </el-icon>
           </el-tooltip>
-          <el-tooltip content="图层下移" placement="bottom" effect="light">
-            <el-icon v-if="index !== imageryLayers.length - 1" class="layer-view" @click.stop="lowerLayer(index, item)">
+          <el-tooltip v-if="index !== imageryLayers.length - 1" content="图层下移" placement="bottom" effect="light">
+            <el-icon class="layer-view" @click.stop="lowerLayer(index, item)">
               <Bottom />
             </el-icon>
           </el-tooltip>
