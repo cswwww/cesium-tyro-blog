@@ -1,8 +1,8 @@
 /*
  * @Date: 2023-06-19 19:30:19
  * @LastEditors: ReBeX  420659880@qq.com
- * @LastEditTime: 2023-07-05 16:01:09
- * @FilePath: \cesium-tyro-blog\src\utils\Entity\point.js
+ * @LastEditTime: 2023-07-25 17:32:59
+ * @FilePath: \cesium-tyro-blog\src\utils\Entity\Graphics\point.js
  * @Description: 实体类中点的相关函数
  */
 
@@ -40,32 +40,7 @@ function add(x = 122, y = 23) {
   return entity
 }
 
-/**
- * Registers a screen click event and adds a point to the viewer.
- */
-function draw() {
-  // 注册屏幕点击事件
-  const handler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas)
-  handler.setInputAction(function (event) {
-    // 转换为不包含地形的笛卡尔坐标
-    const clickPosition = viewer.scene.camera.pickEllipsoid(event.position)
-    // 转经纬度（弧度）坐标
-    const radiansPos = Cesium.Cartographic.fromCartesian(clickPosition)
-    // 转角度
-    console.log('经度：' + Cesium.Math.toDegrees(radiansPos.longitude) + ', 纬度：' + Cesium.Math.toDegrees(radiansPos.latitude))
-
-    // 添加点
-    viewer.entities.add({
-      position: clickPosition,
-      point: {
-        color: Cesium.Color.YELLOW,
-        pixelSize: 30
-      }
-    })
-  }, Cesium.ScreenSpaceEventType.LEFT_CLICK)
-}
 
 export {
   add,
-  draw
 }
