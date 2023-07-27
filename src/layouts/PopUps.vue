@@ -1,7 +1,7 @@
 <!--
  * @Date: 2023-06-06 18:31:24
  * @LastEditors: ReBeX  420659880@qq.com
- * @LastEditTime: 2023-07-16 00:42:17
+ * @LastEditTime: 2023-07-27 23:42:16
  * @FilePath: \cesium-tyro-blog\src\layouts\PopUps.vue
  * @Description: 弹出窗口的界面组件
 -->
@@ -33,8 +33,8 @@ onMounted(() => {
 .bar-container {
   display: flex;
   position: fixed;
-  right: 50px;
-  top: 20px;
+  right: 10px;
+  top: 50px;
   background-color: aliceblue;
 }
 </style>
