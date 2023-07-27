@@ -1,6 +1,6 @@
 /*
  * @Date: 2023-02-09 14:57:52
- * @LastEditTime: 2023-07-25 17:25:21
+ * @LastEditTime: 2023-07-27 10:33:21
  * @FilePath: \cesium-tyro-blog\src\utils\createCesium.js
  * @Description: 创建地图单例
  */
@@ -82,7 +82,7 @@ class CesiumMap {
       this.viewer.imageryLayers.removeAll() // 移除所有图层，只显示蓝色地球
 
 
-      // 修改场景环境,关闭相关特效
+      // !修改场景环境,关闭相关特效
       this.viewer.scene.debugShowFramesPerSecond = false// 显示fps
       this.viewer.scene.moon.show = false// 月亮
       this.viewer.scene.sun.show = false// 太阳
@@ -97,26 +97,28 @@ class CesiumMap {
 
       this.viewer.resolutionScale = 1.0// 画面细度，默认值为1.0
 
-      // 地球相关配置
+      // !地球相关配置
       this.viewer.scene.globe.enableLighting = false // 激活基于太阳位置的光照（场景光照
       // this.viewer.scene.globe.baseColor = Cesium.Color.TRANSPARENT // 基础色，默认是蓝色 Cesium.Color.BLUE
       // this.viewer.scene.globe.translucency.enabled = true // 一定要为 true，否则 undergroundColor 设置无效
       // this.viewer.scene.globe.undergroundColor = Cesium.Color.TRANSPARENT // 地下色，默认是黑色 Cesium.Color.BLACK
       // this.viewer.scene.globe.showGroundAtmosphere = true//开启地表大气效果
       // this.viewer.scene.globe.atmosphereLightIntensity = 10//设置地表大气亮度
+      // 开启地形深度检测:
+      // 控制在渲染场景时，相机是否进行深度测试以避免将被遮挡的物体绘制在前景
+      // true: 相机会根据地形高度信息进行深度测试，避免将低于地面的物体绘制在地面之上
+      this.viewer.scene.globe.depthTestAgainstTerrain = true
 
-      // 自定义光源
+      // !自定义光源
       // viewer.scene.light = new Cesium.DirectionalLight({
       //   direction: Cesium.Cartesian3.fromElements(-0.2, -0.5, -0.8),
       //   intensity: 1
       // })
 
-      // 开启地形深度检测:
-      // 控制在渲染场景时，相机是否进行深度测试以避免将被遮挡的物体绘制在前景
-      // true: 相机会根据地形高度信息进行深度测试，避免将低于地面的物体绘制在地面之上
-      this.viewer.scene.globe.depthTestAgainstTerrain = true
-      
+      // ! 其他配置
       // this.viewer.extend(Cesium.viewerCesium3DTilesInspectorMixin); // 监视3D Tiles数据的监视器
+      // this.viewer.cesiumWidget.screenSpaceEventHandler.removeInputAction(Cesium.ScreenSpaceEventType.LEFT_DOUBLE_CLICK); // 取消默认双击事件
+      // this.viewer.camera.setView({ destination: Cesium.Cartesian3.fromDegrees(110.20, 34.55, 3000000) }); // //设置初始位置
 
       viewer = this.viewer
 
