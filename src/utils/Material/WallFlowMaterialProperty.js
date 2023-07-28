@@ -4,6 +4,7 @@
  * @LastEditTime: 2023-07-24 11:55:35
  * @FilePath: \cesium-tyro-blog\src\utils\Material\WallFlowMaterialProperty.js
  * @Description: 流动墙材质
+ * https://blog.csdn.net/wang415229224ye/article/details/119780950
  */
 import * as Cesium from 'cesium'
 
