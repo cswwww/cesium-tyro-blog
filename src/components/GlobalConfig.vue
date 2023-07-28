@@ -1,17 +1,17 @@
 <!--
  * @Date: 2023-06-07 17:33:49
  * @LastEditors: ReBeX  420659880@qq.com
- * @LastEditTime: 2023-07-28 19:22:03
+ * @LastEditTime: 2023-07-28 20:08:57
  * @FilePath: \cesium-tyro-blog\src\components\GlobalConfig.vue
  * @Description: 全局配置组件：场景、地球
 -->
 <script setup>
-import { onMounted, watch } from "vue";
+import { onMounted, watch, onUnmounted } from "vue";
 import EventBus from '@/common/EventBus.js'
 import { ref } from 'vue'
 import { viewer } from "@/utils/createCesium.js";
-import { ElMessage } from 'element-plus'
 import SceneModeSwitch from '@/components/SceneModeSwitch.vue'
+import * as Cesium from 'cesium'
 
 // 发送关闭弹窗的消息
 const close = () => {
@@ -71,11 +71,33 @@ const switchList = ref([
     type: 'enabled', // 对应的属性名
   }
 ])
+const isFullscreen = ref(Cesium.Fullscreen.fullscreen)
 
 const handleSwitch = (item) => {
-  console.log('item: ', item);
   item.bind[item.type] = item.state
 };
+const handleFullscreen = (item) => {
+  if (isFullscreen.value) {
+    const element = document.getElementById('cesiumContainer');
+    Cesium.Fullscreen.requestFullscreen(element);  
+  } else {
+    Cesium.Fullscreen.exitFullscreen();
+  }
+};
+function onFullscreenChange() {
+  if (Cesium.Fullscreen.fullscreen ) {
+    // 全屏状态
+  } else {
+    // 非全屏状态
+    isFullscreen.value = false
+  }
+};
+onMounted(() => {
+  document.addEventListener(Cesium.Fullscreen.changeEventName , onFullscreenChange);
+});
+onUnmounted(() => {
+  document.removeEventListener(Cesium.Fullscreen.changeEventName , onFullscreenChange);
+});
 </script>
 
 <template>
@@ -94,6 +116,10 @@ const handleSwitch = (item) => {
     </template>
     <div style="margin-top: 10px;">
       <SceneModeSwitch />
+      <div class="card-item">
+        <div class="card-label">全屏</div>
+        <el-switch v-model="isFullscreen" @change="handleFullscreen(item)" />
+      </div>
       <div class="card-item" v-for="(item, index) in switchList" :key="index">
         <div class="card-label">{{ item.label }}</div>
         <el-switch v-model="item.state" @change="handleSwitch(item)" />
