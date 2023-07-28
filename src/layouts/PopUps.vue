@@ -1,7 +1,7 @@
 <!--
  * @Date: 2023-06-06 18:31:24
  * @LastEditors: ReBeX  420659880@qq.com
- * @LastEditTime: 2023-07-27 23:42:16
+ * @LastEditTime: 2023-07-28 15:01:46
  * @FilePath: \cesium-tyro-blog\src\layouts\PopUps.vue
  * @Description: 弹出窗口的界面组件
 -->
@@ -34,7 +34,7 @@ onMounted(() => {
   display: flex;
   position: fixed;
   right: 10px;
-  top: 50px;
+  top: 55px;
   background-color: aliceblue;
 }
 </style>

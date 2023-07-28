@@ -1,12 +1,15 @@
 <script setup>
 import { onMounted } from "vue";
 import { CesiumMap, viewer } from "@/utils/createCesium.js";
-import { loadImagery } from "@/utils/ImageryLayer/loadImagery.js";
+import { loadTianditu } from "@/utils/ImageryLayer/loadTianditu.js";
 import ToolBar from "./layouts/ToolBar.vue";
 import PopUps from "./layouts/PopUps.vue";
+// import add from '@/utils/Material/example.js'
 onMounted(() => {
   new CesiumMap("cesiumContainer");
-  loadImagery.cartoVoyager();
+  loadTianditu('img');
+  loadTianditu('cia');
+  // add()
 });
 </script>
 
