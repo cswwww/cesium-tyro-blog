@@ -1,15 +1,17 @@
 /*
  * @Date: 2023-07-28 16:21:53
  * @LastEditors: ReBeX  420659880@qq.com
- * @LastEditTime: 2023-07-28 18:18:34
+ * @LastEditTime: 2023-07-28 19:45:30
  * @FilePath: \cesium-tyro-blog\src\utils\Visualization\roaming.js
  * @Description: 相机漫游效果
+ * import {roaming} from '@/utils/Visualization/roaming.js'
  */
 
 import { viewer } from '@/utils/createCesium.js' // 引入地图对象
 import * as Cesium from 'cesium'
 import { showAllImagery } from '@/utils/ImageryLayer/setImagery.js'
 import darkEarth from '@/assets/images/darkEarth.jpg'
+import { ElMessage } from 'element-plus'
 
 function roaming() {
   let isRoaming = true; // 漫游标志位
@@ -25,6 +27,7 @@ function roaming() {
       url: '/src/assets/images/darkEarth.jpg'
     })
   );
+  bgImglayer.id = '漫游背景底图'
 
   if (!DEFAULT_LIGHTING) {
     viewer.scene.globe.enableLighting = true; // 开启光照
@@ -46,7 +49,7 @@ function roaming() {
     }
     viewer.imageryLayers.remove(bgImglayer, true); // 移除图层
     viewer.clock.multiplier = 1;  // 正常时间流速
-
+    enterMessage.close()
     handler.removeInputAction(Cesium.ScreenSpaceEventType.LEFT_CLICK); // 移除鼠标事件监听
   }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
 
@@ -57,6 +60,11 @@ function roaming() {
       requestAnimationFrame(roamingEvent);
     }
   })()
+  const enterMessage = ElMessage({
+    duration: 0,
+    icon: 'Sunny',
+    message: 'Greetings! 点击地球结束漫游动画，让我们正式进入应用场景！',
+  })
 }
 
 

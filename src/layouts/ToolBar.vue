@@ -1,7 +1,7 @@
 <!--
  * @Date: 2023-06-06 18:31:24
  * @LastEditors: ReBeX  420659880@qq.com
- * @LastEditTime: 2023-07-28 15:37:46
+ * @LastEditTime: 2023-07-28 19:46:06
  * @FilePath: \cesium-tyro-blog\src\layouts\ToolBar.vue
  * @Description: 工具栏界面组件（用来放功能按钮的
 -->
@@ -34,8 +34,8 @@ function showIM(component) {
 <style scoped lang="less">
 .button-group {
   position: fixed;
-  right: 10px;
-  top: 10px;
+  right: 16px;
+  top: 16px;
   display: flex;
   flex-direction: row;
 
