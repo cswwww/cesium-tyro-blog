@@ -1,7 +1,7 @@
 <!--
  * @Date: 2023-06-07 17:33:49
  * @LastEditors: ReBeX  420659880@qq.com
- * @LastEditTime: 2023-07-19 14:14:51
+ * @LastEditTime: 2023-07-28 19:22:03
  * @FilePath: \cesium-tyro-blog\src\components\GlobalConfig.vue
  * @Description: 全局配置组件：场景、地球
 -->
@@ -11,6 +11,7 @@ import EventBus from '@/common/EventBus.js'
 import { ref } from 'vue'
 import { viewer } from "@/utils/createCesium.js";
 import { ElMessage } from 'element-plus'
+import SceneModeSwitch from '@/components/SceneModeSwitch.vue'
 
 // 发送关闭弹窗的消息
 const close = () => {
@@ -71,15 +72,10 @@ const switchList = ref([
   }
 ])
 
-
 const handleSwitch = (item) => {
   console.log('item: ', item);
   item.bind[item.type] = item.state
-}
-
-onMounted(() => {
-  viewer.scene.moon.show = true
-});
+};
 </script>
 
 <template>
@@ -97,11 +93,11 @@ onMounted(() => {
       </div>
     </template>
     <div style="margin-top: 10px;">
+      <SceneModeSwitch />
       <div class="card-item" v-for="(item, index) in switchList" :key="index">
         <div class="card-label">{{ item.label }}</div>
         <el-switch v-model="item.state" @change="handleSwitch(item)" />
       </div>
-      <!-- 主体内容 -->
     </div>
   </el-card>
 </template>
