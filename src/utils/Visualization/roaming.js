@@ -1,7 +1,7 @@
 /*
  * @Date: 2023-07-28 16:21:53
  * @LastEditors: ReBeX  420659880@qq.com
- * @LastEditTime: 2023-07-28 19:45:30
+ * @LastEditTime: 2023-07-30 22:04:35
  * @FilePath: \cesium-tyro-blog\src\utils\Visualization\roaming.js
  * @Description: 相机漫游效果
  * import {roaming} from '@/utils/Visualization/roaming.js'
@@ -13,7 +13,7 @@ import { showAllImagery } from '@/utils/ImageryLayer/setImagery.js'
 import darkEarth from '@/assets/images/darkEarth.jpg'
 import { ElMessage } from 'element-plus'
 
-function roaming() {
+async function roaming() {
   let isRoaming = true; // 漫游标志位
   const DEFAULT_LIGHTING = viewer.scene.globe.enableLighting; // 默认光照状态
   const DEFAULT_SKY_ATMOSPHERE = viewer.scene.skyAtmosphere.show; // 默认光照状态
@@ -22,11 +22,9 @@ function roaming() {
   showAllImagery(false); // 隐藏所有图层
   viewer.clock.multiplier = -2000.0;  // 时间加速！
 
-  bgImglayer = viewer.imageryLayers.addImageryProvider( // 加载背景底图
-    new Cesium.SingleTileImageryProvider({
-      url: '/src/assets/images/darkEarth.jpg'
-    })
-  );
+  const provider = await Cesium.SingleTileImageryProvider.fromUrl('/src/assets/images/darkEarth.jpg')
+
+  bgImglayer = viewer.imageryLayers.addImageryProvider(provider); // 加载背景底图
   bgImglayer.id = '漫游背景底图'
 
   if (!DEFAULT_LIGHTING) {

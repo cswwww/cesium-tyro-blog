@@ -1,8 +1,8 @@
 <!--
  * @Date: 2023-06-07 17:33:49
  * @LastEditors: ReBeX  420659880@qq.com
- * @LastEditTime: 2023-07-30 22:48:59
- * @FilePath: \cesium-tyro-blog\src\template\FunctionCard.vue
+ * @LastEditTime: 2023-07-30 22:59:43
+ * @FilePath: \cesium-tyro-blog\src\components\MeasureTool.vue
  * @Description: 管理
 -->
 <script setup>
@@ -11,12 +11,16 @@ import EventBus from '@/common/EventBus.js'
 import { ref } from 'vue'
 import { viewer } from "@/utils/createCesium.js";
 import { ElMessage } from 'element-plus'
+import { pickCursor } from '@/utils/Event/cursorEvent.js'
+
+const radio = ref(3)
 
 // 发送关闭弹窗的消息
 const close = () => {
   EventBus.emit('PopUps', false)
 }
 onMounted(() => {
+  pickCursor()
 });
 </script>
 
@@ -25,7 +29,7 @@ onMounted(() => {
   <el-card class="box-card">
     <template #header>
       <div class="card-header">
-        <div class="card-title">标题内容</div>
+        <div class="card-title">测量工具</div>
         <div>
           <el-button class="button" text @click="close">
             <el-icon>
@@ -37,6 +41,12 @@ onMounted(() => {
     </template>
     <div>
       <!-- 主体内容 -->
+      <el-radio-group v-model="radio" class="measure-group">
+        <el-radio disabled :label="3">坐标拾取</el-radio>
+        <el-radio disabled :label="6">距离测量</el-radio>
+        <el-radio disabled :label="9">面积测量</el-radio>
+        <el-radio disabled :label="9">三角测量</el-radio>
+      </el-radio-group>
     </div>
   </el-card>
 </template>
@@ -47,6 +57,12 @@ onMounted(() => {
   width: 340px;
 }
 
+.measure-group {
+  flex-direction: column;
+  :deep(.el-radio:last-child) {
+    margin-right: auto;
+  }
+}
 :deep(.el-card__body) {
   padding: 0 20px;
 }
