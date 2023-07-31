@@ -1,7 +1,7 @@
 <!--
  * @Date: 2023-06-07 17:33:49
  * @LastEditors: ReBeX  420659880@qq.com
- * @LastEditTime: 2023-07-31 18:49:02
+ * @LastEditTime: 2023-07-31 23:05:40
  * @FilePath: \cesium-tyro-blog\src\components\MeasureTool.vue
  * @Description: 测量工具
 -->
@@ -12,25 +12,28 @@ import { ref } from 'vue'
 import { viewer } from "@/utils/createCesium.js";
 import { ElMessage } from 'element-plus'
 import { pickCursor } from '@/utils/Event/cursorEvent.js'
-import { coordinatePicker } from '@/utils/Widgets/measureTool.js'
-
-const radio = ref(0)
+import { MeasureTool } from '@/utils/Widgets/measureTool.js'
+const radio = ref(3)
+let measureTool
 
 // 发送关闭弹窗的消息
 const close = () => {
   EventBus.emit('PopUps', false)
 }
+const toolSwitch = () => {
+  if (radio.value = 3) {
+    measureTool.coordinatePicker()
+  }
+}
 onMounted(() => {
+  measureTool = new MeasureTool()
+  toolSwitch()
 });
 onUnmounted(() => {
   pickCursor(false)
 });
 
-const toolSwitch = () => {
-  if (radio.value = 3) {
-    pickCursor()
-  }
-}
+
 </script>
 
 <template>
