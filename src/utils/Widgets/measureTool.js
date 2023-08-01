@@ -1,7 +1,7 @@
 /*
  * @Date: 2023-07-31 12:28:08
  * @LastEditors: ReBeX  420659880@qq.com
- * @LastEditTime: 2023-08-01 19:52:27
+ * @LastEditTime: 2023-08-01 23:22:54
  * @FilePath: \cesium-tyro-blog\src\utils\Widgets\measureTool.js
  * @Description: 测量工具
  * import { CoordinatePicker } from '@/utils/Widgets/measureTool.js'
@@ -177,22 +177,17 @@ class MeasureDistance {
     // 事件：鼠标移动
     this.moveHandler.setInputAction(event => {
       _coordsTransform(event, (cartesian) => {
-        console.log('cartesian: ', cartesian);
-        // if (pointList.length > 0) {
-        //   pointList.pop();
-        //   pointList.push(cartesian);
-        // }
+        if (pointList.length > 0) {
+          pointList.pop();
+          pointList.push(cartesian);
+        }
       })
     }, Cesium.ScreenSpaceEventType.MOUSE_MOVE);
 
     // 事件：完成绘制
     this.finHandler.setInputAction(event => {
-      if (pointList.length < 2) { // 一个节点都没添加
+      if (pointList.length < 2) { // 如果点击了一次，就会马上创建点和线，那么就需要清除掉最末的entity，否则会污染数据集
         alert('请至少选2个点')
-      } else if (pointList.length < 3) { // 如果点击了一次，就会马上创建点和线，那么就需要清除掉最末的entity，否则会污染数据集
-        alert('请至少选2个点')
-        this.nodeCollection.entities.remove(this.nodeCollection.entities.values[this.nodeCollection.entities.values.length - 1]);
-        this.lineCollection.entities.remove(this.lineCollection.entities.values[this.lineCollection.entities.values.length - 1]);
       }
       this.stop()
       this.start()
