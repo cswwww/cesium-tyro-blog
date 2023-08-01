@@ -1,7 +1,7 @@
 <!--
  * @Date: 2023-06-07 17:33:49
  * @LastEditors: ReBeX  420659880@qq.com
- * @LastEditTime: 2023-07-31 23:05:40
+ * @LastEditTime: 2023-08-01 19:21:57
  * @FilePath: \cesium-tyro-blog\src\components\MeasureTool.vue
  * @Description: 测量工具
 -->
@@ -12,25 +12,35 @@ import { ref } from 'vue'
 import { viewer } from "@/utils/createCesium.js";
 import { ElMessage } from 'element-plus'
 import { pickCursor } from '@/utils/Event/cursorEvent.js'
-import { MeasureTool } from '@/utils/Widgets/measureTool.js'
+import { CoordinatePicker, MeasureDistance } from '@/utils/Widgets/measureTool.js'
 const radio = ref(3)
-let measureTool
+let coordinatePicker
+let distance
 
 // 发送关闭弹窗的消息
 const close = () => {
   EventBus.emit('PopUps', false)
 }
 const toolSwitch = () => {
-  if (radio.value = 3) {
-    measureTool.coordinatePicker()
+  clear()
+  if (radio.value === 3) {
+    coordinatePicker.start()
+  } else if (radio.value === 6) {
+    distance.start()
   }
 }
+const clear = () => {
+  coordinatePicker.destroy()
+  distance.destroy()
+}
+
 onMounted(() => {
-  measureTool = new MeasureTool()
+  coordinatePicker = new CoordinatePicker()
+  distance = new MeasureDistance()
   toolSwitch()
 });
 onUnmounted(() => {
-  pickCursor(false)
+  clear()
 });
 
 
@@ -43,6 +53,11 @@ onUnmounted(() => {
       <div class="card-header">
         <div class="card-title">测量工具</div>
         <div>
+          <el-button class="button" text @click="clear">
+            <el-icon>
+              <Delete />
+            </el-icon>
+          </el-button>
           <el-button class="button" text @click="close">
             <el-icon>
               <Close />
@@ -55,7 +70,7 @@ onUnmounted(() => {
       <!-- 主体内容 -->
       <el-radio-group @change="toolSwitch" v-model="radio" class="measure-group">
         <el-radio :label="3">坐标拾取</el-radio>
-        <el-radio disabled :label="6">距离测量</el-radio>
+        <el-radio :label="6">距离测量</el-radio>
         <el-radio disabled :label="9">面积测量</el-radio>
         <el-radio disabled :label="9">三角测量</el-radio>
       </el-radio-group>

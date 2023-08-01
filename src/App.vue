@@ -13,8 +13,7 @@ onMounted(() => {
   loadImagery.cartoVoyager();
   // loadTianditu('img');
   // loadTianditu('cia');
-  roaming() // 开启入场漫游
-
+  // roaming() // 开启入场漫游
 });
 </script>
 
