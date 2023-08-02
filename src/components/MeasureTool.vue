@@ -1,7 +1,7 @@
 <!--
  * @Date: 2023-06-07 17:33:49
  * @LastEditors: ReBeX  420659880@qq.com
- * @LastEditTime: 2023-08-01 19:21:57
+ * @LastEditTime: 2023-08-02 14:34:52
  * @FilePath: \cesium-tyro-blog\src\components\MeasureTool.vue
  * @Description: 测量工具
 -->
@@ -11,7 +11,6 @@ import EventBus from '@/common/EventBus.js'
 import { ref } from 'vue'
 import { viewer } from "@/utils/createCesium.js";
 import { ElMessage } from 'element-plus'
-import { pickCursor } from '@/utils/Event/cursorEvent.js'
 import { CoordinatePicker, MeasureDistance } from '@/utils/Widgets/measureTool.js'
 const radio = ref(3)
 let coordinatePicker
@@ -22,7 +21,8 @@ const close = () => {
   EventBus.emit('PopUps', false)
 }
 const toolSwitch = () => {
-  clear()
+  coordinatePicker.destroy()
+  distance.destroy()
   if (radio.value === 3) {
     coordinatePicker.start()
   } else if (radio.value === 6) {
@@ -30,8 +30,8 @@ const toolSwitch = () => {
   }
 }
 const clear = () => {
-  coordinatePicker.destroy()
-  distance.destroy()
+  coordinatePicker.clear()
+  distance.clear()
 }
 
 onMounted(() => {
@@ -40,7 +40,8 @@ onMounted(() => {
   toolSwitch()
 });
 onUnmounted(() => {
-  clear()
+  coordinatePicker.destroy()
+  distance.destroy()
 });
 
 
