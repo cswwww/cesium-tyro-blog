@@ -1,7 +1,7 @@
 /*
  * @Date: 2023-07-31 12:28:08
  * @LastEditors: ReBeX  420659880@qq.com
- * @LastEditTime: 2023-08-02 19:54:33
+ * @LastEditTime: 2023-08-02 21:54:24
  * @FilePath: \cesium-tyro-blog\src\utils\Widgets\measureTool.js
  * @Description: 测量工具
  * import { CoordinatePicker } from '@/utils/Widgets/measureTool.js'
@@ -200,6 +200,8 @@ class MeasureDistance {
 
       _coordsTransform(event, (cartesian) => {
         this.nodeCollection.entities.add(this.createNodePoint(cartesian)); // 绘制节点
+        this.labelCollection.entities.add(this.createNodeLabel(cartesian)); // 绘制节点
+
         pointList.push(cartesian);
         // 绘制动态线：首次点击后触发
         if (pointList.length === 1) {
@@ -210,8 +212,6 @@ class MeasureDistance {
           const dynamicPositions = new Cesium.CallbackProperty(() => pointList, false);
           this.lineCollection.entities.add(this.createNormalLine(dynamicPositions)) // 绘制线
         }
-        // this.labelCollection.entities.add(this.createNodeLabel(cartesian)); // 绘制节点
-        console.log('this.createNodeLabel(cartesian): ', this.createNodeLabel(cartesian));
       })
     }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
 
@@ -293,22 +293,22 @@ class MeasureDistance {
     const label = viewer.entities.add({
       position: cartesian,
       label: {
-        text: 0,
+        text: this.distance ? (this.distance).toFixed(2) +'米' : '起点',
         pixelOffset: new Cesium.Cartesian2(0, -20), // 在点的上方偏移
         heightReference: Cesium.HeightReference.CLAMP_TO_GROUND,
-        font: "24px Helvetica",
+        // font: "24px Helvetica",
         // FILL	填充；OUTLINE 只显示边框；FILL_AND_OUTLINE 既有填充又有边框
         style: Cesium.LabelStyle.FILL_AND_OUTLINE,
-        scale: 1.0,
-        showBackground: true,
-        backgroundColor: Cesium.Color.BLUE,
-        backgroundPadding: new Cesium.Cartesian2(7, 5),
+        // scale: 1.0,
+        // showBackground: true,
+        // backgroundColor: Cesium.Color.BLUE,
+        // backgroundPadding: new Cesium.Cartesian2(7, 5),
         eyeOffset: Cesium.Cartesian3.ZERO,
-        horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
-        verticalOrigin: Cesium.VerticalOrigin.CENTER,
-        fillColor: Cesium.Color.SKYBLUE,
-        outlineColor: Cesium.Color.BLACK,
-        outlineWidth: 2,
+        // horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
+        // verticalOrigin: Cesium.VerticalOrigin.CENTER,
+        // fillColor: Cesium.Color.SKYBLUE,
+        // outlineColor: Cesium.Color.BLACK,
+        // outlineWidth: 2,
         disableDepthTestDistance: Number.POSITIVE_INFINITY,
       },
     });
