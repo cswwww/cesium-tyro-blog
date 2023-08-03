@@ -1,7 +1,7 @@
 /*
  * @Date: 2023-07-05 16:47:45
  * @LastEditors: ReBeX  420659880@qq.com
- * @LastEditTime: 2023-07-13 15:51:45
+ * @LastEditTime: 2023-08-03 19:59:21
  * @FilePath: \cesium-tyro-blog\src\utils\Event\pickEvent.js
  * @Description: 一些获取事件
  * import { rayCoords } from '@/utils/Event/pickEvent.js'
@@ -77,7 +77,7 @@ function clickToPick(callback) {
   }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
 }
 
-// 获取地形表面经纬度和高度
+// 获取地形表面经纬度和高程：地标坐标
 function rayCoords(eventType = 'LEFT_CLICK', callback) {
   const handler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas); // 交互句柄
   handler.setInputAction((event) => {
@@ -91,7 +91,7 @@ function rayCoords(eventType = 'LEFT_CLICK', callback) {
   }, Cesium.ScreenSpaceEventType[eventType]);
 }
 
-// 获取椭球体表面的经纬度
+// 获取椭球体表面的经纬度：世界坐标（Cartesian3）
 function ellipsoidCoords(eventType = 'LEFT_CLICK', callback) {
   const handler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas); // 交互句柄
   handler.setInputAction((event) => {
@@ -104,9 +104,34 @@ function ellipsoidCoords(eventType = 'LEFT_CLICK', callback) {
   }, Cesium.ScreenSpaceEventType[eventType]);
 }
 
+
+// 获取倾斜摄影或模型点击处的坐标：场景坐标
+// ! 只有在开启地形深度检测，且不使用默认地形时是准确的
+function modelCoords(eventType = 'LEFT_CLICK', callback) {
+  const handler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas); // 交互句柄
+  handler.setInputAction((event) => {
+    const cartesian = viewer.scene.pickPosition(event.position || event.endPosition);
+    if (Cesium.defined(cartesian)) {
+      console.log('cartesian: ', cartesian);
+      callback?.(cartesian);
+    }
+  }, Cesium.ScreenSpaceEventType[eventType]);
+}
+
+// 获取点击处屏幕坐标 ：屏幕坐标（鼠标点击位置距离canvas左上角的像素值）
+function screenCoords(eventType = 'LEFT_CLICK', callback) {
+  var handler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas);
+  handler.setInputAction(function (movement) {
+    console.log(movement.position);
+  }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
+}
+
+
 export {
   getDefaultClickEvent,
   clickToPick,
   rayCoords,
-  ellipsoidCoords
+  ellipsoidCoords,
+  modelCoords,
+  screenCoords
 }

@@ -1,6 +1,6 @@
 /*
  * @Date: 2023-02-09 14:57:52
- * @LastEditTime: 2023-07-27 10:33:21
+ * @LastEditTime: 2023-08-03 20:33:26
  * @FilePath: \cesium-tyro-blog\src\utils\createCesium.js
  * @Description: 创建地图单例
  */
@@ -25,7 +25,7 @@ const viewerOption = {
   navigationHelpButton: false, // 是否显示右上角的帮助按钮
   sceneModePicker: false, // 是否显示3D/2D选择器: scene3DOnly为false时才可用
   selectionIndicator: false, // 是否显示选取指示器组件
-  timeline: false, // 是否显示时间轴
+  timeline: true, // 是否显示时间轴
   vrButton: false, // vr模式
 
   // ! Scene
