@@ -19,7 +19,7 @@ import RadarScanMaterialProperty from '@/utils/Material/RadarScanMaterialPropert
 
 // import {addRadar} from '@/utils/Visualization/radarScan.js'
 function addRadar() {
-  let rader = viewer.entities.add({
+  const rader = viewer.entities.add({
     position: Cesium.Cartesian3.fromDegrees(113.9236839, 22.528061),
     name: '雷达扫描',
     ellipse: {
@@ -27,7 +27,7 @@ function addRadar() {
       semiMinorAxis: 1000.0,
       material: new RadarScanMaterialProperty({
         color: new Cesium.Color(1.0, 1.0, 0.0, 0.2),
-        speed: 20.0,
+        speed: 20.0
       }),
       height: 60,
       heightReference: Cesium.HeightReference.RELATIVE_TO_GROUND,
@@ -54,4 +54,4 @@ function addRadar() {
 
 export {
   addRadar
-} 
+}

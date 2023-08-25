@@ -6,10 +6,10 @@
  * @Description: 影像图层管理
 -->
 <script setup>
-import { onMounted, watch } from "vue";
+import { onMounted, watch } from 'vue'
 import EventBus from '@/common/EventBus.js'
 import { ref } from 'vue'
-import { viewer } from "@/utils/createCesium.js";
+import { viewer } from '@/utils/createCesium.js'
 import { ElMessage } from 'element-plus'
 import { loadTianditu, layerKey } from '@/utils/ImageryLayer/loadTianditu.js'
 
@@ -19,7 +19,7 @@ const activeNames2 = ref(['1']) // 天地图折叠面板激活的列表项
 const imageryLayers = ref([]) // 图层集信息
 const isRotating = ref(false) // 刷新按钮转不转
 const showAdd = ref(false) // 是否激活添加图层界面
-const checked1 = ref([]) //选项
+const checked1 = ref([]) // 选项
 
 // 发送关闭弹窗的消息
 const close = () => {
@@ -32,13 +32,13 @@ const add = () => {
   checked1.value = []
 }
 const addChange = () => {
-  console.log(checked1);
+  console.log(checked1)
 }
 // 确认新增
 const confirm = () => {
   for (let i = 0; i < checked1.value.length; i++) {
-    const ele = checked1.value[i];
-    console.log('ele: ', ele);
+    const ele = checked1.value[i]
+    console.log('ele: ', ele)
     loadTianditu(ele)
   }
   add() // 返回图层列表界面
@@ -47,16 +47,16 @@ const confirm = () => {
 
 // 刷新图层列表
 const refresh = () => {
-  isRotating.value = true;
+  isRotating.value = true
   activeNames.value = 99
   setTimeout(() => {
-    isRotating.value = false;
-  }, 1000); // 控制旋转的时间，1 秒钟
+    isRotating.value = false
+  }, 1000) // 控制旋转的时间，1 秒钟
 
-  const layers = viewer.imageryLayers;
+  const layers = viewer.imageryLayers
   imageryLayers.value = []
   for (let i = 0; i < layers.length; i++) {
-    imageryLayers.value.push(layers.get(i));
+    imageryLayers.value.push(layers.get(i))
     // for(const key in layers.get(i).defaultOption) {
     //   imageryLayers.value[i][key] = layers.get(i).defaultOption[key]
     // }
@@ -72,7 +72,7 @@ const showLayer = (layer) => {
 // 在视图上，将图层上移一层（本质上是将图层序号降低,序号低的在底层
 const raiseLayer = (index) => {
   const layer = viewer.imageryLayers.get(index)
-  viewer.imageryLayers.lower(layer);
+  viewer.imageryLayers.lower(layer)
   refresh()
 }
 
@@ -85,7 +85,7 @@ const lowerLayer = (index, item) => {
 
 onMounted(() => {
   refresh()
-});
+})
 </script>
 
 <template>
@@ -208,12 +208,10 @@ onMounted(() => {
   .box-card();
 }
 
-
 .refresh-icon {
   margin-left: 5px;
   cursor: pointer;
 }
-
 
 :deep(.el-card__body) {
   padding: 0 20px;

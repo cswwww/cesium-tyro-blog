@@ -1,11 +1,11 @@
 import { ref, markRaw, onMounted } from 'vue'
 
 // 功能组件
-import ManageImagery from '../components/ManageImagery.vue';
-import ManageTileset from '../components/ManageTileset.vue';
-import GlobalConfig from '../components/GlobalConfig.vue';
-import DrawPolyline from '../components/DrawPolyline.vue';
-import MeasureTool from '../components/MeasureTool.vue';
+import ManageImagery from '../components/ManageImagery.vue'
+import ManageTileset from '../components/ManageTileset.vue'
+import GlobalConfig from '../components/GlobalConfig.vue'
+import DrawPolyline from '../components/DrawPolyline.vue'
+import MeasureTool from '../components/MeasureTool.vue'
 
 // 图标图片：SuperMap GIS产品彩色系功能图标库
 // https://www.iconfont.cn/collections/detail?spm=a313x.7781069.0.da5a778a4&cid=32519

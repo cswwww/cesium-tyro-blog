@@ -20,13 +20,13 @@ import * as Cesium from 'cesium'
 
 function showAllImagery(boolean = true) {
   // 获取图像图层集合
-  const imageryLayers = viewer.imageryLayers;
+  const imageryLayers = viewer.imageryLayers
 
   // 遍历图像图层并隐藏它们
-  let numLayers = imageryLayers.length;
+  const numLayers = imageryLayers.length
   for (let i = 0; i < numLayers; i++) {
-    const layer = imageryLayers.get(i); // 获取图像图层对象
-    layer.show = boolean; // 设置图像图层隐藏
+    const layer = imageryLayers.get(i) // 获取图像图层对象
+    layer.show = boolean // 设置图像图层隐藏
   }
 }
 

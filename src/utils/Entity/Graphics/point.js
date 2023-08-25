@@ -17,10 +17,10 @@ import * as Cesium from 'cesium'
  * @return {Entity} The newly created point entity.
  */
 function add(x = 122, y = 23) {
-  const position = Cesium.Cartesian3.fromDegrees(x, y);
+  const position = Cesium.Cartesian3.fromDegrees(x, y)
   const options = {
     show: true,
-    pixelSize: 10, // 像素大小，默认: 1 
+    pixelSize: 10, // 像素大小，默认: 1
     heightReference: Cesium.HeightReference.NONE, // 表示相对于地形的位置
     color: Cesium.Color.SKYBLUE, // 默认: 白
     outlineColor: Cesium.Color.BLACK, // 边框颜色,默认: 黑
@@ -30,17 +30,16 @@ function add(x = 122, y = 23) {
     // distanceDisplayCondition: new Cesium.DistanceDisplayCondition(0,2.0e3), // 在指定距离区间内可见
     // 获取或设置与相机的距离，在深度处禁用深度测试
     // 设置为零时，将始终应用深度测试。设置为Number.POSITIVE_INFINITY时，永远不会应用深度测试。
-    disableDepthTestDistance: Number.POSITIVE_INFINITY,
+    disableDepthTestDistance: Number.POSITIVE_INFINITY
   }
   const entity = viewer.entities.add({
     position,
     point: options
-  });
-  viewer.zoomTo(entity);
+  })
+  viewer.zoomTo(entity)
   return entity
 }
 
-
 export {
-  add,
+  add
 }

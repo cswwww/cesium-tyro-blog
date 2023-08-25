@@ -1,19 +1,19 @@
 // https://www.bilibili.com/video/BV1Qg4y137Zp/?spm_id_from=333.788&vd_source=814c2ce816d31f8a2d3129e05764f50c
 
-export const dynamicPoint = [//pocket
-  //必须的节点，document
+export const dynamicPoint = [// pocket
+  // 必须的节点，document
   {
-    id: "document",
-    name: "CZML Point - Time Dynamic",
-    version: "1.0",
+    id: 'document',
+    name: 'CZML Point - Time Dynamic',
+    version: '1.0',
     clock: {
-      interval: "2012-08-04T16:00:00Z/2012-08-04T16:00:59Z",
-      currentTime: "2012-08-04T16:00:00",
+      interval: '2012-08-04T16:00:00Z/2012-08-04T16:00:59Z',
+      currentTime: '2012-08-04T16:00:00'
       // multiplier: 10,
-    },
+    }
   },
   {
-    id: "point",
+    id: 'point',
     // availability: "2012-08-04T16:00:00Z/2012-08-04T16:05:00Z",
     position: {
       // epoch: "2012-08-04T16:00:00Z",
@@ -33,21 +33,21 @@ export const dynamicPoint = [//pocket
         '2012-08-04T16:00:59Z',
         -98,
         52,
-        150000,
-      ],
+        150000
+      ]
     },
     point: {
       color: {
-        rgba: [255, 255, 255, 128],
+        rgba: [255, 255, 255, 128]
       },
       outlineColor: {
-        rgba: [255, 0, 0, 128],
+        rgba: [255, 0, 0, 128]
       },
       outlineWidth: 3,
-      pixelSize: 15,
+      pixelSize: 15
     },
     properties: {
-      //interval方式
+      // interval方式
       // height: [
       //     {
       //         interval: "2012-08-04T16:00:00Z/2012-08-04T16:00:10Z",
@@ -59,13 +59,13 @@ export const dynamicPoint = [//pocket
       //     },
       // ]
 
-      //sample方式
+      // sample方式
       height: {
         number: [
-          "2012-08-04T16:00:00Z", 5,
-          "2012-08-04T16:00:59Z", 6
+          '2012-08-04T16:00:00Z', 5,
+          '2012-08-04T16:00:59Z', 6
         ]
-      },
+      }
 
       // position: {
       //     cartesian: [
@@ -74,7 +74,6 @@ export const dynamicPoint = [//pocket
       //         600, 1369743.14695017, -1903662.23809705, -6663952.07552171
       //     ]
       // }
-
 
       // testRGB: [
       //     {
@@ -87,5 +86,5 @@ export const dynamicPoint = [//pocket
       //     },
       // ]
     }
-  },
+  }
 ]

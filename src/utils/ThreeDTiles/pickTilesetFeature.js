@@ -18,22 +18,22 @@ let handler
  * @return {void}
  */
 function getClickFeature(callback) {
-  let feature = null; // 选中的要素对象
+  let feature = null // 选中的要素对象
 
-  handler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas); // 交互句柄
+  handler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas) // 交互句柄
   handler.setInputAction((click) => {
     if (feature) {
-      feature.color = Cesium.Color.WHITE; // 将上次选中的要素的颜色重置
+      feature.color = Cesium.Color.WHITE // 将上次选中的要素的颜色重置
     }
-    feature = viewer.scene.pick(click.position); // 拾取要素， returns a Cesium3DTileFeature object.
-    
+    feature = viewer.scene.pick(click.position) // 拾取要素， returns a Cesium3DTileFeature object.
+
     if (!Cesium.defined(feature)) return
 
     if (feature instanceof Cesium.Cesium3DTileFeature) {
-      feature.color = Cesium.Color.YELLOW;
+      feature.color = Cesium.Color.YELLOW
     }
-    callback?.(feature); // 将选中的要素暴露给回调函数
-  }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
+    callback?.(feature) // 将选中的要素暴露给回调函数
+  }, Cesium.ScreenSpaceEventType.LEFT_CLICK)
 }
 
 function removeClickFeature(callback) {

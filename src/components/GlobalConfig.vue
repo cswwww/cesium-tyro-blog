@@ -6,10 +6,10 @@
  * @Description: 全局配置组件：场景、地球
 -->
 <script setup>
-import { onMounted, watch, onUnmounted } from "vue";
+import { onMounted, watch, onUnmounted } from 'vue'
 import EventBus from '@/common/EventBus.js'
 import { ref } from 'vue'
-import { viewer } from "@/utils/createCesium.js";
+import { viewer } from '@/utils/createCesium.js'
 import SceneModeSwitch from '@/components/SceneModeSwitch.vue'
 import * as Cesium from 'cesium'
 
@@ -23,81 +23,81 @@ const switchList = ref([
     label: '显示fps',
     state: viewer.scene.debugShowFramesPerSecond, // 状态
     bind: viewer.scene, // 对应的对象
-    type: 'debugShowFramesPerSecond', // 对应的属性名
+    type: 'debugShowFramesPerSecond' // 对应的属性名
   }, {
     label: 'HDR效果',
     state: viewer.scene.highDynamicRange, // 状态
     bind: viewer.scene, // 对应的对象
-    type: 'highDynamicRange', // 对应的属性名
+    type: 'highDynamicRange' // 对应的属性名
   }, {
     label: '月亮',
     state: viewer.scene.moon.show, // 状态
     bind: viewer.scene.moon, // 对应的对象
-    type: 'show', // 对应的属性名
+    type: 'show' // 对应的属性名
   }, {
     label: '太阳',
     state: viewer.scene.sun.show, // 状态
     bind: viewer.scene.sun, // 对应的对象
-    type: 'show', // 对应的属性名
+    type: 'show' // 对应的属性名
   }, {
     label: '天空盒',
     state: viewer.scene.skyBox.show, // 状态
     bind: viewer.scene.skyBox, // 对应的对象
-    type: 'show', // 对应的属性名
+    type: 'show' // 对应的属性名
   }, {
     label: '天空大气',
     state: viewer.scene.skyAtmosphere.show, // 状态
     bind: viewer.scene.skyAtmosphere, // 对应的对象
-    type: 'show', // 对应的属性名
+    type: 'show' // 对应的属性名
   }, {
     label: '雾',
     state: viewer.scene.fog.enabled, // 状态
     bind: viewer.scene.fog, // 对应的对象
-    type: 'enabled', // 对应的属性名
+    type: 'enabled' // 对应的属性名
   }, {
     label: '昼夜',
     state: viewer.scene.globe.enableLighting, // 状态
     bind: viewer.scene.globe, // 对应的对象
-    type: 'enableLighting', // 对应的属性名
+    type: 'enableLighting' // 对应的属性名
   }, {
     label: '地表大气',
     state: viewer.scene.globe.showGroundAtmosphere, // 状态
     bind: viewer.scene.globe, // 对应的对象
-    type: 'showGroundAtmosphere', // 对应的属性名
+    type: 'showGroundAtmosphere' // 对应的属性名
   }, {
     label: '泛光效果',
     state: viewer.scene.postProcessStages.bloom.enabled, // 状态
     bind: viewer.scene.postProcessStages.bloom, // 对应的对象
-    type: 'enabled', // 对应的属性名
+    type: 'enabled' // 对应的属性名
   }
 ])
 const isFullscreen = ref(Cesium.Fullscreen.fullscreen)
 
 const handleSwitch = (item) => {
   item.bind[item.type] = item.state
-};
+}
 const handleFullscreen = (item) => {
   if (isFullscreen.value) {
-    const element = document.getElementById('cesiumContainer');
-    Cesium.Fullscreen.requestFullscreen(element);  
+    const element = document.getElementById('cesiumContainer')
+    Cesium.Fullscreen.requestFullscreen(element)
   } else {
-    Cesium.Fullscreen.exitFullscreen();
+    Cesium.Fullscreen.exitFullscreen()
   }
-};
+}
 function onFullscreenChange() {
-  if (Cesium.Fullscreen.fullscreen ) {
+  if (Cesium.Fullscreen.fullscreen) {
     // 全屏状态
   } else {
     // 非全屏状态
     isFullscreen.value = false
   }
-};
+}
 onMounted(() => {
-  document.addEventListener(Cesium.Fullscreen.changeEventName , onFullscreenChange);
-});
+  document.addEventListener(Cesium.Fullscreen.changeEventName, onFullscreenChange)
+})
 onUnmounted(() => {
-  document.removeEventListener(Cesium.Fullscreen.changeEventName , onFullscreenChange);
-});
+  document.removeEventListener(Cesium.Fullscreen.changeEventName, onFullscreenChange)
+})
 </script>
 
 <template>

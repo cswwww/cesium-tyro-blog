@@ -9,8 +9,8 @@
 import { ref, onMounted } from 'vue'
 import { splitImagery } from '@/utils/ImageryLayer/splitImagery.js'
 
-let flag = ref(1)
-let splitInstance = ref(0)
+const flag = ref(1)
+const splitInstance = ref(0)
 
 function action() {
   if (flag.value) {

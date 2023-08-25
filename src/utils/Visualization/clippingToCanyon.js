@@ -12,9 +12,9 @@ export function loadGrandCanyon() {
   // Pick a position at the Grand Canyon
   const position = Cesium.Cartographic.toCartesian(
     new Cesium.Cartographic.fromDegrees(-113.2665534, 36.0939345, 100)
-  );
-  const distance = 3000.0;
-  const boundingSphere = new Cesium.BoundingSphere(position, distance);
+  )
+  const distance = 3000.0
+  const boundingSphere = new Cesium.BoundingSphere(position, distance)
 
   viewer.scene.globe.clippingPlanes = new Cesium.ClippingPlaneCollection({
     modelMatrix: Cesium.Transforms.eastNorthUpToFixedFrame(position),
@@ -34,19 +34,19 @@ export function loadGrandCanyon() {
       new Cesium.ClippingPlane(
         new Cesium.Cartesian3(0.0, -1.0, 0.0),
         distance
-      ),
+      )
     ],
     unionClippingRegions: true,
     edgeWidth: 1.0, // 0.0,
     edgeColor: Cesium.Color.WHITE,
-    enabled: true,
-  });
-  viewer.scene.globe.backFaceCulling = false;
-  viewer.scene.globe.showSkirts = false;
+    enabled: true
+  })
+  viewer.scene.globe.backFaceCulling = false
+  viewer.scene.globe.showSkirts = false
 
   viewer.camera.viewBoundingSphere(
     boundingSphere,
     new Cesium.HeadingPitchRange(0.5, -0.5, boundingSphere.radius * 5.0)
-  );
-  viewer.camera.lookAtTransform(Cesium.Matrix4.IDENTITY);
+  )
+  viewer.camera.lookAtTransform(Cesium.Matrix4.IDENTITY)
 }

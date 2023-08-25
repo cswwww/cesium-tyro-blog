@@ -10,7 +10,7 @@ import { viewer } from '@/utils/createCesium.js' // 引入地图对象
 import * as Cesium from 'cesium'
 
 function add() {
-  const options ={
+  const options = {
     show: true,
     // 指定PolygonHierarchy
     hierarchy: Cesium.Cartesian3.fromDegreesArray([
@@ -23,7 +23,7 @@ function add() {
       -102.0,
       31.0,
       -102.0,
-      35.0,
+      35.0
     ]),
     height: 0, // 多边形相对于椭球面的高度
     heightReference: Cesium.HeightReference.NONE,
@@ -35,7 +35,7 @@ function add() {
     material: Cesium.Color.RED, // Cesium.Color.fromRandom({ alpha: 1.0 })
     outline: false,
     outlineColor: Cesium.Color.BLACK,
-    outlineWidth: 1.0,  // 有些电脑outlineWidth为大于1的值时，将不起作用，参考：https://blog.csdn.net/u014556081/article/details/114305047
+    outlineWidth: 1.0, // 有些电脑outlineWidth为大于1的值时，将不起作用，参考：https://blog.csdn.net/u014556081/article/details/114305047
     perPositionHeight: false, // 是否使用每个位置的高度
 
     closeTop: true, // 如果为false，则将挤出的多边形顶部留空
@@ -53,12 +53,12 @@ function add() {
     // TERRAIN 将仅对地形进行分类;CESIUM_3D_TILE 将仅对3D Tiles进行分类;BOTH	将同时对Terrain和3D Tiles进行分类。
     classificationType: Cesium.ClassificationType.BOTH,
     // 指定用于订购地面几何形状的z索引。仅在多边形为常数且未指定高度或拉伸高度的情况下才有效  type:ConstantProperty
-    zIndex: 0,
+    zIndex: 0
   }
   const entity = viewer.entities.add({
     polygon: options
-  });
-  viewer.zoomTo(entity);
+  })
+  viewer.zoomTo(entity)
   return entity
 }
 
@@ -66,7 +66,7 @@ function add() {
 function Polygon(dataSource) {
   const entities = dataSource.entities.values // 获取集合中实体实例的数组
   for (let i = 0; i < entities.length; i++) {
-    const entity = entities[i];
+    const entity = entities[i]
 
     if (!entity.polygon) {
       return

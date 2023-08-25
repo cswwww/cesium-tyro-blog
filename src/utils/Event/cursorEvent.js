@@ -15,19 +15,19 @@ const iconUrl = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(
 
 function pickCursor(boolean = true, type) {
   if (!handleInstance) {
-    handleInstance = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas);
+    handleInstance = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas)
   }
   // ! 优化方向：减少DOM操作，将获取地球容器元素的操作放在函数外部，并将其作为参数传入函数，减少函数内部对DOM的多次查询。
-  const globeElement = document.getElementById("cesiumContainer"); // ! 替换为你的地球场景容器元素ID
+  const globeElement = document.getElementById('cesiumContainer') // ! 替换为你的地球场景容器元素ID
   if (!boolean) {
-    handleInstance.removeInputAction(Cesium.ScreenSpaceEventType.MOUSE_MOVE);
-    globeElement.style.cursor = "default"; // 恢复指针样式为默认值
+    handleInstance.removeInputAction(Cesium.ScreenSpaceEventType.MOUSE_MOVE)
+    globeElement.style.cursor = 'default' // 恢复指针样式为默认值
     return
   }
   handleInstance.setInputAction(({ endPosition }) => {
     // 将鼠标位置从屏幕坐标系转换为世界坐标系
-    const ray = viewer.camera.getPickRay(endPosition);
-    const intersection = viewer.scene.globe.pick(ray, viewer.scene);
+    const ray = viewer.camera.getPickRay(endPosition)
+    const intersection = viewer.scene.globe.pick(ray, viewer.scene)
     if (Cesium.defined(intersection)) {
       // 鼠标在地球上
       if (type) {
@@ -37,9 +37,9 @@ function pickCursor(boolean = true, type) {
       }
     } else {
       // 鼠标不在地球上
-      globeElement.style.cursor = "default"; // 恢复指针样式为默认值
+      globeElement.style.cursor = 'default' // 恢复指针样式为默认值
     }
-  }, Cesium.ScreenSpaceEventType.MOUSE_MOVE);
+  }, Cesium.ScreenSpaceEventType.MOUSE_MOVE)
 }
 
 export {

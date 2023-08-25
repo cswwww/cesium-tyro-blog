@@ -11,7 +11,7 @@ import { viewer } from '@/utils/createCesium.js' // 引入地图对象
 import * as Cesium from 'cesium'
 
 function add(x = 122, y = 23) {
-  const position = Cesium.Cartesian3.fromDegrees(x, y);
+  const position = Cesium.Cartesian3.fromDegrees(x, y)
   const options = {
     show: true,
     // 指定定义走廊中心线的 Cartesian3 位置的数组  type: Cartesian3
@@ -21,7 +21,7 @@ function add(x = 122, y = 23) {
       -85.0,
       40.0,
       -85.0,
-      35.0,
+      35.0
     ]),
     width: 200000.0,
     height: 200000.0,
@@ -46,14 +46,14 @@ function add(x = 122, y = 23) {
     // ),
     // 走廊在地面上时将对地形，3D tiles还是对两者进行分类  type:ClassificationType  default:ClassificationType.BOTH
     // TERRAIN 将仅对地形进行分类;CESIUM_3D_TILE 将仅对3D Tiles进行分类;BOTH	将同时对Terrain和3D Tiles进行分类。
-    classificationType: Cesium.ClassificationType.BOTH,
+    classificationType: Cesium.ClassificationType.BOTH
     // zIndex: 0 // 用于排序。只有在未定义高度和拉伸高度以及道路是静态的情况下才有效果。
   }
   const entity = viewer.entities.add({
     position,
     corridor: options
-  });
-  viewer.zoomTo(entity);
+  })
+  viewer.zoomTo(entity)
   return entity
 }
 

@@ -11,17 +11,17 @@ import * as Cesium from 'cesium'
 
 function add() {
   function computeCircle(radius) {
-    var positions = [];
+    var positions = []
     for (var i = 0; i < 360; i++) {
-      var radians = Cesium.Math.toRadians(i);
+      var radians = Cesium.Math.toRadians(i)
       positions.push(
         new Cesium.Cartesian2(
           radius * Math.cos(radians),
           radius * Math.sin(radians)
         )
-      );
+      )
     }
-    return positions;
+    return positions
   }
   const options = {
     show: true,
@@ -33,7 +33,7 @@ function add() {
       -85.0,
       36.0,
       -89.0,
-      36.0,
+      36.0
     ]),
 
     // 指定 Cartesian2 位置的数组，这些位置定义了要拉伸的形状
@@ -54,7 +54,7 @@ function add() {
     outlineColor: Cesium.Color.BLACK,
     outlineWidth: 1.0,
 
-    shadows: Cesium.ShadowMode.DISABLED, // 体积是投射还是接收光源的阴影
+    shadows: Cesium.ShadowMode.DISABLED // 体积是投射还是接收光源的阴影
 
     // type:DistanceDisplayCondition
     // distanceDisplayCondition: new Cesium.DistanceDisplayCondition(
@@ -64,8 +64,8 @@ function add() {
   }
   const entity = viewer.entities.add({
     polylineVolume: options
-  });
-  viewer.zoomTo(entity);
+  })
+  viewer.zoomTo(entity)
   return entity
 }
 

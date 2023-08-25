@@ -9,32 +9,32 @@ import * as Cesium from 'cesium'
 
 export default class RadarScanMaterialProperty {
   constructor(options) {
-    this._definitionChanged = new Cesium.Event();
-    this._color = undefined;
-    this._speed = undefined;
-    this.color = options.color; // 扫码源颜色
-    this.speed = options.speed; // 扫码旋转速度
+    this._definitionChanged = new Cesium.Event()
+    this._color = undefined
+    this._speed = undefined
+    this.color = options.color // 扫码源颜色
+    this.speed = options.speed // 扫码旋转速度
   }
 
   get isConstant() {
-    return false;
+    return false
   }
 
   get definitionChanged() {
-    return this._definitionChanged;
+    return this._definitionChanged
   }
 
   getType() {
-    return Cesium.Material.RadarScanMaterialType;
+    return Cesium.Material.RadarScanMaterialType
   }
 
   getValue(time, result) {
     if (!Cesium.defined(result)) {
-      result = {};
+      result = {}
     }
 
-    result.color = Cesium.Property.getValueOrDefault(this._color, time, Cesium.Color.RED, result.color);
-    result.speed = Cesium.Property.getValueOrDefault(this._speed, time, 10, result.speed);
+    result.color = Cesium.Property.getValueOrDefault(this._color, time, Cesium.Color.RED, result.color)
+    result.speed = Cesium.Property.getValueOrDefault(this._speed, time, 10, result.speed)
     return result
   }
 
@@ -53,8 +53,8 @@ Object.defineProperties(RadarScanMaterialProperty.prototype, {
 })
 
 // Cesium.RadarScanMaterialProperty = RadarScanMaterialProperty;
-Cesium.Material.RadarScanMaterialProperty = 'RadarScanMaterialProperty';
-Cesium.Material.RadarScanMaterialType = 'RadarScanMaterialType'; // 材质类型id，对应的Cesium是一种材质类
+Cesium.Material.RadarScanMaterialProperty = 'RadarScanMaterialProperty'
+Cesium.Material.RadarScanMaterialType = 'RadarScanMaterialType' // 材质类型id，对应的Cesium是一种材质类
 Cesium.Material.RadarScanMaterialSource =
   `
   uniform vec4 color;
@@ -96,11 +96,11 @@ Cesium.Material._materialCache.addMaterial(Cesium.Material.RadarScanMaterialType
     },
     source: Cesium.Material.RadarScanMaterialSource
   },
-  translucent: function () {
-    return true;
+  translucent: function() {
+    return true
   }
 })
-console.log('成功加载雷达扫描材质');
+console.log('成功加载雷达扫描材质')
 
 // ? 如何使用
 // import RadarScanMaterialProperty from '@/utils/Material/RadarScanMaterialProperty.js'

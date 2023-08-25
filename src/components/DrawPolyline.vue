@@ -6,10 +6,10 @@
  * @Description: 全局配置组件：场景、地球
 -->
 <script setup>
-import { onMounted, onUnmounted, watch } from "vue";
+import { onMounted, onUnmounted, watch } from 'vue'
 import EventBus from '@/common/EventBus.js'
 import { ref } from 'vue'
-import { viewer } from "@/utils/createCesium.js";
+import { viewer } from '@/utils/createCesium.js'
 import { ElMessage } from 'element-plus'
 import { PolylineDrawer } from '@/utils/Entity/Draw/polyline.js'
 
@@ -24,13 +24,13 @@ const close = () => {
 }
 
 onMounted(() => {
-  polylineDrawer.start();
+  polylineDrawer.start()
   ElMessage({
     showClose: true,
-    message: '鼠标左键添加点、右键完成绘制',
+    message: '鼠标左键添加点、右键完成绘制'
   })
   lineEntityCollection.value = polylineDrawer.lineCollection.entities.values
-});
+})
 onUnmounted(() => {
   polylineDrawer.destroy()
 })
@@ -39,7 +39,7 @@ const getLineCollection = (list) => {
   rendering.value++
 }
 
-const polylineDrawer = new PolylineDrawer(getLineCollection);
+const polylineDrawer = new PolylineDrawer(getLineCollection)
 
 </script>
 
@@ -77,7 +77,6 @@ const polylineDrawer = new PolylineDrawer(getLineCollection);
   width: 340px;
   .box-card();
 }
-
 
 :deep(.el-card__body) {
   padding: 0 20px;

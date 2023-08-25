@@ -43,7 +43,7 @@ export async function addThreeDTiles(url, option) {
   const loading = ElLoading.service({
     lock: true,
     text: '加载中...',
-    background: 'rgba(255, 255, 255, 0.5)',
+    background: 'rgba(255, 255, 255, 0.5)'
   })
 
   /*
@@ -62,19 +62,19 @@ export async function addThreeDTiles(url, option) {
   // ! 写法二：
   let tileset = {}
   try {
-    if (typeof url == 'number') {
-      tileset = await Cesium.Cesium3DTileset.fromIonAssetId(url, option);
+    if (typeof url === 'number') {
+      tileset = await Cesium.Cesium3DTileset.fromIonAssetId(url, option)
     } else {
-      tileset = await Cesium.Cesium3DTileset.fromUrl(url, option);
+      tileset = await Cesium.Cesium3DTileset.fromUrl(url, option)
     }
   } catch (error) {
     loading.close()
     ElMessage.error('发生错误' + error)
   }
-  viewer.scene.primitives.add(tileset);
+  viewer.scene.primitives.add(tileset)
   // 定位到模型
   viewer.zoomTo(
-    tileset,
+    tileset
     // new Cesium.HeadingPitchRange(
     //   0.0,
     //   -0.5,

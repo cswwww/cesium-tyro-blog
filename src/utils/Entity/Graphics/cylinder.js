@@ -10,7 +10,7 @@ import { viewer } from '@/utils/createCesium.js' // 引入地图对象
 import * as Cesium from 'cesium'
 
 function add(x = 122, y = 23) {
-  const position = Cesium.Cartesian3.fromDegrees(x, y);
+  const position = Cesium.Cartesian3.fromDegrees(x, y)
   const options = {
     // show: true,
     length: 400000.0, // 圆柱体长度
@@ -24,7 +24,7 @@ function add(x = 122, y = 23) {
     outlineWidth: 1.0,
     numberOfVerticalLines: 16, // 沿轮廓的周长绘制的垂直线的数量
     shadows: Cesium.ShadowMode.DISABLED,
-    slices: 128, // 圆柱周围的边缘数量
+    slices: 128 // 圆柱周围的边缘数量
     // distanceDisplayCondition: new Cesium.DistanceDisplayCondition(
     //   1.0e3,
     //   2.0e3
@@ -33,8 +33,8 @@ function add(x = 122, y = 23) {
   const entity = viewer.entities.add({
     position,
     cylinder: options
-  });
-  viewer.zoomTo(entity);
+  })
+  viewer.zoomTo(entity)
   return entity
 }
 

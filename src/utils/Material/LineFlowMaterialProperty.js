@@ -10,38 +10,38 @@ import * as Cesium from 'cesium'
 
 export default class LineFlowMaterialProperty {
   constructor(options) {
-    this._definitionChanged = new Cesium.Event();
-    this._color = undefined;
-    this._speed = undefined;
-    this._percent = undefined;
-    this._gradient = undefined;
-    this.color = options.color;
-    this.speed = options.speed;
-    this.percent = options.percent;
-    this.gradient = options.gradient;
-  };
+    this._definitionChanged = new Cesium.Event()
+    this._color = undefined
+    this._speed = undefined
+    this._percent = undefined
+    this._gradient = undefined
+    this.color = options.color
+    this.speed = options.speed
+    this.percent = options.percent
+    this.gradient = options.gradient
+  }
 
   get isConstant() {
-    return false;
+    return false
   }
 
   get definitionChanged() {
-    return this._definitionChanged;
+    return this._definitionChanged
   }
 
   getType(time) {
-    return Cesium.Material.LineFlowMaterialType;
+    return Cesium.Material.LineFlowMaterialType
   }
 
   getValue(time, result) {
     if (!Cesium.defined(result)) {
-      result = {};
+      result = {}
     }
 
-    result.color = Cesium.Property.getValueOrDefault(this._color, time, Cesium.Color.RED, result.color);
-    result.speed = Cesium.Property.getValueOrDefault(this._speed, time, 5.0, result.speed);
-    result.percent = Cesium.Property.getValueOrDefault(this._percent, time, 0.1, result.percent);
-    result.gradient = Cesium.Property.getValueOrDefault(this._gradient, time, 0.01, result.gradient);
+    result.color = Cesium.Property.getValueOrDefault(this._color, time, Cesium.Color.RED, result.color)
+    result.speed = Cesium.Property.getValueOrDefault(this._speed, time, 5.0, result.speed)
+    result.percent = Cesium.Property.getValueOrDefault(this._percent, time, 0.1, result.percent)
+    result.gradient = Cesium.Property.getValueOrDefault(this._gradient, time, 0.01, result.gradient)
     return result
   }
 
@@ -56,17 +56,16 @@ export default class LineFlowMaterialProperty {
   }
 }
 
-
 Object.defineProperties(LineFlowMaterialProperty.prototype, {
   color: Cesium.createPropertyDescriptor('color'),
   speed: Cesium.createPropertyDescriptor('speed'),
   percent: Cesium.createPropertyDescriptor('percent'),
-  gradient: Cesium.createPropertyDescriptor('gradient'),
+  gradient: Cesium.createPropertyDescriptor('gradient')
 })
 
 // Cesium.LineFlowMaterialProperty = LineFlowMaterialProperty;
-Cesium.Material.LineFlowMaterialProperty = 'LineFlowMaterialProperty';
-Cesium.Material.LineFlowMaterialType = 'LineFlowMaterialType';
+Cesium.Material.LineFlowMaterialProperty = 'LineFlowMaterialProperty'
+Cesium.Material.LineFlowMaterialType = 'LineFlowMaterialType'
 Cesium.Material.LineFlowMaterialSource =
   `
   uniform vec4 color;
@@ -98,12 +97,11 @@ Cesium.Material._materialCache.addMaterial(Cesium.Material.LineFlowMaterialType,
     },
     source: Cesium.Material.LineFlowMaterialSource
   },
-  translucent: function (material) {
-    return true;
+  translucent: function(material) {
+    return true
   }
 })
-console.log('成功加载飞线材质');
-
+console.log('成功加载飞线材质')
 
 // ? 如何使用
 // import LineFlowMaterialProperty from '@/utils/Material/LineFlowMaterialProperty.js'

@@ -7,7 +7,6 @@
  */
 // TODO 未完成
 
-
 // scene.preUpdate： 更新或呈现场景之前将引发的事件
 // scene.postUpdate： 场景更新后以及渲染场景之前立即引发的事件
 // scene.preRender： 场景更新后以及渲染场景之前将引发的事件

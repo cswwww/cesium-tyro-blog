@@ -27,7 +27,7 @@ function add(xyz) {
   const heading = Cesium.Math.toRadians(45) // 围绕Z轴的旋转
   const pitch = Cesium.Math.toRadians(0) // 围绕X轴旋转
   const roll = Cesium.Math.toRadians(0) // 绕Y轴旋转
-  const hpr = new Cesium.HeadingPitchRoll(heading, pitch, roll);
+  const hpr = new Cesium.HeadingPitchRoll(heading, pitch, roll)
   // 将三个欧拉角转换为四元数，用于控制模型的方位
   const orientation = Cesium.Transforms.headingPitchRollQuaternion(
     position,
@@ -36,7 +36,7 @@ function add(xyz) {
 
   const options = {
     show: true,
-    uri: "/src/assets/model/glb/Cesium_Air.glb", // A string or Resource Property specifying the URI of the glTF asset.
+    uri: '/src/assets/model/glb/Cesium_Air.glb', // A string or Resource Property specifying the URI of the glTF asset.
     scale: 1.0,
     minimumPixelSize: 128, // 模型的最小像素大小，而不考虑缩放
     maximumScale: 20000, // 模型的最大比例尺大小。 minimumPixelSize的上限
@@ -54,7 +54,7 @@ function add(xyz) {
     // HIGHLIGHT 将源颜色乘以目标颜色;REPLACE 将源颜色替换为目标颜色;MIX 将源颜色和目标颜色混合在一起
     colorBlendMode: Cesium.ColorBlendMode.HIGHLIGHT,
     // 用于指定 colorBlendMode 为 MIX 时的颜色强度。值0.0会产生模型的着色，而值1.0会导致纯色，介于两者之间的任何值都会导致两者混合
-    colorBlendAmount: 0.5, // 混入 程度 
+    colorBlendAmount: 0.5, // 混入 程度
 
     imageBasedLightingFactor: new Cesium.Cartesian2(1.0, 1.0), // 指定基于漫反射和镜面反射的图像照明的贡献
     lightColor: undefined, // 为模型着色时指定浅色的属性。如果 undefined ，则使用场景的浅色。
@@ -80,16 +80,16 @@ function add(xyz) {
         outlineWidth: 1,
         outlineColor: Cesium.Color.BLACK
       })
-    }),
+    })
   }
 
   const entity = viewer.entities.add({
-    name: "glTF模型",
+    name: 'glTF模型',
     position,
     orientation, // 默认情况下，模型是直立的并面向东
     model: options // 也即一个ModelGraphics类
-  });
-  viewer.zoomTo(entity);
+  })
+  viewer.zoomTo(entity)
   // viewer.trackedEntity = entity // 聚焦到对应实体
 
   return entity

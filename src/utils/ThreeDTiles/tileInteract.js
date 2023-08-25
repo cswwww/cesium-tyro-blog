@@ -33,7 +33,7 @@ const eventReaction = {
   缩放: 'zoom',
   信息: 'properties'
 }
-export function tileInteract (tileset, event = '左键单击', reaction = '信息') {
+export function tileInteract(tileset, event = '左键单击', reaction = '信息') {
   if (!viewer.scene.pickPositionSupported) {
     // 判断是否支持位置拾取
     alert('浏览器不支持位置拾取')
@@ -43,7 +43,7 @@ export function tileInteract (tileset, event = '左键单击', reaction = '信�
   const annotations = viewer.scene.primitives.add(new Cesium.LabelCollection())
 
   const handler = new Cesium.ScreenSpaceEventHandler(viewer.canvas)
-  handler.setInputAction(function (movement) {
+  handler.setInputAction(function(movement) {
     const feature = viewer.scene.pick(movement.position) // 拾取要素
     if (!Cesium.defined(feature)) {
       return
@@ -68,7 +68,7 @@ export function tileInteract (tileset, event = '左键单击', reaction = '信�
  * @param {*} annotations - 标签集合类
  * @return {*}
  */
-function annotate (movement, annotations) {
+function annotate(movement, annotations) {
   // 判断是否支持拾取
   if (viewer.scene.pickPositionSupported) {
     // 通过屏幕坐标拾取到世界坐标
@@ -95,7 +95,7 @@ function annotate (movement, annotations) {
 }
 
 // 打印要素信息
-function printProperties (feature) {
+function printProperties(feature) {
   console.log('Properties:')
   const propertyIds = feature.getPropertyIds()
   const length = propertyIds.length
@@ -105,7 +105,7 @@ function printProperties (feature) {
   }
 }
 // 缩放
-function zoom (feature) {
+function zoom(feature) {
   const longitude = Cesium.Math.toRadians(feature.getProperty('Longitude'))
   const latitude = Cesium.Math.toRadians(feature.getProperty('Latitude'))
   const height = feature.getProperty('Height')
@@ -144,7 +144,7 @@ function zoom (feature) {
   })
 }
 
-function offsetFromHeadingPitchRange (heading, pitch, range) {
+function offsetFromHeadingPitchRange(heading, pitch, range) {
   pitch = Cesium.Math.clamp(
     pitch,
     -Cesium.Math.PI_OVER_TWO,

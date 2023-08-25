@@ -52,7 +52,7 @@ export class splitTileset {
   // 设置分割线左侧展示的瓦片集
   setLeftTileset(url = 75343) {
     if (leftTileset) {
-      viewer.scene.primitives.remove(leftTileset);
+      viewer.scene.primitives.remove(leftTileset)
     }
     const modelPromise = addThreeDTiles(url)
     modelPromise.then(tileset => {
@@ -64,7 +64,7 @@ export class splitTileset {
   // 设置分割线右侧展示的瓦片集
   setRightTileset(url) {
     if (rightTileset) {
-      viewer.scene.primitives.remove(rightTileset);
+      viewer.scene.primitives.remove(rightTileset)
     }
 
     // 默认加载osm建筑
@@ -97,11 +97,11 @@ export class splitTileset {
   // TODO 未完成：重新加载之前保存的瓦片集
   reloadTileset() {
     if (leftTileset) {
-      console.log('leftTileset: ', leftTileset);
-      viewer.scene.primitives.remove(leftTileset);
+      console.log('leftTileset: ', leftTileset)
+      viewer.scene.primitives.remove(leftTileset)
     }
     if (rightTileset) {
-      viewer.scene.primitives.remove(rightTileset);
+      viewer.scene.primitives.remove(rightTileset)
     }
   }
 
@@ -131,7 +131,6 @@ export class splitTileset {
         this.slider.style.left = '0%'
       }
     }, Cesium.ScreenSpaceEventType.LEFT_UP)
-
   }
 
   // 不卷了
@@ -166,8 +165,6 @@ export class splitTileset {
     viewer.scene.splitPosition = splitPosition
   }
 }
-
-
 
 /**
  * @description: 即调即用的简单版影像卷帘功能
@@ -226,20 +223,20 @@ export function tilesCompare(target = 'cesiumContainer') {
 
   const handler = new Cesium.ScreenSpaceEventHandler(slider)
 
-  handler.setInputAction(function () {
+  handler.setInputAction(function() {
     moveActive = true
   }, Cesium.ScreenSpaceEventType.LEFT_DOWN)
-  handler.setInputAction(function () {
+  handler.setInputAction(function() {
     moveActive = true
   }, Cesium.ScreenSpaceEventType.PINCH_START)
 
   handler.setInputAction(move, Cesium.ScreenSpaceEventType.MOUSE_MOVE)
   handler.setInputAction(move, Cesium.ScreenSpaceEventType.PINCH_MOVE)
 
-  handler.setInputAction(function () {
+  handler.setInputAction(function() {
     moveActive = false
   }, Cesium.ScreenSpaceEventType.LEFT_UP)
-  handler.setInputAction(function () {
+  handler.setInputAction(function() {
     moveActive = false
   }, Cesium.ScreenSpaceEventType.PINCH_END)
 }

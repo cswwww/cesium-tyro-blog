@@ -12,12 +12,12 @@ import * as Cesium from 'cesium'
 
 function flood() {
   if (!viewer.scene.globe.depthTestAgainstTerrain) {
-    viewer.scene.globe.depthTestAgainstTerrain = true  // 该功能需开启地形深度检测
+    viewer.scene.globe.depthTestAgainstTerrain = true // 该功能需开启地形深度检测
   }
   if (viewer.terrainProvider instanceof Cesium.EllipsoidTerrainProvider) { // 如果没加载地形就加一个
     viewer.terrainProvider = new Cesium.CesiumTerrainProvider({
       url: Cesium.IonResource.fromAssetId(3956),
-      requestWaterMask: true,  // 请求水体效果所需要的海岸线数据
+      requestWaterMask: true, // 请求水体效果所需要的海岸线数据
       requestVertexNormals: true // 请求地形照明数据:增加法线提高光照效果
     })
   }
@@ -26,7 +26,7 @@ function flood() {
   const waterMaxElevation = 400 // 淹没水平面最高值
   const positions = Cesium.Cartesian3.fromDegreesArrayHeights([116.64, 36.34, 8000, 116.66, 36.34, 8000, 116.66, 36.32, 8000, 116.64, 36.32, 8000, 116.64, 36.34, 8000])
 
-  let entity = viewer.entities.add({
+  const entity = viewer.entities.add({
     polygon: {
       hierarchy: new Cesium.PolygonHierarchy(positions),
       extrudedHeight: new Cesium.CallbackProperty(() => {

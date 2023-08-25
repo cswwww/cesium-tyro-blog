@@ -38,15 +38,15 @@ function add() {
 
     // 在地面上时将对地形，3D tiles还是对两者进行分类  type:ClassificationType  default:ClassificationType.BOTH
     // TERRAIN 将仅对地形进行分类;CESIUM_3D_TILE 将仅对3D Tiles进行分类;BOTH	将同时对Terrain和3D Tiles进行分类。
-    classificationType: Cesium.ClassificationType.BOTH,
+    classificationType: Cesium.ClassificationType.BOTH
 
     // 指定用于订购地面几何形状的z索引。仅在多边形为常数且未指定高度或拉伸高度的情况下才有效  type:ConstantProperty
     // zIndex: 0,
   }
   const entity = viewer.entities.add({
     polyline: options
-  });
-  viewer.zoomTo(entity);
+  })
+  viewer.zoomTo(entity)
   return entity
 }
 

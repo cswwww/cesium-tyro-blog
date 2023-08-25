@@ -3,12 +3,12 @@ import * as Cesium from 'cesium'
 
 import FlowPictureMaterialProperty from '@/utils/Material/FlowPictureMaterialProperty.js'
 
-const position = Cesium.Cartesian3.fromDegrees(12, 34);
+const position = Cesium.Cartesian3.fromDegrees(12, 34)
 
 const material = new FlowPictureMaterialProperty({
   color: Cesium.Color.WHITE, // new Cesium.Color(1.0, 1.0, 1.0, 1.0),
   image: '/src/assets/images/redBar.png',
-  duration: 1500,
+  duration: 1500
 })
 
 // const material = Cesium.Color.RED
@@ -31,9 +31,9 @@ export default function add() {
       // type:ShadowMode  default:ShadowMode.DISABLED
       // DISABLED	对象不投射或接收阴影；ENABLED	对象投射并接收阴影；CAST_ONLY	对象仅投射阴影；RECEIVE_ONLY 该对象仅接收阴影。
       // viewer.shadows = true 时才生效
-      shadows: Cesium.ShadowMode.DISABLED, // Cesium.ShadowMode.ENABLED
+      shadows: Cesium.ShadowMode.DISABLED // Cesium.ShadowMode.ENABLED
     }
-  });
+  })
 
   const cylinder = viewer.entities.add({
     position: Cesium.Cartesian3.fromDegrees(16, 34),
@@ -50,9 +50,9 @@ export default function add() {
       outlineWidth: 1.0,
       numberOfVerticalLines: 16, // 沿轮廓的周长绘制的垂直线的数量
       shadows: Cesium.ShadowMode.DISABLED,
-      slices: 128, // 圆柱周围的边缘数量
+      slices: 128 // 圆柱周围的边缘数量
     }
-  });
+  })
 
   const ellipse = viewer.entities.add({
     position: Cesium.Cartesian3.fromDegrees(24, 34),
@@ -83,9 +83,9 @@ export default function add() {
 
       // 在地面上时将对地形，3D tiles还是对两者进行分类  type:ClassificationType  default:ClassificationType.BOTH
       // TERRAIN 将仅对地形进行分类;CESIUM_3D_TILE 将仅对3D瓷砖进行分类;BOTH	将同时对Terrain和3D Tile进行分类。
-      classificationType: Cesium.ClassificationType.BOTH,
+      classificationType: Cesium.ClassificationType.BOTH
     }
-  });
+  })
 
   const ellipsoid = viewer.entities.add({
     position: Cesium.Cartesian3.fromDegrees(20, 38, 150000),
@@ -108,13 +108,13 @@ export default function add() {
       slicePartitions: 64, // 延经度线切割的次数
       subdivisions: 128, // 每个轮廓环的样本数，确定曲率的粒度
 
-      shadows: Cesium.ShadowMode.DISABLED,
+      shadows: Cesium.ShadowMode.DISABLED
       // distanceDisplayCondition: new Cesium.DistanceDisplayCondition(
       //   1.0e3,
       //   2.0e3
       // ),
     }
-  });
+  })
 
   const plane = viewer.entities.add({
     position: Cesium.Cartesian3.fromDegrees(11, 34),
@@ -128,9 +128,9 @@ export default function add() {
       outline: true,
       outlineColor: Cesium.Color.BLACK,
       outlineWidth: 1.0,
-      shadows: Cesium.ShadowMode.DISABLED,
+      shadows: Cesium.ShadowMode.DISABLED
     }
-  });
+  })
 
   const polygon = viewer.entities.add({
     polygon: {
@@ -140,7 +140,7 @@ export default function add() {
         12.0, 30.0,
         12.0, 28.0,
         15.0, 28.0,
-        15.0, 30.0,
+        15.0, 30.0
       ]),
       height: 1000, // 多边形相对于椭球面的高度
       // heightReference: Cesium.HeightReference.NONE,
@@ -151,7 +151,7 @@ export default function add() {
       fill: true,
       material, // Cesium.Color.fromRandom({ alpha: 1.0 })
       outline: true,
-      outlineColor: Cesium.Color.BLACK,
+      outlineColor: Cesium.Color.BLACK
       // perPositionHeight: false, // 是否使用每个位置的高度
 
       // closeTop: true, // 如果为false，则将挤出的多边形顶部留空
@@ -163,9 +163,7 @@ export default function add() {
       // classificationType: Cesium.ClassificationType.BOTH,
       // zIndex: 0,
     }
-  });
-
-
+  })
 
   const polyline = viewer.entities.add({
     polyline: {
@@ -187,22 +185,22 @@ export default function add() {
       // shadows: Cesium.ShadowMode.DISABLED, // 折线是投射还是接收光源的阴影
       // 在地面上时将对地形，3D tiles还是对两者进行分类  type:ClassificationType  default:ClassificationType.BOTH
       // TERRAIN 将仅对地形进行分类;CESIUM_3D_TILE 将仅对3D Tiles进行分类;BOTH	将同时对Terrain和3D Tiles进行分类。
-      classificationType: Cesium.ClassificationType.BOTH,
+      classificationType: Cesium.ClassificationType.BOTH
     }
-  });
+  })
 
   function computeCircle(radius) {
-    var positions = [];
+    var positions = []
     for (var i = 0; i < 360; i++) {
-      var radians = Cesium.Math.toRadians(i);
+      var radians = Cesium.Math.toRadians(i)
       positions.push(
         new Cesium.Cartesian2(
           radius * Math.cos(radians),
           radius * Math.sin(radians)
         )
-      );
+      )
     }
-    return positions;
+    return positions
   }
   const polylineVolume = viewer.entities.add({
     polylineVolume: {
@@ -228,7 +226,7 @@ export default function add() {
       outlineColor: Cesium.Color.BLACK,
       outlineWidth: 1.0,
 
-      shadows: Cesium.ShadowMode.DISABLED, // 体积是投射还是接收光源的阴影
+      shadows: Cesium.ShadowMode.DISABLED // 体积是投射还是接收光源的阴影
 
       // type:DistanceDisplayCondition
       // distanceDisplayCondition: new Cesium.DistanceDisplayCondition(
@@ -236,8 +234,7 @@ export default function add() {
       //   2.0e3
       // ),
     }
-  });
-
+  })
 
   const wall = viewer.entities.add({
     wall: {
@@ -252,7 +249,7 @@ export default function add() {
         200000.0,
         29.0,
         41.0,
-        200000.0,
+        200000.0
       ]),
 
       // 用于墙底而不是地球表面的高度数组
@@ -268,14 +265,13 @@ export default function add() {
       outlineColor: Cesium.Color.BLACK,
       outlineWidth: 1.0,
 
-      shadows: Cesium.ShadowMode.DISABLED,
+      shadows: Cesium.ShadowMode.DISABLED
       // distanceDisplayCondition: new Cesium.DistanceDisplayCondition(
       //   1.0e3,
       //   2.0e3
       // ),
     }
-  });
-
+  })
 
   const best = viewer.entities.add({
     position: Cesium.Cartesian3.fromDegrees(50, 50),
@@ -285,10 +281,9 @@ export default function add() {
       material: new FlowPictureMaterialProperty({
         color: Cesium.Color.WHITE, // new Cesium.Color(1.0, 1.0, 1.0, 1.0),
         image: '/src/assets/images/redBar.png',
-        duration: 1500,
+        duration: 1500
       })
     }
-  });
-  viewer.zoomTo(best);
-
+  })
+  viewer.zoomTo(best)
 }

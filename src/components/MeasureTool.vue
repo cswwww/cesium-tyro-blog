@@ -1,12 +1,12 @@
 <!--
  * @Date: 2023-06-07 17:33:49
  * @LastEditors: ReBeX  420659880@qq.com
- * @LastEditTime: 2023-08-03 20:15:51
+ * @LastEditTime: 2023-08-25 15:23:33
  * @FilePath: \cesium-tyro-blog\src\components\MeasureTool.vue
  * @Description: 测量工具
 -->
 <script setup>
-import { onMounted, onUnmounted, watch } from "vue";
+import { onMounted, onUnmounted, watch } from 'vue'
 import EventBus from '@/common/EventBus.js'
 import { ref } from 'vue'
 import { ElMessage } from 'element-plus'
@@ -26,11 +26,11 @@ const toolSwitch = () => {
   if (radio.value === 0) {
     coordinatePicker.start()
   } else if (radio.value === 1) {
-    console.log('height: ', height);
+    console.log(0)
   } else if (radio.value === 2) {
     ElMessage({
       showClose: true,
-      message: '鼠标左键添加点、右键结束加点',
+      message: '鼠标左键添加点、右键结束加点'
     })
     distance.start()
   }
@@ -44,12 +44,11 @@ onMounted(() => {
   coordinatePicker = new CoordinatePicker()
   distance = new MeasureDistance()
   toolSwitch()
-});
+})
 onUnmounted(() => {
   coordinatePicker.destroy()
   distance.destroy()
-});
-
+})
 
 </script>
 

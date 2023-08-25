@@ -8,8 +8,8 @@
 -->
 
 <script setup>
-import { onMounted, ref } from "vue";
-import { viewer } from "@/utils/createCesium.js"; // ! 引入场景对象
+import { onMounted, ref } from 'vue'
+import { viewer } from '@/utils/createCesium.js' // ! 引入场景对象
 
 const sceneMode = ref(3)
 
@@ -18,18 +18,18 @@ const changeSceneMode = () => {
     '1': { method: viewer.scene.morphToColumbusView, duration: 2 },
     '2': { method: viewer.scene.morphTo2D, duration: 2 },
     '3': { method: viewer.scene.morphTo3D, duration: 2 }
-  };
+  }
 
-  const selectedMode = modeMap[sceneMode.value];
+  const selectedMode = modeMap[sceneMode.value]
   if (selectedMode) {
-    const { method, duration } = selectedMode;
-    method.call(viewer.scene, duration);
+    const { method, duration } = selectedMode
+    method.call(viewer.scene, duration)
   }
 }
 
 onMounted(() => {
   sceneMode.value = viewer.scene.mode
-});
+})
 </script>
 
 <template>

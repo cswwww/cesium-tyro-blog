@@ -20,11 +20,11 @@ const layerOption = {
   contrast: 1, // 对比度（0，3）
   hue: 0, // 色调（0，360）
   saturation: 1, // 饱和度（0，3）
-  gamma: 1, // 伽马校正（0.01，5）
+  gamma: 1 // 伽马校正（0.01，5）
 }
 
 const token = 'ab1a5f73690be1ad06c60f819924b2a3' // 申请的key
-const subdomains = ['0', '1', '2', '3', '4', '5', '6', '7']; // 服务负载子域
+const subdomains = ['0', '1', '2', '3', '4', '5', '6', '7'] // 服务负载子域
 const projectionType = {
   '_c': '经纬度投影',
   '_w': '球面墨卡托投影'
@@ -55,7 +55,7 @@ function loadTianditu(layer = 'img', proj = '_w', option) {
     subdomains: subdomains,
     tilingScheme: new Cesium.WebMercatorTilingScheme(),
     maximumLevel: 18
-  });
+  })
   const imageryLayer = new Cesium.ImageryLayer(imageryProvider, option)
   imageryLayer.id = `天地图${layerKey[layer]} (${projectionType[proj]})`
   viewer.imageryLayers.add(imageryLayer)

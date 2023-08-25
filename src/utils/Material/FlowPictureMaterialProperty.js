@@ -1,7 +1,7 @@
 /*
  * @Date: 2023-07-19 11:15:22
  * @LastEditors: ReBeX  420659880@qq.com
- * @LastEditTime: 2023-07-28 12:17:08
+ * @LastEditTime: 2023-08-25 15:22:33
  * @FilePath: \cesium-tyro-blog\src\utils\Material\FlowPictureMaterialProperty.js
  * @Description: 流动纹理/图片材质
  */
@@ -9,54 +9,53 @@ import * as Cesium from 'cesium'
 
 export default class FlowPictureMaterialProperty {
   constructor(options) {
-    this._definitionChanged = new Cesium.Event();
-    this._color = undefined;
-    this._colorSubscription = undefined;
-    this.image = options.image;
-    this.color = options.color;
-    this.duration = options.duration;
-    this._time = (new Date()).getTime();
-  };
+    this._definitionChanged = new Cesium.Event()
+    this._color = undefined
+    this._colorSubscription = undefined
+    this.image = options.image
+    this.color = options.color
+    this.duration = options.duration
+    this._time = (new Date()).getTime()
+  }
 
   get isConstant() {
-    return false;
+    return false
   }
 
   get definitionChanged() {
-    return this._definitionChanged;
+    return this._definitionChanged
   }
 
   getType(time) {
-    return Cesium.Material.FlowPictureMaterialType;
+    return Cesium.Material.FlowPictureMaterialType
   }
 
   getValue(time, result) {
     if (!Cesium.defined(result)) {
-      result = {};
+      result = {}
     }
-    result.time = (((new Date()).getTime() - this._time) % this.duration) / this.duration;
-    result.color = Cesium.Property.getValueOrDefault(this._color, time, Cesium.Color.RED, result.color);
+    result.time = (((new Date()).getTime() - this._time) % this.duration) / this.duration
+    result.color = Cesium.Property.getValueOrDefault(this._color, time, Cesium.Color.RED, result.color)
     // result.color = Cesium.Property.getValueOrClonedDefault(this._color, time, Cesium.Color.WHITE, result.color);
-    result.image = this.image;
+    result.image = this.image
     return result
   }
 
   equals(other) {
     return (this === other ||
       (other instanceof FlowPictureMaterialProperty &&
-        Property.equals(this._color, other._color))
+        Cesium.Property.equals(this._color, other._color))
     )
   }
 }
 
-
 Object.defineProperties(FlowPictureMaterialProperty.prototype, {
-  color: Cesium.createPropertyDescriptor('color'),
+  color: Cesium.createPropertyDescriptor('color')
 })
 
 // Cesium.FlowPictureMaterialProperty = FlowPictureMaterialProperty;
-Cesium.Material.FlowPictureMaterialProperty = 'FlowPictureMaterialProperty';
-Cesium.Material.FlowPictureMaterialType = 'FlowPictureMaterialType';
+Cesium.Material.FlowPictureMaterialProperty = 'FlowPictureMaterialProperty'
+Cesium.Material.FlowPictureMaterialType = 'FlowPictureMaterialType'
 Cesium.Material.FlowPictureMaterialSource =
 `
 czm_material czm_getMaterial(czm_materialInput materialInput)
@@ -70,7 +69,6 @@ czm_material czm_getMaterial(czm_materialInput materialInput)
 }
 `
 
-
 Cesium.Material._materialCache.addMaterial(Cesium.Material.FlowPictureMaterialType, {
   fabric: {
     type: Cesium.Material.FlowPictureMaterialType,
@@ -81,12 +79,11 @@ Cesium.Material._materialCache.addMaterial(Cesium.Material.FlowPictureMaterialTy
     },
     source: Cesium.Material.FlowPictureMaterialSource
   },
-  translucent: function (material) {
-    return true;
+  translucent: function(material) {
+    return true
   }
 })
-console.log('成功加载流动纹理/图片材质');
-
+console.log('成功加载流动纹理/图片材质')
 
 // ? 如何使用
 // import FlowPictureMaterialProperty from '@/utils/Material/FlowPictureMaterialProperty.js'

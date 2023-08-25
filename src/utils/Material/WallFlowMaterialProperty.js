@@ -10,33 +10,33 @@ import * as Cesium from 'cesium'
 
 export default class WallFlowMaterialProperty {
   constructor(options) {
-    this._definitionChanged = new Cesium.Event();
-    this._color = undefined;
-    this._speed = undefined;
-    this.color = options.color;
-    this.speed = options.speed;
+    this._definitionChanged = new Cesium.Event()
+    this._color = undefined
+    this._speed = undefined
+    this.color = options.color
+    this.speed = options.speed
     this.image = options.image
-  };
+  }
 
   get isConstant() {
-    return false;
+    return false
   }
 
   get definitionChanged() {
-    return this._definitionChanged;
+    return this._definitionChanged
   }
 
   getType(time) {
-    return Cesium.Material.WallFlowMaterialType;
+    return Cesium.Material.WallFlowMaterialType
   }
 
   getValue(time, result) {
     if (!Cesium.defined(result)) {
-      result = {};
+      result = {}
     }
 
-    result.color = Cesium.Property.getValueOrDefault(this._color, time, Cesium.Color.RED, result.color);
-    result.speed = Cesium.Property.getValueOrDefault(this._speed, time, 5.0, result.speed);
+    result.color = Cesium.Property.getValueOrDefault(this._color, time, Cesium.Color.RED, result.color)
+    result.speed = Cesium.Property.getValueOrDefault(this._speed, time, 5.0, result.speed)
     result.image = this.image
     return result
   }
@@ -50,15 +50,14 @@ export default class WallFlowMaterialProperty {
   }
 }
 
-
 Object.defineProperties(WallFlowMaterialProperty.prototype, {
   color: Cesium.createPropertyDescriptor('color'),
-  speed: Cesium.createPropertyDescriptor('speed'),
+  speed: Cesium.createPropertyDescriptor('speed')
 })
 
 // Cesium.WallFlowMaterialProperty = WallFlowMaterialProperty;
-Cesium.Material.WallFlowMaterialProperty = 'WallFlowMaterialProperty';
-Cesium.Material.WallFlowMaterialType = 'WallFlowMaterialType';
+Cesium.Material.WallFlowMaterialProperty = 'WallFlowMaterialProperty'
+Cesium.Material.WallFlowMaterialType = 'WallFlowMaterialType'
 Cesium.Material.WallFlowMaterialSource =
   `czm_material czm_getMaterial(czm_materialInput materialInput)
   {
@@ -75,7 +74,6 @@ Cesium.Material.WallFlowMaterialSource =
   }
 `
 
-
 Cesium.Material._materialCache.addMaterial(Cesium.Material.WallFlowMaterialType, {
   fabric: {
     type: Cesium.Material.WallFlowMaterialType,
@@ -86,12 +84,11 @@ Cesium.Material._materialCache.addMaterial(Cesium.Material.WallFlowMaterialType,
     },
     source: Cesium.Material.WallFlowMaterialSource
   },
-  translucent: function (material) {
-    return true;
+  translucent: function(material) {
+    return true
   }
 })
-console.log('成功加载流动墙材质');
-
+console.log('成功加载流动墙材质')
 
 // ? 如何使用
 // import WallFlowMaterialProperty from '@/utils/Material/WallFlowMaterialProperty.js'

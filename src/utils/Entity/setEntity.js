@@ -6,7 +6,6 @@
  * @Description: Entity 管理
  */
 
-
 // viewer.entities.getById("entity_1");
 // viewer.entities.remove(entity);
 // viewer.entities.removeById("entity_1");

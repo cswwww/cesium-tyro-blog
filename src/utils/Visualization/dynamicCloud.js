@@ -12,11 +12,11 @@ import * as Cesium from 'cesium'
 import earth_cloud from '../../assets/images/earth_cloud.png'
 function addCloud() {
   let west = -180
-  let east = 180
+  const east = 180
   viewer.entities.add({
     rectangle: {
       coordinates: new Cesium.CallbackProperty(() => {
-        console.log(west);
+        console.log(west)
         west = west - 1
         // east = east -1
         return Cesium.Rectangle.fromDegrees(west, -90, east, 90)

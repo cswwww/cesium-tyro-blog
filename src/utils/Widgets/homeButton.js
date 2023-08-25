@@ -11,20 +11,20 @@ import * as Cesium from 'cesium'
 
 function homeButton() {
   Cesium.Camera.DEFAULT_VIEW_RECTANGLE = Cesium.Rectangle.fromDegrees(80, 26, 150.0, 35.5) // 修改默认显示范围
-  Cesium.Camera.DEFAULT_VIEW_FACTOR = -0.2; // 修改默认高度
+  Cesium.Camera.DEFAULT_VIEW_FACTOR = -0.2 // 修改默认高度
 
-  viewer.homeButton.viewModel.command.beforeExecute.addEventListener(function (e) {
+  viewer.homeButton.viewModel.command.beforeExecute.addEventListener(function(e) {
     e.cancel = false // 是否取消原事件
 
     // ! e.cancel = true 时下段代码才生效
     viewer.camera.flyTo({
-      destination: Cesium.Cartesian3.fromDegrees(116.404269, 39.922793, 100000),
+      destination: Cesium.Cartesian3.fromDegrees(116.404269, 39.922793, 100000)
     })
-  });
+  })
 
-  viewer.homeButton.viewModel.duration = 1; // 设置相机移动动画持续时间
-  console.log('viewer.homeButton.viewModel: ', viewer.homeButton.container);
-  viewer.homeButton.viewModel.tooltip = '回到初始姿态';
+  viewer.homeButton.viewModel.duration = 1 // 设置相机移动动画持续时间
+  console.log('viewer.homeButton.viewModel: ', viewer.homeButton.container)
+  viewer.homeButton.viewModel.tooltip = '回到初始姿态'
 
   // 改变图标：修改按钮子元素
   viewer.homeButton.container.querySelector('button').innerHTML =

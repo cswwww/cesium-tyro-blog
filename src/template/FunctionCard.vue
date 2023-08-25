@@ -6,10 +6,10 @@
  * @Description: 管理
 -->
 <script setup>
-import { onMounted, watch } from "vue";
+import { onMounted, watch } from 'vue'
 import EventBus from '@/common/EventBus.js'
 import { ref } from 'vue'
-import { viewer } from "@/utils/createCesium.js";
+import { viewer } from '@/utils/createCesium.js'
 import { ElMessage } from 'element-plus'
 
 // 发送关闭弹窗的消息
@@ -17,7 +17,7 @@ const close = () => {
   EventBus.emit('PopUps', false)
 }
 onMounted(() => {
-});
+})
 </script>
 
 <template>

@@ -1,7 +1,7 @@
 /*
  * @Date: 2023-06-04 10:41:29
  * @LastEditors: ReBeX  420659880@qq.com
- * @LastEditTime: 2023-07-08 17:22:24
+ * @LastEditTime: 2023-08-25 15:19:44
  * @FilePath: \cesium-tyro-blog\src\utils\ImageryLayer\loadImagery.js
  * @Description: 加载影像图层
  * 各个provider的参考：https://zhuanlan.zhihu.com/p/340669216
@@ -19,7 +19,7 @@ const layerOption = {
   contrast: 1, // 对比度（0，3）
   hue: 0, // 色调（0，360）
   saturation: 1, // 饱和度（0，3）
-  gamma: 1, // 伽马校正（0.01，5）
+  gamma: 1 // 伽马校正（0.01，5）
 }
 
 export const loadImagery = {
@@ -35,7 +35,7 @@ export const loadImagery = {
       // rectangle:window.Cesium.Rectangle.fromDegrees(117.26344486210633, 36.67686347861695, 117.273444862106332,  36.68686347861695), // 地图显示范围，弧度制[东,南,西,北]
       maximumLevel: 18,
       enablePickFeatures: true, // 是否应该返回用于选择的附加要素数据，服务需支持Identify操作
-      usePreCachedTilesIfAvailable: true, // 如果为 true，则使用服务器的预缓存切片（如果可用）。如果为 false，则忽略任何预缓存的切片并使用'导出'服务。
+      usePreCachedTilesIfAvailable: true // 如果为 true，则使用服务器的预缓存切片（如果可用）。如果为 false，则忽略任何预缓存的切片并使用'导出'服务。
     })
     const layer = new Cesium.ImageryLayer(imageryProvider, option)
     // viewer.imageryLayers.add(layer, index) // 可以为图层设置index
@@ -44,16 +44,16 @@ export const loadImagery = {
     if (callback) {
       viewer.screenSpaceEventHandler.setInputAction(async function onLeftClick(event) {
         // 获取鼠标点击位置的屏幕坐标
-        const position = event.position;
+        const position = event.position
         const cartographic = window.Cesium.Cartographic.fromCartesian(window.viewer.scene.pickPosition(position))
 
         // 使用pickFeatures方法获取选择的要素信息
         // pickFeatures的条件比较苛刻，比如输入18，则缩放必须处于18级才能点选
-        const promise = imageryProvider.pickFeatures(position.x, position.y, 18, cartographic.longitude, cartographic.latitude);
+        const promise = imageryProvider.pickFeatures(position.x, position.y, 18, cartographic.longitude, cartographic.latitude)
         const features = await promise
 
         callback(features) // 触发回调函数
-      }, window.Cesium.ScreenSpaceEventType.LEFT_CLICK);
+      }, window.Cesium.ScreenSpaceEventType.LEFT_CLICK)
     }
 
     viewer.imageryLayers.add(layer) // (layer,index)
@@ -144,16 +144,16 @@ export const loadImagery = {
     return layer
   },
   // TODO 未完成：加载WMTS
-  wmts: () => {
+  wmts: (option) => {
     const imageryProvider = new Cesium.WebMapTileServiceImageryProvider({
-      url: "https://gibs.earthdata.nasa.gov/wmts/epsg4326/best/MODIS_Terra_CorrectedReflectance_TrueColor/default/{Time}/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}.jpg",
-      layer: "MODIS_Terra_CorrectedReflectance_TrueColor", // 要显示图层
+      url: 'https://gibs.earthdata.nasa.gov/wmts/epsg4326/best/MODIS_Terra_CorrectedReflectance_TrueColor/default/{Time}/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}.jpg',
+      layer: 'MODIS_Terra_CorrectedReflectance_TrueColor', // 要显示图层
       credit: '', // 于表示影像图层的来源及版权信息
       style: 'default',
-      tileMatrixSetID: "250m",
+      tileMatrixSetID: '250m',
       maximumLevel: 5,
-      format: "image/jpeg",
-      clock: viewer.clock,
+      format: 'image/jpeg',
+      clock: viewer.clock
     })
     const layer = new Cesium.ImageryLayer(imageryProvider, option)
     // viewer.imageryLayers.add(layer, index) // 可以为图层设置index
@@ -161,30 +161,30 @@ export const loadImagery = {
     return layer
   },
   // TODO 未完成：加载WMS
-  wms: () => {
+  wms: (option) => {
     const imageryProvider = new Cesium.WebMapServiceImageryProvider({
-      url: "https://nationalmap.gov.au/proxy/http://geoserver.nationalmap.nicta.com.au/geotopo_250k/ows",
-      layers: "Hydrography:bores",
+      url: 'https://nationalmap.gov.au/proxy/http://geoserver.nationalmap.nicta.com.au/geotopo_250k/ows',
+      layers: 'Hydrography:bores',
       parameters: {
-        service: "WMS",
-        format: "image/png",
+        service: 'WMS',
+        format: 'image/png',
         transparent: true
-      },
+      }
     })
     const layer = new Cesium.ImageryLayer(imageryProvider, option)
     // viewer.imageryLayers.add(layer, index) // 可以为图层设置index
     viewer.imageryLayers.add(layer)
     return layer
   },
-  mapbox: () => {
+  mapbox: (option) => {
     const imageryProvider = new Cesium.MapboxStyleImageryProvider({
-      username: "你的账号名称",
+      username: '你的账号名称',
       styleId: '你的地图Id',
-      accessToken: '你的accessToken',
+      accessToken: '你的accessToken'
     })
     const layer = new Cesium.ImageryLayer(imageryProvider, option)
     // viewer.imageryLayers.add(layer, index) // 可以为图层设置index
     viewer.imageryLayers.add(layer)
     return layer
-  },
+  }
 }

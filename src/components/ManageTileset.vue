@@ -6,10 +6,10 @@
  * @Description: 3D Tiles管理
 -->
 <script setup>
-import { onMounted, watch } from "vue";
+import { onMounted, watch } from 'vue'
 import EventBus from '@/common/EventBus.js'
 import { ref } from 'vue'
-import { viewer } from "@/utils/createCesium.js";
+import { viewer } from '@/utils/createCesium.js'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import * as Cesium from 'cesium'
 import { addThreeDTiles } from '@/utils/ThreeDTiles/loadTileset.js'
@@ -29,7 +29,7 @@ const querySearch = [
   { value: '75343' },
   { value: '40866' },
   { value: '8564' },
-  { value: '/src/assets/model/Tileset/sampleBuilding/tileset.json' },
+  { value: '/src/assets/model/Tileset/sampleBuilding/tileset.json' }
 ]
 
 // 发送关闭弹窗的消息
@@ -57,19 +57,19 @@ const confirm = () => {
 
 // 刷新
 const refresh = () => {
-  isRotating.value = true;
+  isRotating.value = true
   activeNames.value = 99
   setTimeout(() => {
-    isRotating.value = false;
-  }, 1000); // 控制旋转的时间，1 秒钟
+    isRotating.value = false
+  }, 1000) // 控制旋转的时间，1 秒钟
 
-  const tilesets = viewer.scene.primitives;
+  const tilesets = viewer.scene.primitives
   tilesetArray.value = []
 
   for (let i = 0; i < tilesets.length; i++) {
-    let primitive = tilesets.get(i);
+    const primitive = tilesets.get(i)
     if (primitive instanceof Cesium.Cesium3DTileset) {
-      tilesetArray.value.push(primitive);
+      tilesetArray.value.push(primitive)
     }
   }
 }
@@ -94,7 +94,7 @@ const picking = (item) => {
       ElMessageBox.alert('_batchId:' + feature._batchId, '要素信息', {
         // autofocus: false,
         closeOnClickModal: true,
-        confirmButtonText: 'OK',
+        confirmButtonText: 'OK'
       })
     })
   } else {
@@ -107,10 +107,10 @@ const zoomToTileset = (item) => {
 
 onMounted(() => {
   refresh()
-  if (tilesetArray.value.length == 0) {
+  if (tilesetArray.value.length === 0) {
     showAdd.value = true
   }
-});
+})
 </script>
 
 <template>
@@ -206,12 +206,10 @@ onMounted(() => {
   width: 340px;
 }
 
-
 .refresh-icon {
   margin-left: 5px;
   cursor: pointer;
 }
-
 
 :deep(.el-card__body) {
   padding: 0 20px;

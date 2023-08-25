@@ -4,7 +4,7 @@
  * @LastEditTime: 2023-07-19 11:58:33
  * @FilePath: \cesium-tyro-blog\src\utils\ThreeDTiles\translateTileset.js
  * @Description: 平移（Translation）：将Tileset在三维场景中沿着指定的方向平移
- * 
+ *
  * import {setPosition} from '@/utils/ThreeDTiles/translateTileset.js'
  * setPosition(tileset, 113.27, 23.13, 10)
  */
@@ -27,8 +27,8 @@ function setPosition(tileset, lng, lat, h) {
     tileset.boundingSphere.center
   )
   const { longitude, latitude, height } = cartographic
-  console.log('h: ', h);
-  console.log('height: ', height);
+  console.log('h: ', h)
+  console.log('height: ', height)
 
   // 模型包围球的中心点坐标，输出以笛卡尔坐标系表示的三维坐标点
   const surface = Cesium.Cartesian3.fromRadians(
@@ -42,7 +42,7 @@ function setPosition(tileset, lng, lat, h) {
     lng || Cesium.Math.toDegrees(longitude),
     lat || Cesium.Math.toDegrees(latitude),
     height + h || height
-  );
+  )
 
   // 计算差向量：计算tileset的平移量，并将其应用到modelMatrix中
   const translation = Cesium.Cartesian3.subtract(
@@ -52,7 +52,7 @@ function setPosition(tileset, lng, lat, h) {
   )
 
   // 修改模型的变换矩阵，通过四维矩阵
-  tileset.modelMatrix = Cesium.Matrix4.fromTranslation(translation);
+  tileset.modelMatrix = Cesium.Matrix4.fromTranslation(translation)
   // viewer.zoomTo(tileset);
 }
 
@@ -64,7 +64,7 @@ function setPosition(tileset, lng, lat, h) {
  */
 function serMatrix(tileset, matrix) {
   tileset.modelMatrix = matrix || Cesium.Matrix4.IDENTITY
-  viewer.zoomTo(tileset);
+  viewer.zoomTo(tileset)
 }
 
 function setScale(tileset) {
@@ -72,20 +72,19 @@ function setScale(tileset) {
   const cartographic = Cesium.Cartographic.fromCartesian(tileset.boundingSphere.center)
   const { longitude, latitude, height } = cartographic
 
-
   const surface = Cesium.Cartesian3.fromRadians(
     longitude,
     latitude,
     height
   )
 
-  const m = Cesium.Transforms.eastNorthUpToFixedFrame(surface);
-  const scale = Cesium.Matrix4.fromUniformScale(3); // 缩放比例，大于1放大，小于1缩小
+  const m = Cesium.Transforms.eastNorthUpToFixedFrame(surface)
+  const scale = Cesium.Matrix4.fromUniformScale(3) // 缩放比例，大于1放大，小于1缩小
 
   Cesium.Matrix4.multiply(m, scale, m)
-  tileset._root.transform = m;
+  tileset._root.transform = m
 
-  viewer.zoomTo(tileset);
+  viewer.zoomTo(tileset)
 }
 
 export {

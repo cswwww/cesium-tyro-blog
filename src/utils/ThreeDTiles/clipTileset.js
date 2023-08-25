@@ -51,8 +51,8 @@ export function planeClipping(tileset) {
 
   let selectedPlane // 当前选中的裁剪平面
   const mouseHandler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas) // 鼠标操作句柄
-  
-  mouseHandler.setInputAction(function (movement) {
+
+  mouseHandler.setInputAction(function(movement) {
     // 拾取裁剪面实体
     const pickedObject = viewer.scene.pick(movement.position)
 
@@ -61,13 +61,12 @@ export function planeClipping(tileset) {
       selectedPlane = pickedObject.id.plane
       selectedPlane.material = Cesium.Color.WHITE.withAlpha(0.05)
 
-      viewer.scene.screenSpaceCameraController.enableInputs = false; // 将相机控制输入关闭
+      viewer.scene.screenSpaceCameraController.enableInputs = false // 将相机控制输入关闭
     }
-
   }, Cesium.ScreenSpaceEventType.LEFT_DOWN)
 
-  mouseHandler.setInputAction(function () {
-    console.log('selectedPlane: ', selectedPlane);
+  mouseHandler.setInputAction(function() {
+    console.log('selectedPlane: ', selectedPlane)
 
     if (Cesium.defined(selectedPlane)) {
       // 鼠标左键抬起时，设置裁剪平面实体的颜色、边线、销毁当前选中的裁剪平面实体
@@ -77,7 +76,7 @@ export function planeClipping(tileset) {
     viewer.scene.screenSpaceCameraController.enableInputs = true // 恢复相机控制输入
   }, Cesium.ScreenSpaceEventType.LEFT_UP)
 
-  mouseHandler.setInputAction(function (movement) {
+  mouseHandler.setInputAction(function(movement) {
     if (Cesium.defined(selectedPlane)) {
       // 鼠标移动后，计算移动量，并将移动量叠加到targetY
       const deltaY = movement.startPosition.y - movement.endPosition.y
@@ -87,7 +86,7 @@ export function planeClipping(tileset) {
 }
 
 export function removePlaneClipping(tileset) {
-  console.log('tileset.clippingPlanes: ', viewer.entities);
+  console.log('tileset.clippingPlanes: ', viewer.entities)
 
   viewer.entities.removeAll()
   tileset.clippingPlanes.removeAll()

@@ -9,51 +9,51 @@ import * as Cesium from 'cesium'
 
 export default class EllipsoidFadeMaterialProperty {
   constructor(options) {
-    this._definitionChanged = new Cesium.Event();
-    this._color = undefined;
-    this._colorSubscription = undefined;
-    this._time = (new Date()).getTime();
-    this.color = options.color;
-    this.duration = options.duration;
-  };
+    this._definitionChanged = new Cesium.Event()
+    this._color = undefined
+    this._colorSubscription = undefined
+    this._time = (new Date()).getTime()
+    this.color = options.color
+    this.duration = options.duration
+  }
 
   get isConstant() {
-    return false;
+    return false
   }
 
   get definitionChanged() {
-    return this._definitionChanged;
+    return this._definitionChanged
   }
 
   getType(time) {
-    return Cesium.Material.EllipsoidFadeMaterialType;
+    return Cesium.Material.EllipsoidFadeMaterialType
   }
 
   getValue(time, result) {
     if (!Cesium.defined(result)) {
-      result = {};
+      result = {}
     }
 
-    result.color = Cesium.Property.getValueOrClonedDefault(this._color, time, Cesium.Color.WHITE, result.color);
-    result.time = (((new Date()).getTime() - this._time) % this.duration) / this.duration;
-    return result;
+    result.color = Cesium.Property.getValueOrClonedDefault(this._color, time, Cesium.Color.WHITE, result.color)
+    result.time = (((new Date()).getTime() - this._time) % this.duration) / this.duration
+    return result
   }
 
   equals(other) {
     return (this === other ||
       (other instanceof EllipsoidFadeMaterialProperty &&
-        Property.equals(this._color, other._color))
+        Cesium.Property.equals(this._color, other._color))
     )
   }
 }
 
 Object.defineProperties(EllipsoidFadeMaterialProperty.prototype, {
-  color: Cesium.createPropertyDescriptor('color'),
+  color: Cesium.createPropertyDescriptor('color')
 })
 
 // Cesium.EllipsoidFadeMaterialProperty = EllipsoidFadeMaterialProperty;
-Cesium.Material.EllipsoidFadeMaterialProperty = 'EllipsoidFadeMaterialProperty';
-Cesium.Material.EllipsoidFadeMaterialType = 'EllipsoidFadeMaterialType';
+Cesium.Material.EllipsoidFadeMaterialProperty = 'EllipsoidFadeMaterialProperty'
+Cesium.Material.EllipsoidFadeMaterialType = 'EllipsoidFadeMaterialType'
 Cesium.Material.EllipsoidFadeMaterialSource =
   `
   czm_material czm_getMaterial(czm_materialInput materialInput)
@@ -80,7 +80,7 @@ Cesium.Material.EllipsoidFadeMaterialSource =
   // "float dis = distance(st, vec2(0.5, 0.5));\n" +
   // "float per = fract(time);\n" +
   // "if(dis > per * 0.5){\n" +
-  // "material.alpha = 0.0;\n"+                     
+  // "material.alpha = 0.0;\n"+
   // "discard;\n" +
   // "}else {\n" +
   // "material.alpha = color.a  * dis / per / 1.0;\n" +
@@ -95,7 +95,6 @@ Cesium.Material.EllipsoidFadeMaterialSource =
 // 接下来就是一个if判断了，然后就是设置透明度alpha为0。discard关键词在opengl中是片段截取的意思，相当于这一块不要了。else里面则是将透明度进行了一个计算。
 // ! 上述内容来源：https://blog.csdn.net/GhostPaints/article/details/124382690
 
-
 Cesium.Material._materialCache.addMaterial(Cesium.Material.EllipsoidFadeMaterialType, {
   fabric: {
     type: Cesium.Material.EllipsoidFadeMaterialType,
@@ -105,12 +104,11 @@ Cesium.Material._materialCache.addMaterial(Cesium.Material.EllipsoidFadeMaterial
     },
     source: Cesium.Material.EllipsoidFadeMaterialSource
   },
-  translucent: function (material) {
-    return true;
+  translucent: function(material) {
+    return true
   }
 })
-console.log('成功加载扩散圆材质');
-
+console.log('成功加载扩散圆材质')
 
 // ? 如何使用
 // import EllipsoidFadeMaterialProperty from '@/utils/Material/EllipsoidFadeMaterialProperty.js'

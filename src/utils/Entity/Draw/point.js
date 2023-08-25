@@ -7,7 +7,7 @@ import * as Cesium from 'cesium'
 function draw() {
   // 注册屏幕点击事件
   const handler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas)
-  handler.setInputAction(function (event) {
+  handler.setInputAction(function(event) {
     // 转换为不包含地形的笛卡尔坐标
     const clickPosition = viewer.scene.camera.pickEllipsoid(event.position)
     // 转经纬度（弧度）坐标

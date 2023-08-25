@@ -12,14 +12,14 @@ import { pickCursor } from '@/utils/Event/cursorEvent.js'
 
 // 坐标获取与转换
 function _coordsTransform(event, got, not) {
-  const ray = viewer.camera.getPickRay(event.position || event.endPosition); // 从摄影机位置创建一条光线，穿过世界坐标中position处的像素。
+  const ray = viewer.camera.getPickRay(event.position || event.endPosition) // 从摄影机位置创建一条光线，穿过世界坐标中position处的像素。
   // const cartesian = viewer.scene.pickPosition(event.position || event.endPosition); // 获取倾斜摄影或模型点击处的坐标
-  const cartesian = viewer.scene.camera.pickEllipsoid(event.position || event.endPosition, viewer.scene.globe.ellipsoid); // 获取鼠标点的对应椭球面位置
+  const cartesian = viewer.scene.camera.pickEllipsoid(event.position || event.endPosition, viewer.scene.globe.ellipsoid) // 获取鼠标点的对应椭球面位置
   // const cartesian = viewer.scene.globe.pick(ray, viewer.scene); // 获取加载地形后对应的经纬度和高程
   if (Cesium.defined(cartesian)) {
-    got?.(cartesian);
+    got?.(cartesian)
   } else {
-    not?.();
+    not?.()
   }
 }
 
@@ -28,54 +28,54 @@ function getLength(points) {
     return 0
   }
   // 计算距离
-  let length = Cesium.Cartesian3.distance(points[points.length - 2], points[points.length - 1]);
+  const length = Cesium.Cartesian3.distance(points[points.length - 2], points[points.length - 1])
   return length
 }
 
 // 坐标拾取
 class CoordinatePicker {
   constructor() {
-    this.globeElement = document.getElementById("cesiumContainer"); // 替换为你的地球场景容器元素ID
-    this.floatInfoElement = document.createElement('div'); // 创建指针旁的浮动信息元素
-    this.measureHandler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas);// 测量工具的交互句柄单例
+    this.globeElement = document.getElementById('cesiumContainer') // 替换为你的地球场景容器元素ID
+    this.floatInfoElement = document.createElement('div') // 创建指针旁的浮动信息元素
+    this.measureHandler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas)// 测量工具的交互句柄单例
 
     // 新建DataSource用来管理entities
-    this.measureCollection = new Cesium.CustomDataSource("measureEntityCollection");
-    viewer.dataSources.add(this.measureCollection);
+    this.measureCollection = new Cesium.CustomDataSource('measureEntityCollection')
+    viewer.dataSources.add(this.measureCollection)
 
     this._floatInfoStyle()
   }
 
   // 修改浮动信息元素的样式和内容
   _floatInfoStyle() {
-    this.globeElement.appendChild(this.floatInfoElement);
+    this.globeElement.appendChild(this.floatInfoElement)
 
-    this.floatInfoElement.style.position = 'fixed';
-    this.floatInfoElement.style.bottom = '10px';
-    this.floatInfoElement.style.left = '10px';
+    this.floatInfoElement.style.position = 'fixed'
+    this.floatInfoElement.style.bottom = '10px'
+    this.floatInfoElement.style.left = '10px'
 
     this.floatInfoElement.onmouseover = () => {
-      this.floatInfoElement.style.display = 'none';
+      this.floatInfoElement.style.display = 'none'
     }
   }
 
   // 鼠标移动事件处理函数
   _onMouseMove(movement) {
     if (!movement) {
-      this.floatInfoElement.style.display = 'none';
+      this.floatInfoElement.style.display = 'none'
     }
     _coordsTransform(movement, (cartesian) => {
-      const cartographic = Cesium.Cartographic.fromCartesian(cartesian);
-      const longitude = Cesium.Math.toDegrees(cartographic.longitude);
-      const latitude = Cesium.Math.toDegrees(cartographic.latitude);
+      const cartographic = Cesium.Cartographic.fromCartesian(cartesian)
+      const longitude = Cesium.Math.toDegrees(cartographic.longitude)
+      const latitude = Cesium.Math.toDegrees(cartographic.latitude)
 
       // 更新经纬度信息
-      this.floatInfoElement.innerHTML = `经度: ${longitude.toFixed(6)}<br>纬度: ${latitude.toFixed(6)}`;
-      this.floatInfoElement.style.display = 'block';
-      this.floatInfoElement.style.left = `${movement.endPosition.x + 10}px`;
-      this.floatInfoElement.style.top = `${movement.endPosition.y + 10}px`;
+      this.floatInfoElement.innerHTML = `经度: ${longitude.toFixed(6)}<br>纬度: ${latitude.toFixed(6)}`
+      this.floatInfoElement.style.display = 'block'
+      this.floatInfoElement.style.left = `${movement.endPosition.x + 10}px`
+      this.floatInfoElement.style.top = `${movement.endPosition.y + 10}px`
     }, () => {
-      this.floatInfoElement.style.display = 'none';
+      this.floatInfoElement.style.display = 'none'
     })
   }
 
@@ -83,11 +83,11 @@ class CoordinatePicker {
   _addBillboard(event) {
     _coordsTransform(event, (cartesian) => {
       // 将 Cartesian3 坐标转换为 Cartographic 格式
-      const cartographic = Cesium.Cartographic.fromCartesian(cartesian);
+      const cartographic = Cesium.Cartographic.fromCartesian(cartesian)
       // 将弧度表示的经纬度转换为度表示
-      const longitude = Cesium.Math.toDegrees(cartographic.longitude);
-      const latitude = Cesium.Math.toDegrees(cartographic.latitude);
-      const height = cartographic.height;
+      const longitude = Cesium.Math.toDegrees(cartographic.longitude)
+      const latitude = Cesium.Math.toDegrees(cartographic.latitude)
+      const height = cartographic.height
       // 绘制一个圆点
       const point = this.measureCollection.entities.add({
         position: cartesian,
@@ -97,14 +97,14 @@ class CoordinatePicker {
           outlineColor: Cesium.Color.WHITE,
           disableDepthTestDistance: Number.POSITIVE_INFINITY,
           outlineWidth: 1
-        },
-      });
+        }
+      })
       // 创建广告牌并显示经纬度信息
       const label = this.measureCollection.entities.add({
         position: cartesian,
         billboard: {
           // image: '',
-          scale: 1.0,
+          scale: 1.0
         },
         label: {
           text: `经度: ${longitude.toFixed(6)}\n纬度: ${latitude.toFixed(6)}`,
@@ -114,17 +114,17 @@ class CoordinatePicker {
           pixelOffset: new Cesium.Cartesian2(0, -30), // 广告牌位置上移一些
           horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
           verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
-          disableDepthTestDistance: Number.POSITIVE_INFINITY, // 避免被遮挡
+          disableDepthTestDistance: Number.POSITIVE_INFINITY // 避免被遮挡
         }
-      });
+      })
     })
   }
 
   // ! 坐标拾取
   start() {
     pickCursor() // 修改指针
-    this.measureHandler.setInputAction(this._onMouseMove.bind(this), Cesium.ScreenSpaceEventType.MOUSE_MOVE);
-    this.measureHandler.setInputAction(this._addBillboard.bind(this), Cesium.ScreenSpaceEventType.LEFT_CLICK);
+    this.measureHandler.setInputAction(this._onMouseMove.bind(this), Cesium.ScreenSpaceEventType.MOUSE_MOVE)
+    this.measureHandler.setInputAction(this._addBillboard.bind(this), Cesium.ScreenSpaceEventType.LEFT_CLICK)
   }
 
   // ! 清空所有测量绘制
@@ -136,7 +136,7 @@ class CoordinatePicker {
   destroy() {
     pickCursor(false)
     this.clear()
-    this.floatInfoElement.style.display = 'none';
+    this.floatInfoElement.style.display = 'none'
     this.measureHandler.removeInputAction(Cesium.ScreenSpaceEventType.MOUSE_MOVE)
     this.measureHandler.removeInputAction(Cesium.ScreenSpaceEventType.LEFT_CLICK)
   }
@@ -149,108 +149,108 @@ class MeasureDistance {
   constructor() {
     if (!Cesium.Entity.supportsPolylinesOnTerrain(viewer.scene)) {
       window.alert(
-        "This browser does not support polylines on terrain."
-      );
+        'This browser does not support polylines on terrain.'
+      )
     }
     if (!MeasureDistance.instance) { // 首次使用构造器实例
-      this.globeElement = document.getElementById("cesiumContainer"); // 替换为你的地球场景容器元素ID
-      this.floatInfoElement = document.createElement('div'); // 创建指针旁的浮动信息元素
+      this.globeElement = document.getElementById('cesiumContainer') // 替换为你的地球场景容器元素ID
+      this.floatInfoElement = document.createElement('div') // 创建指针旁的浮动信息元素
       this._floatInfoStyle()
 
       // 新建DataSource用来管理entities
-      this.nodeCollection = new Cesium.CustomDataSource("nodeEntityCollection");
-      this.lineCollection = new Cesium.CustomDataSource("lineEntityCollection");
-      this.labelCollection = new Cesium.CustomDataSource("labelEntityCollection");
-      viewer.dataSources.add(this.nodeCollection);
-      viewer.dataSources.add(this.lineCollection);
-      viewer.dataSources.add(this.labelCollection);
+      this.nodeCollection = new Cesium.CustomDataSource('nodeEntityCollection')
+      this.lineCollection = new Cesium.CustomDataSource('lineEntityCollection')
+      this.labelCollection = new Cesium.CustomDataSource('labelEntityCollection')
+      viewer.dataSources.add(this.nodeCollection)
+      viewer.dataSources.add(this.lineCollection)
+      viewer.dataSources.add(this.labelCollection)
 
-      this.addHandler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas); // 新增点位的交互句柄
-      this.finHandler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas); // 完成点选的交互句柄
-      this.moveHandler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas); // 完成点选的交互句柄
+      this.addHandler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas) // 新增点位的交互句柄
+      this.finHandler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas) // 完成点选的交互句柄
+      this.moveHandler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas) // 完成点选的交互句柄
 
-      viewer.cesiumWidget.screenSpaceEventHandler.removeInputAction(Cesium.ScreenSpaceEventType.LEFT_DOUBLE_CLICK); // 关闭左键双击事件
+      viewer.cesiumWidget.screenSpaceEventHandler.removeInputAction(Cesium.ScreenSpaceEventType.LEFT_DOUBLE_CLICK) // 关闭左键双击事件
       MeasureDistance.instance = this // 将this挂载到MeasureDistance这个类的instance属性上
     }
     return MeasureDistance.instance // 返回单例
   }
   // 修改浮动信息元素的样式和内容
   _floatInfoStyle() {
-    this.globeElement.appendChild(this.floatInfoElement);
+    this.globeElement.appendChild(this.floatInfoElement)
 
-    this.floatInfoElement.style.position = 'fixed';
-    this.floatInfoElement.style.bottom = '10px';
-    this.floatInfoElement.style.left = '10px';
+    this.floatInfoElement.style.position = 'fixed'
+    this.floatInfoElement.style.bottom = '10px'
+    this.floatInfoElement.style.left = '10px'
 
     this.floatInfoElement.onmouseover = () => {
-      this.floatInfoElement.style.display = 'none';
+      this.floatInfoElement.style.display = 'none'
     }
   }
   // ! 开始绘制
   start() {
     pickCursor(true, 'pointer')
 
-    this.activePoint = this.createCursorPoint({ x: 0, y: 0, z: 0 }); // 默认显示动态点
-    this.activePoint.position.setValue(undefined); // 隐藏指针点
+    this.activePoint = this.createCursorPoint({ x: 0, y: 0, z: 0 }) // 默认显示动态点
+    this.activePoint.position.setValue(undefined) // 隐藏指针点
 
-    let pointList = []; // 初始化当前的线坐标数组
+    const pointList = [] // 初始化当前的线坐标数组
     // 事件：新增点
     this.addHandler.setInputAction(event => {
       this.distance = parseFloat(this.distance) + parseFloat(this.dynamicDistance)
 
       _coordsTransform(event, (cartesian) => {
-        this.nodeCollection.entities.add(this.createNodePoint(cartesian)); // 绘制节点
-        this.labelCollection.entities.add(this.createNodeLabel(cartesian)); // 绘制节点
+        this.nodeCollection.entities.add(this.createNodePoint(cartesian)) // 绘制节点
+        this.labelCollection.entities.add(this.createNodeLabel(cartesian)) // 绘制节点
 
-        pointList.push(cartesian);
+        pointList.push(cartesian)
         // 绘制动态线：首次点击后触发
         if (pointList.length === 1) {
           pointList.push(cartesian) // 加入一个动态点
         }
         // 绘制线：点击2次后触发
         if (pointList.length === 2) {
-          const dynamicPositions = new Cesium.CallbackProperty(() => pointList, false);
+          const dynamicPositions = new Cesium.CallbackProperty(() => pointList, false)
           this.lineCollection.entities.add(this.createNormalLine(dynamicPositions)) // 绘制线
         }
       })
-    }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
+    }, Cesium.ScreenSpaceEventType.LEFT_CLICK)
 
     // 事件：鼠标移动
     this.moveHandler.setInputAction(event => {
       if (!event) {
-        this.floatInfoElement.style.display = 'none';
+        this.floatInfoElement.style.display = 'none'
       }
       _coordsTransform(event, (cartesian) => {
-        this.activePoint.position.setValue(cartesian);
+        this.activePoint.position.setValue(cartesian)
         if (pointList.length > 0) {
-          pointList.pop();
-          pointList.push(cartesian);
+          pointList.pop()
+          pointList.push(cartesian)
         }
         this.dynamicDistance = getLength(pointList)
-        this.floatInfoElement.innerHTML = (this.dynamicDistance + this.distance).toFixed(2) + '米';
-        this.floatInfoElement.style.display = 'block';
-        this.floatInfoElement.style.left = `${event.endPosition.x + 10}px`;
-        this.floatInfoElement.style.top = `${event.endPosition.y + 10}px`;
+        this.floatInfoElement.innerHTML = (this.dynamicDistance + this.distance).toFixed(2) + '米'
+        this.floatInfoElement.style.display = 'block'
+        this.floatInfoElement.style.left = `${event.endPosition.x + 10}px`
+        this.floatInfoElement.style.top = `${event.endPosition.y + 10}px`
       }, () => {
-        this.floatInfoElement.style.display = 'none';
+        this.floatInfoElement.style.display = 'none'
       })
-    }, Cesium.ScreenSpaceEventType.MOUSE_MOVE);
+    }, Cesium.ScreenSpaceEventType.MOUSE_MOVE)
 
     // 事件：完成绘制
     this.finHandler.setInputAction(event => {
-      pointList.pop();
+      pointList.pop()
 
       if (pointList.length < 1) { // 一个节点都没添加
         alert('请至少选2个点')
         return
       } else if (pointList.length < 2) { // 如果点击了一次，就会马上创建点和线，那么就需要清除掉最末的entity，否则会污染数据集
         alert('请至少选2个点')
-        this.nodeCollection.entities.remove(this.nodeCollection.entities.values[this.nodeCollection.entities.values.length - 1]);
+        this.nodeCollection.entities.remove(this.nodeCollection.entities.values[this.nodeCollection.entities.values.length - 1])
         return
       }
       this.stop()
       this.start()
-    }, Cesium.ScreenSpaceEventType.RIGHT_CLICK);
+    }, Cesium.ScreenSpaceEventType.RIGHT_CLICK)
   }
 
   // 结束绘制
@@ -261,7 +261,7 @@ class MeasureDistance {
     this.moveHandler.removeInputAction(Cesium.ScreenSpaceEventType.MOUSE_MOVE)
     this.finHandler.removeInputAction(Cesium.ScreenSpaceEventType.RIGHT_CLICK)
 
-    viewer.entities.remove(this.activePoint); // 移除动态点
+    viewer.entities.remove(this.activePoint) // 移除动态点
   }
 
   // 绘制：节点
@@ -269,10 +269,10 @@ class MeasureDistance {
     return new Cesium.Entity({
       position: cartesian,
       point: {
-        pixelSize: 3, // 像素大小，默认: 1 
+        pixelSize: 3, // 像素大小，默认: 1
         heightReference: Cesium.HeightReference.CLAMP_TO_GROUND, // 表示相对于地形的位置
         color: Cesium.Color.BLUE, // 默认: 白
-        disableDepthTestDistance: Number.POSITIVE_INFINITY,
+        disableDepthTestDistance: Number.POSITIVE_INFINITY
       }
     })
   }
@@ -281,13 +281,13 @@ class MeasureDistance {
     const point = viewer.entities.add({
       position: cartesian,
       point: {
-        pixelSize: 5, // 像素大小，默认: 1 
+        pixelSize: 5, // 像素大小，默认: 1
         heightReference: Cesium.HeightReference.CLAMP_TO_GROUND, // 表示相对于地形的位置
         color: Cesium.Color.SKYBLUE, // 默认: 白
-        disableDepthTestDistance: Number.POSITIVE_INFINITY,
-      },
-    });
-    return point;
+        disableDepthTestDistance: Number.POSITIVE_INFINITY
+      }
+    })
+    return point
   }
   createNodeLabel(cartesian) {
     const label = viewer.entities.add({
@@ -298,10 +298,10 @@ class MeasureDistance {
         heightReference: Cesium.HeightReference.CLAMP_TO_GROUND,
         style: Cesium.LabelStyle.FILL_AND_OUTLINE,
         eyeOffset: Cesium.Cartesian3.ZERO,
-        disableDepthTestDistance: Number.POSITIVE_INFINITY,
-      },
-    });
-    return label;
+        disableDepthTestDistance: Number.POSITIVE_INFINITY
+      }
+    })
+    return label
   }
   // 绘制：线
   createNormalLine(list) {
@@ -309,8 +309,8 @@ class MeasureDistance {
       polyline: {
         positions: list,
         clampToGround: true,
-        width: 2,
-      },
+        width: 2
+      }
     })
   }
   clear() {
@@ -321,7 +321,7 @@ class MeasureDistance {
 
   // 销毁：清空绘制与监听
   destroy() {
-    this.floatInfoElement.style.display = 'none';
+    this.floatInfoElement.style.display = 'none'
 
     pickCursor(false)
     this.stop()

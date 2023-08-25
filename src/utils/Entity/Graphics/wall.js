@@ -9,7 +9,6 @@
 import { viewer } from '@/utils/createCesium.js' // 引入地图对象
 import * as Cesium from 'cesium'
 
-
 // viewer.entities.add({
 //   name: "立体墙",
 //   wall: {
@@ -30,7 +29,7 @@ function add() {
       200000.0,
       -90.0,
       44.0,
-      200000.0,
+      200000.0
     ]),
 
     // 用于墙底而不是地球表面的高度数组
@@ -46,7 +45,7 @@ function add() {
     outlineColor: Cesium.Color.BLACK,
     outlineWidth: 1.0,
 
-    shadows: Cesium.ShadowMode.DISABLED,
+    shadows: Cesium.ShadowMode.DISABLED
     // distanceDisplayCondition: new Cesium.DistanceDisplayCondition(
     //   1.0e3,
     //   2.0e3
@@ -54,8 +53,8 @@ function add() {
   }
   const entity = viewer.entities.add({
     wall: options
-  });
-  viewer.zoomTo(entity);
+  })
+  viewer.zoomTo(entity)
   return entity
 }
 

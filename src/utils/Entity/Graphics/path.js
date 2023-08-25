@@ -11,7 +11,7 @@ import { viewer } from '@/utils/createCesium.js' // 引入地图对象
 import * as Cesium from 'cesium'
 
 function add(x = 122, y = 23) {
-  const position = Cesium.Cartesian3.fromDegrees(x, y);
+  const position = Cesium.Cartesian3.fromDegrees(x, y)
   const options = {
     show: true,
     leadTime: 0,
@@ -21,14 +21,14 @@ function add(x = 122, y = 23) {
     material: new Cesium.PolylineGlowMaterialProperty({
       glowPower: 0.3,
       taperPower: 0.3,
-      color: Cesium.Color.PALEGOLDENROD,
-    }),
+      color: Cesium.Color.PALEGOLDENROD
+    })
   }
   const entity = viewer.entities.add({
     position,
     path: options
-  });
-  viewer.zoomTo(entity);
+  })
+  viewer.zoomTo(entity)
   return entity
 }
 

@@ -10,7 +10,7 @@ import { viewer } from '@/utils/createCesium.js' // 引入地图对象
 import * as Cesium from 'cesium'
 
 function add(x = 122, y = 23) {
-  const position = Cesium.Cartesian3.fromDegrees(x, y);
+  const position = Cesium.Cartesian3.fromDegrees(x, y)
   const options = {
     show: true,
     radii: new Cesium.Cartesian3(200000.0, 200000.0, 300000.0), // 椭球半径
@@ -30,7 +30,7 @@ function add(x = 122, y = 23) {
     slicePartitions: 64, // 延经度线切割的次数
     subdivisions: 128, // 每个轮廓环的样本数，确定曲率的粒度
 
-    shadows: Cesium.ShadowMode.DISABLED,
+    shadows: Cesium.ShadowMode.DISABLED
     // distanceDisplayCondition: new Cesium.DistanceDisplayCondition(
     //   1.0e3,
     //   2.0e3
@@ -39,8 +39,8 @@ function add(x = 122, y = 23) {
   const entity = viewer.entities.add({
     position,
     ellipsoid: options
-  });
-  viewer.zoomTo(entity);
+  })
+  viewer.zoomTo(entity)
   return entity
 }
 

@@ -10,7 +10,7 @@ import { viewer } from '@/utils/createCesium.js' // 引入地图对象
 import * as Cesium from 'cesium'
 
 function add(x = 122, y = 23) {
-  const position = Cesium.Cartesian3.fromDegrees(x, y);
+  const position = Cesium.Cartesian3.fromDegrees(x, y)
   const options = {
     show: true,
     semiMajorAxis: 300000.0, // 长半轴距离
@@ -38,13 +38,13 @@ function add(x = 122, y = 23) {
 
     // 在地面上时将对地形，3D tiles还是对两者进行分类  type:ClassificationType  default:ClassificationType.BOTH
     // TERRAIN 将仅对地形进行分类;CESIUM_3D_TILE 将仅对3D瓷砖进行分类;BOTH	将同时对Terrain和3D Tile进行分类。
-    classificationType: Cesium.ClassificationType.BOTH,
+    classificationType: Cesium.ClassificationType.BOTH
   }
   const entity = viewer.entities.add({
     position,
     ellipse: options
-  });
-  viewer.zoomTo(entity);
+  })
+  viewer.zoomTo(entity)
   return entity
 }
 

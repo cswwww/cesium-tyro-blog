@@ -9,7 +9,7 @@
  */
 import { viewer } from '@/utils/createCesium.js' // 引入地图对象
 import * as Cesium from 'cesium'
-import { loadImagery } from "@/utils/ImageryLayer/loadImagery.js";
+import { loadImagery } from '@/utils/ImageryLayer/loadImagery.js'
 
 let leftImagery // 左边的影像
 let rightImagery // 右边的影像
@@ -54,7 +54,7 @@ export class splitImagery {
   // 设置分割线左侧展示的影像
   setLeftImagery(layer = loadImagery.ion('', 3812)) {
     if (leftImagery) { // 如果已经有图层了则销毁旧的加载新的
-      viewer.imageryLayers.remove(leftImagery, true); // 移除图层
+      viewer.imageryLayers.remove(leftImagery, true) // 移除图层
     }
     leftImagery = layer
     // viewer.imageryLayers.add(layer)
@@ -64,7 +64,7 @@ export class splitImagery {
   // 设置分割线右侧展示的影像
   setRightImagery(layer = loadImagery.ion('', 3845)) {
     if (rightImagery) {
-      viewer.imageryLayers.remove(rightImagery, true); // 移除图层
+      viewer.imageryLayers.remove(rightImagery, true) // 移除图层
     }
     rightImagery = layer
     // viewer.imageryLayers.add(layer)
@@ -73,10 +73,10 @@ export class splitImagery {
 
   // 获取当前场景中所有的影像图层并保存到数组中
   saveImageryLayers() {
-    const layers = viewer.imageryLayers;
+    const layers = viewer.imageryLayers
     this.imageryLayers = []
     for (let i = 0; i < layers.length; i++) {
-      this.imageryLayers.push(layers.get(i));
+      this.imageryLayers.push(layers.get(i))
     }
 
     layers.removeAll(false) // 移除所有 ImageryLayer
@@ -84,17 +84,17 @@ export class splitImagery {
 
   // 重新加载之前保存的影像图层
   reloadImageryLayers() {
-    const layers = viewer.imageryLayers;
+    const layers = viewer.imageryLayers
     // layers.removeAll(false) // 移除所有 ImageryLayer
     if (leftImagery) {
-      viewer.imageryLayers.remove(leftImagery, true); // 移除图层
+      viewer.imageryLayers.remove(leftImagery, true) // 移除图层
     }
     if (rightImagery) {
-      viewer.imageryLayers.remove(rightImagery, true); // 移除图层
+      viewer.imageryLayers.remove(rightImagery, true) // 移除图层
     }
 
     for (let i = 0; i < this.imageryLayers.length; i++) {
-      layers.add(this.imageryLayers[i]);
+      layers.add(this.imageryLayers[i])
     }
   }
 
@@ -124,7 +124,6 @@ export class splitImagery {
         this.slider.style.left = '0%'
       }
     }, Cesium.ScreenSpaceEventType.LEFT_UP)
-
   }
 
   // 不卷了
@@ -159,8 +158,6 @@ export class splitImagery {
     viewer.scene.splitPosition = splitPosition
   }
 }
-
-
 
 /**
  * @description: 即调即用的简单版影像卷帘功能

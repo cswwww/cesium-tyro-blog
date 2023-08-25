@@ -10,32 +10,32 @@ import * as Cesium from 'cesium'
 
 export default class LineFlickerMaterialProperty {
   constructor(options) {
-    this._definitionChanged = new Cesium.Event();
-    this._color = undefined;
-    this._speed = undefined;
-    this.color = options.color;
-    this.speed = options.speed;
-  };
+    this._definitionChanged = new Cesium.Event()
+    this._color = undefined
+    this._speed = undefined
+    this.color = options.color
+    this.speed = options.speed
+  }
 
   get isConstant() {
-    return false;
+    return false
   }
 
   get definitionChanged() {
-    return this._definitionChanged;
+    return this._definitionChanged
   }
 
   getType(time) {
-    return Cesium.Material.LineFlickerMaterialType;
+    return Cesium.Material.LineFlickerMaterialType
   }
 
   getValue(time, result) {
     if (!Cesium.defined(result)) {
-      result = {};
+      result = {}
     }
 
-    result.color = Cesium.Property.getValueOrDefault(this._color, time, Cesium.Color.RED, result.color);
-    result.speed = Cesium.Property.getValueOrDefault(this._speed, time, 5.0, result.speed);
+    result.color = Cesium.Property.getValueOrDefault(this._color, time, Cesium.Color.RED, result.color)
+    result.speed = Cesium.Property.getValueOrDefault(this._speed, time, 5.0, result.speed)
     return result
   }
 
@@ -50,12 +50,12 @@ export default class LineFlickerMaterialProperty {
 
 Object.defineProperties(LineFlickerMaterialProperty.prototype, {
   color: Cesium.createPropertyDescriptor('color'),
-  speed: Cesium.createPropertyDescriptor('speed'),
+  speed: Cesium.createPropertyDescriptor('speed')
 })
 
 // Cesium.LineFlickerMaterialProperty = LineFlickerMaterialProperty;
-Cesium.Material.LineFlickerMaterialProperty = 'LineFlickerMaterialProperty';
-Cesium.Material.LineFlickerMaterialType = 'LineFlickerMaterialType';
+Cesium.Material.LineFlickerMaterialProperty = 'LineFlickerMaterialProperty'
+Cesium.Material.LineFlickerMaterialType = 'LineFlickerMaterialType'
 Cesium.Material.LineFlickerMaterialSource =
   `
 uniform vec4 color;
@@ -76,16 +76,16 @@ Cesium.Material._materialCache.addMaterial(Cesium.Material.LineFlickerMaterialTy
     type: Cesium.Material.LineFlickerMaterialType,
     uniforms: {
       color: new Cesium.Color(1.0, 0.0, 0.0, 1.0),
-      speed: 5.0,
+      speed: 5.0
     },
     source: Cesium.Material.LineFlickerMaterialSource
   },
-  translucent: function (material) {
-    return true;
+  translucent: function(material) {
+    return true
   }
 })
 
-console.log('成功加载闪烁线材质');
+console.log('成功加载闪烁线材质')
 
 // ? 如何使用
 // import LineFlickerMaterialProperty from '@/utils/Material/LineFlickerMaterialProperty.js'

@@ -10,14 +10,13 @@
 import { viewer } from '@/utils/createCesium.js' // 引入地图对象
 import * as Cesium from 'cesium'
 
-
 // darkFilter({
 //   invertColor: true, //反色?
 //   filterRGB: [60, 145, 172], //滤色值
 //  });
 function darkFilter(options) {
   const baseLayer = viewer.imageryLayers.get(0)
-  //以下几个参数根据实际情况修改,目前我是参照火星科技的参数,个人感觉效果还不错
+  // 以下几个参数根据实际情况修改,目前我是参照火星科技的参数,个人感觉效果还不错
   baseLayer.brightness = options.brightness || 0.6
   baseLayer.contrast = options.contrast || 1.8
   baseLayer.gamma = options.gamma || 0.3

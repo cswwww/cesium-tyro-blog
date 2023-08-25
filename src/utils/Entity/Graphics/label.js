@@ -11,11 +11,11 @@ import { viewer } from '@/utils/createCesium.js' // 引入地图对象
 import * as Cesium from 'cesium'
 
 function add(x = 122, y = 23, z = 5000) {
-  const position = Cesium.Cartesian3.fromDegrees(x, y, z);
+  const position = Cesium.Cartesian3.fromDegrees(x, y, z)
   const options = {
     show: true,
-    text: "label标签",
-    font: "24px Helvetica",
+    text: 'label标签',
+    font: '24px Helvetica',
     // FILL	填充；OUTLINE 只显示边框；FILL_AND_OUTLINE 既有填充又有边框
     style: Cesium.LabelStyle.FILL_AND_OUTLINE,
     scale: 1.0,
@@ -47,13 +47,13 @@ function add(x = 122, y = 23, z = 5000) {
     //   1.0e3,
     //   2.0e3
     // ),
-    disableDepthTestDistance: Number.POSITIVE_INFINITY,
+    disableDepthTestDistance: Number.POSITIVE_INFINITY
   }
   const entity = viewer.entities.add({
     position,
     label: options
-  });
-  viewer.zoomTo(entity);
+  })
+  viewer.zoomTo(entity)
   return entity
 }
 

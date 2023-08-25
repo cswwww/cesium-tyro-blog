@@ -52,7 +52,7 @@ const viewerOption = {
   contextOptions: undefined, // 传递给Scene对象的上下文参数（scene.options）
   mapProjection: new Cesium.WebMercatorProjection(), // 地图投影体系
   dataSources: new Cesium.DataSourceCollection(), // 需要进行可视化的数据源的集合
-  creditContainer: document.createElement('div'), // 创建空div，可实现移除版权信息的效果
+  creditContainer: document.createElement('div') // 创建空div，可实现移除版权信息的效果
 
   // skyBox: new Cesium.SkyBox({ // 天空盒
   //   sources: {
@@ -75,19 +75,18 @@ class CesiumMap {
   constructor(target, Option = viewerOption) {
     // 首次使用构造器实例
     if (!CesiumMap.instance) {
-      Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI1ODRiMTU0NS05NmJlLTRhNzYtYjA3OS02N2JmY2RhMDE0NDgiLCJpZCI6MTA3OTM5LCJpYXQiOjE2NjMxMjk1Nzd9.XmVmA2d7T2qG6y4vAcQrmb9msWbnLxCe5qYtnlK8h5k';
+      Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI1ODRiMTU0NS05NmJlLTRhNzYtYjA3OS02N2JmY2RhMDE0NDgiLCJpZCI6MTA3OTM5LCJpYXQiOjE2NjMxMjk1Nzd9.XmVmA2d7T2qG6y4vAcQrmb9msWbnLxCe5qYtnlK8h5k'
 
       this.target = target // Type: Element | String
       this.viewer = new Cesium.Viewer(target, Option)
       this.viewer.imageryLayers.removeAll() // 移除所有图层，只显示蓝色地球
-
 
       // !修改场景环境,关闭相关特效
       this.viewer.scene.debugShowFramesPerSecond = false// 显示fps
       this.viewer.scene.moon.show = false// 月亮
       this.viewer.scene.sun.show = false// 太阳
       this.viewer.scene.skyBox.show = true// 天空盒
-      this.viewer.scene.skyAtmosphere.show = false; // 隐藏天空大气
+      this.viewer.scene.skyAtmosphere.show = false // 隐藏天空大气
       // this.this.scene.skyAtmosphere.atmosphereLightIntensity=50//天空大气效果亮度
       this.viewer.scene.fog.enabled = false// 雾
       // this.viewer.scene.fog.minimumBrightness = 0.1//雾效果最小亮度
@@ -141,14 +140,14 @@ class CesiumMap {
         viewer.terrainProvider = new Cesium.CesiumTerrainProvider({
           // url: 'https://tiles.geovis.online/base/v1/terrain?token=fd2cddddcf70866a1a334a47b78b8cba1941af00c93b3a97e49c65ab5182922a',
           url: Cesium.IonResource.fromAssetId(3956), // 1
-          requestWaterMask: true,  // 请求水体效果所需要的海岸线数据
+          requestWaterMask: true, // 请求水体效果所需要的海岸线数据
           requestVertexNormals: true // 请求地形照明数据:增加法线提高光照效果
         })
         break
       case 3:
         viewer.terrainProvider = new Cesium.ArcGISTiledElevationTerrainProvider({
-          url: "https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer",
-          token: "KED1aF_I4UzXOHy3BnhwyBHU4l5oY6rO6walkmHoYqGp4XyIWUd5YZUC1ZrLAzvV40pR6gBXQayh0eFA8m6vPg..",
+          url: 'https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer',
+          token: 'KED1aF_I4UzXOHy3BnhwyBHU4l5oY6rO6walkmHoYqGp4XyIWUd5YZUC1ZrLAzvV40pR6gBXQayh0eFA8m6vPg..'
         })
         break
       default:

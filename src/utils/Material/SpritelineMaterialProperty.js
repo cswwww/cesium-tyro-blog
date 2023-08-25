@@ -10,7 +10,7 @@ import * as Cesium from 'cesium'
 
 export default class SpritelineMaterialProperty {
   constructor(options) {
-    this._definitionChanged = new Cesium.Event();
+    this._definitionChanged = new Cesium.Event()
     // this._duration = undefined
     // this._image = undefined
     this._time = performance.now()
@@ -19,15 +19,15 @@ export default class SpritelineMaterialProperty {
   }
 
   get isConstant() {
-    return false;
+    return false
   }
 
   get definitionChanged() {
-    return this._definitionChanged;
+    return this._definitionChanged
   }
 
   getType() {
-    return Cesium.Material.SpritelineMaterialType;
+    return Cesium.Material.SpritelineMaterialType
   }
 
   getValue(time, result) {
@@ -56,8 +56,8 @@ Object.defineProperties(SpritelineMaterialProperty.prototype, {
 })
 
 // Cesium.SpritelineMaterialProperty = SpritelineMaterialProperty;
-Cesium.Material.SpritelineMaterialProperty = 'SpritelineMaterialProperty';
-Cesium.Material.SpritelineMaterialType = 'SpritelineMaterialType'; // 材质类型id，对应的Cesium是一种材质类
+Cesium.Material.SpritelineMaterialProperty = 'SpritelineMaterialProperty'
+Cesium.Material.SpritelineMaterialType = 'SpritelineMaterialType' // 材质类型id，对应的Cesium是一种材质类
 Cesium.Material.SpritelineMaterialSource =
   `
   czm_material czm_getMaterial(czm_materialInput materialInput)
@@ -81,15 +81,15 @@ Cesium.Material._materialCache.addMaterial(Cesium.Material.SpritelineMaterialTyp
       color: new Cesium.Color(1, 0, 0, 0.5),
       image: '',
       transparent: true,
-      time: 20,
+      time: 20
     },
     source: Cesium.Material.SpritelineMaterialSource
   },
-  translucent: function () {
-    return true;
+  translucent: function() {
+    return true
   }
 })
-console.log('成功加载穿梭线材质');
+console.log('成功加载穿梭线材质')
 
 // ? 如何使用
 // import SpritelineMaterialProperty from '@/utils/Material/SpritelineMaterialProperty.js'

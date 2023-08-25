@@ -10,7 +10,7 @@ import { viewer } from '@/utils/createCesium.js' // 引入地图对象
 import * as Cesium from 'cesium'
 
 function add(x = 122, y = 23) {
-  const position = Cesium.Cartesian3.fromDegrees(x, y);
+  const position = Cesium.Cartesian3.fromDegrees(x, y)
   const options = {
     show: true,
     // 用于指定平面的法线和距离
@@ -21,7 +21,7 @@ function add(x = 122, y = 23) {
     outline: false,
     outlineColor: Cesium.Color.BLACK,
     outlineWidth: 1.0,
-    shadows: Cesium.ShadowMode.DISABLED,
+    shadows: Cesium.ShadowMode.DISABLED
     // type:DistanceDisplayCondition
     // distanceDisplayCondition: new Cesium.DistanceDisplayCondition(
     //   1.0e3,
@@ -31,8 +31,8 @@ function add(x = 122, y = 23) {
   const entity = viewer.entities.add({
     position,
     plane: options
-  });
-  viewer.zoomTo(entity);
+  })
+  viewer.zoomTo(entity)
   return entity
 }
 

@@ -1,32 +1,32 @@
 /*
  * @Date: 2023-07-05 17:37:20
  * @LastEditors: ReBeX  420659880@qq.com
- * @LastEditTime: 2023-07-06 17:10:31
+ * @LastEditTime: 2023-08-25 11:53:14
  * @FilePath: \cesium-tyro-blog\src\utils\Event\cameraEvent.js
  * @Description: 相机事件
  */
 // TODO 未完成
+import { viewer } from '@/utils/createCesium.js' // 引入地图对象
+import * as Cesium from 'cesium'
 
 viewer.scene.screenSpaceCameraController.tiltEventTypes = [
   Cesium.CameraEventType.RIGHT_DRAG,
   Cesium.CameraEventType.PINCH,
   {
     eventType: Cesium.CameraEventType.LEFT_DRAG,
-    modifier: Cesium.KeyboardEventModifier.CTRL,
+    modifier: Cesium.KeyboardEventModifier.CTRL
   },
   {
     eventType: Cesium.CameraEventType.RIGHT_DRAG,
-    modifier: Cesium.KeyboardEventModifier.CTRL,
-  },
-];
+    modifier: Cesium.KeyboardEventModifier.CTRL
+  }
+]
 
 viewer.scene.screenSpaceCameraController.zoomEventTypes = [
   Cesium.CameraEventType.MIDDLE_DRAG,
   Cesium.CameraEventType.WHEEL,
-  Cesium.CameraEventType.PINCH,
-];
-
-
+  Cesium.CameraEventType.PINCH
+]
 
 /**
  * @description: 使用键盘控制地图漫游初始化
@@ -36,17 +36,17 @@ viewer.scene.screenSpaceCameraController.zoomEventTypes = [
  */
 function keyboardMapRoamingInit(_viewer) {
   // 添加键盘监听事件
-  document.addEventListener('keydown', keyDown, false);
-  document.addEventListener('keyup', keyUp, false);
+  document.addEventListener('keydown', keyDown, false)
+  document.addEventListener('keyup', keyUp, false)
 
   // 为每一帧添加监听事件
-  _viewer.clock.onTick.addEventListener(function () {
-    keyboardMapRoamingRender(_viewer);
-  });
+  _viewer.clock.onTick.addEventListener(function() {
+    keyboardMapRoamingRender(_viewer)
+  })
 }
 
 // 定义事件组
-let flags = {
+const flags = {
   // 相机位置
   moveForward: false,
   moveBackward: false,
@@ -66,8 +66,6 @@ let flags = {
   zoomOut: false
 }
 
-
-
 // 相机位置：W：向前；S：向后；D：向右；A：向左；Q：升高；E：降低；
 // 相机姿态：↑：抬头；↓：低头；←：左转；→：右转；0：顺时针；.：逆时针
 // 缩放：+：放大，-：缩小；
@@ -83,37 +81,37 @@ function getFlagFromKeyboard(key) {
     // 按字符的Unicode编码
     // 相机位置
     case 87:
-      return 'moveForward';
+      return 'moveForward'
     case 83:
-      return 'moveBackward';
+      return 'moveBackward'
     case 68:
-      return 'moveRight';
+      return 'moveRight'
     case 65:
-      return 'moveLeft';
+      return 'moveLeft'
     case 81:
-      return 'moveUp';
+      return 'moveUp'
     case 69:
-      return 'moveDown';
-    // 相机姿态 
+      return 'moveDown'
+    // 相机姿态
     case 38:
-      return 'lookUp';
+      return 'lookUp'
     case 40:
-      return 'lookDown';
+      return 'lookDown'
     case 37:
-      return 'lookLeft';
+      return 'lookLeft'
     case 39:
-      return 'lookRight';
+      return 'lookRight'
     case 96:
-      return 'twistLeft';
+      return 'twistLeft'
     case 110:
-      return 'twistRight';
+      return 'twistRight'
     // 缩放
     case 107:
-      return 'zoomIn';
+      return 'zoomIn'
     case 109:
-      return 'zoomOut';
+      return 'zoomOut'
     default:
-      return undefined;
+      return undefined
   }
 }
 
@@ -123,9 +121,9 @@ function getFlagFromKeyboard(key) {
 * @return {*}
 */
 function keyDown(event) {
-  let flagName = getFlagFromKeyboard(event.keyCode);
+  const flagName = getFlagFromKeyboard(event.keyCode)
   if (typeof flagName !== 'undefined') {
-    flags[flagName] = true;
+    flags[flagName] = true
   }
 }
 
@@ -135,12 +133,11 @@ function keyDown(event) {
 * @return {*}
 */
 function keyUp(event) {
-  let flagName = getFlagFromKeyboard(event.keyCode);
+  const flagName = getFlagFromKeyboard(event.keyCode)
   if (typeof flagName !== 'undefined') {
-    flags[flagName] = false;
+    flags[flagName] = false
   }
 }
-
 
 /**
 * @description: 根据事件调整相机
@@ -148,54 +145,54 @@ function keyUp(event) {
 * @return {*}
 */
 function keyboardMapRoamingRender(_viewer) {
-  let camera = _viewer.camera;
-  let ellipsoid = _viewer.scene.globe.ellipsoid;
-  let cameraHeight = ellipsoid.cartesianToCartographic(camera.position).height;
+  const camera = _viewer.camera
+  const ellipsoid = _viewer.scene.globe.ellipsoid
+  const cameraHeight = ellipsoid.cartesianToCartographic(camera.position).height
 
   // 根据相机高度设置移动距离，比默认距离移动效果更好
-  let moveRate = cameraHeight / 20.0;
+  const moveRate = cameraHeight / 20.0
 
   if (flags.moveForward) {
-    camera.moveForward(moveRate);
+    camera.moveForward(moveRate)
   }
   if (flags.moveBackward) {
-    camera.moveBackward(moveRate);
+    camera.moveBackward(moveRate)
   }
   if (flags.moveLeft) {
-    camera.moveLeft(moveRate);
+    camera.moveLeft(moveRate)
   }
   if (flags.moveRight) {
-    camera.moveRight(moveRate);
+    camera.moveRight(moveRate)
   }
   if (flags.moveUp) {
-    camera.moveUp(moveRate);
+    camera.moveUp(moveRate)
   }
   if (flags.moveDown) {
-    camera.moveDown(moveRate);
+    camera.moveDown(moveRate)
   }
   if (flags.lookUp) {
-    camera.lookUp();
+    camera.lookUp()
   }
   if (flags.lookDown) {
-    camera.lookDown();
+    camera.lookDown()
   }
   if (flags.lookLeft) {
-    camera.lookLeft();
+    camera.lookLeft()
   }
   if (flags.lookRight) {
-    camera.lookRight();
+    camera.lookRight()
   }
   if (flags.twistLeft) {
-    camera.twistLeft();
+    camera.twistLeft()
   }
   if (flags.twistRight) {
-    camera.twistRight();
+    camera.twistRight()
   }
   // 根据相机高度设置缩放参数
   if (flags.zoomIn) {
-    camera.zoomIn(cameraHeight / 2);
+    camera.zoomIn(cameraHeight / 2)
   }
   if (flags.zoomOut) {
-    camera.zoomOut(cameraHeight / 2);
+    camera.zoomOut(cameraHeight / 2)
   }
 }
