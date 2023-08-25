@@ -145,7 +145,7 @@ module.exports = {
     ],
     // 要求构造函数首字母大写
     'new-cap': [
-      2,
+      0,
       {
         newIsCap: true,
         capIsNew: false

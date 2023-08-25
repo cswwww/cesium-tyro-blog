@@ -1,7 +1,7 @@
 /*
  * @Date: 2023-07-28 16:21:53
  * @LastEditors: ReBeX  420659880@qq.com
- * @LastEditTime: 2023-07-30 22:04:35
+ * @LastEditTime: 2023-08-25 11:15:44
  * @FilePath: \cesium-tyro-blog\src\utils\Visualization\roaming.js
  * @Description: 相机漫游效果
  * import {roaming} from '@/utils/Visualization/roaming.js'
@@ -22,7 +22,7 @@ async function roaming() {
   showAllImagery(false); // 隐藏所有图层
   viewer.clock.multiplier = -2000.0;  // 时间加速！
 
-  const provider = await Cesium.SingleTileImageryProvider.fromUrl('/src/assets/images/darkEarth.jpg')
+  const provider = await Cesium.SingleTileImageryProvider.fromUrl(darkEarth)
 
   bgImglayer = viewer.imageryLayers.addImageryProvider(provider); // 加载背景底图
   bgImglayer.id = '漫游背景底图'
