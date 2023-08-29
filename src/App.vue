@@ -1,20 +1,22 @@
 <script setup>
 import { onMounted } from 'vue'
-import { CesiumMap, viewer } from '@/utils/createCesium.js'
+import { CesiumMap } from '@/utils/createCesium.js'
 import { loadImagery } from '@/utils/ImageryLayer/loadImagery.js'
-import * as Cesium from 'cesium'
-// import { loadTianditu } from "@/utils/ImageryLayer/loadTianditu.js";
-
 import { roaming } from '@/utils/Visualization/roaming.js'
+
+// import { loadTianditu } from "@/utils/ImageryLayer/loadTianditu.js";
 
 import ToolBar from './layouts/ToolBar.vue'
 import PopUps from './layouts/PopUps.vue'
+import { addClustering } from '@/utils/Entity/clusterEntity.js'
+
 onMounted(() => {
   new CesiumMap('cesiumContainer')
   loadImagery.cartoVoyager()
   // loadTianditu('img');
   // loadTianditu('cia');
-  roaming() // 开启入场漫游
+  // roaming() // 开启入场漫游
+  addClustering()
 })
 </script>
 

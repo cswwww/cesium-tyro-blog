@@ -9,8 +9,9 @@ var origin = Cesium.Cartesian3.fromDegrees(-120, 44.0, 0)
 var modelMatrix = Cesium.Transforms.eastNorthUpToFixedFrame(origin)
 var model = viewer.scene.primitives.add(
   Cesium.Model.fromGltf({
-    url: './data/models/DracoCompressed/CesiumMilkTruck.gltf',
+    url: '@/assets/model/glb/Cesium_Man.glb',
     modelMatrix: modelMatrix,
+    // modelMatrix: Cesium.Matrix4.fromTranslationQuaternionRotationScale(Cesium.Cartesian3.fromDegrees(117.66, 36.1, 330), Cesium.Quaternion.fromHeadingPitchRoll(Cesium.HeadingPitchRoll.fromDegrees(0, 20, -45)), new Cesium.Cartesian3(1, 1, 1)),
     minimumPixelSize: 128,
     maximumScale: 20000
   })

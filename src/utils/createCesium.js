@@ -1,6 +1,6 @@
 /*
  * @Date: 2023-02-09 14:57:52
- * @LastEditTime: 2023-08-25 11:25:41
+ * @LastEditTime: 2023-08-29 11:30:34
  * @FilePath: \cesium-tyro-blog\src\utils\createCesium.js
  * @Description: 创建地图单例
  */
@@ -13,6 +13,16 @@ import tycho2t380pz from '@/assets/images/tycho2t3_80_pz.jpg'
 import tycho2t380mz from '@/assets/images/tycho2t3_80_mz.jpg'
 
 let viewer = {} // 地图对象
+
+const clockModel = new Cesium.Clock({
+  startTime: Cesium.JulianDate.fromIso8601('2013-12-25'),
+  currentTime: Cesium.JulianDate.fromIso8601('2013-12-25'),
+  stopTime: Cesium.JulianDate.fromIso8601('2013-12-26'),
+  clockRange: Cesium.ClockRange.CLAMPED,
+  clockStep: Cesium.ClockStep.SYSTEM_CLOCK_MULTIPLIER,
+  multiplier: 4000,
+  shouldAnimate: true
+})
 
 const viewerOption = {
   // ! Widgets
@@ -27,6 +37,7 @@ const viewerOption = {
   selectionIndicator: false, // 是否显示选取指示器组件
   timeline: false, // 是否显示时间轴
   vrButton: false, // vr模式
+  // clockViewModel: new Cesium.ClockViewModel(clockModel),
 
   // ! Scene
   scene3DOnly: true, // 如果设置为true，则所有几何图形以3D模式绘制以节约GPU资源
@@ -117,7 +128,8 @@ class CesiumMap {
       // ! 其他配置
       // this.viewer.extend(Cesium.viewerCesium3DTilesInspectorMixin); // 监视3D Tiles数据的监视器
       // this.viewer.cesiumWidget.screenSpaceEventHandler.removeInputAction(Cesium.ScreenSpaceEventType.LEFT_DOUBLE_CLICK); // 取消默认双击事件
-      // this.viewer.camera.setView({ destination: Cesium.Cartesian3.fromDegrees(110.20, 34.55, 3000000) }); // //设置初始位置
+      // this.viewer.scene.globe.atmosphereLightIntensity = 10//设置地表大气亮度
+      // this.viewer.pickTranslucentDepth = true // 控制是否在深度测试期间选择半透明对象
 
       viewer = this.viewer
 

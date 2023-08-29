@@ -1,9 +1,10 @@
 /*
  * @Date: 2023-07-25 14:24:15
  * @LastEditors: ReBeX  420659880@qq.com
- * @LastEditTime: 2023-07-25 15:13:11
+ * @LastEditTime: 2023-08-25 19:23:40
  * @FilePath: \cesium-tyro-blog\src\utils\Visualization\clippingToCanyon.js
  * @Description: https://sandcastle.cesium.com/?src=Terrain%20Clipping%20Planes.html
+ * 裁剪获得一个区域
  */
 import { viewer } from '@/utils/createCesium.js' // 引入地图对象
 import * as Cesium from 'cesium'
