@@ -1,7 +1,7 @@
 <!--
  * @Date: 2023-06-06 16:17:18
  * @LastEditors: ReBeX  420659880@qq.com
- * @LastEditTime: 2023-09-08 17:48:14
+ * @LastEditTime: 2023-09-08 19:32:26
  * @FilePath: \cesium-tyro-blog\src\useScene\ancientEarth.vue
  * @Description: 古地球场景
 -->
@@ -57,10 +57,10 @@ async function action() {
       destination: Cesium.Cartesian3.fromDegrees(116.404269, 39.922793, 20000000)
     })
 
-    flag.value = 1
+    flag.value = 0
 
     saveImageryLayers()
-    const provider = await Cesium.SingleTileImageryProvider.fromUrl(`/img/earth/${historyList.value[flag.value].file}.jpg`)
+    const provider = await Cesium.SingleTileImageryProvider.fromUrl(`img/earth/${historyList.value[flag.value].file}.jpg`)
     bgImglayer = viewer.imageryLayers.addImageryProvider(provider) // 加载背景底图
     bgImglayer.id = historyList.value[flag.value].label;
 
@@ -85,7 +85,7 @@ const previous = async() => {
 
   // 准备新的地球底图图片，并设置新的名称
 
-  const provider = await Cesium.SingleTileImageryProvider.fromUrl(`/img/earth/${historyList.value[flag.value].file}.jpg`)
+  const provider = await Cesium.SingleTileImageryProvider.fromUrl(`img/earth/${historyList.value[flag.value].file}.jpg`)
   bgImglayer = viewer.imageryLayers.addImageryProvider(provider)
   bgImglayer.id = historyList.value[flag.value].label
 }
@@ -98,7 +98,7 @@ const next = async() => {
 
   // 准备新的地球底图图片，并设置新的名称
 
-  const provider = await Cesium.SingleTileImageryProvider.fromUrl(`/img/earth/${historyList.value[flag.value].file}.jpg`)
+  const provider = await Cesium.SingleTileImageryProvider.fromUrl(`img/earth/${historyList.value[flag.value].file}.jpg`)
   bgImglayer = viewer.imageryLayers.addImageryProvider(provider)
   bgImglayer.id = historyList.value[flag.value].label
 }
@@ -111,7 +111,7 @@ const skip = async(index) => {
 
   // 准备新的地球底图图片，并设置新的名称
 
-  const provider = await Cesium.SingleTileImageryProvider.fromUrl(`/img/earth/${historyList.value[flag.value].file}.jpg`)
+  const provider = await Cesium.SingleTileImageryProvider.fromUrl(`img/earth/${historyList.value[flag.value].file}.jpg`)
   bgImglayer = viewer.imageryLayers.addImageryProvider(provider)
   bgImglayer.id = historyList.value[flag.value].label
 }
