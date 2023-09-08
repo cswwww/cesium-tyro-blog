@@ -1,7 +1,7 @@
 <!--
  * @Date: 2023-06-07 17:33:49
  * @LastEditors: ReBeX  420659880@qq.com
- * @LastEditTime: 2023-07-19 14:22:00
+ * @LastEditTime: 2023-09-07 16:33:50
  * @FilePath: \cesium-tyro-blog\src\components\ManageTileset.vue
  * @Description: 3D Tiles管理
 -->
@@ -29,7 +29,7 @@ const querySearch = [
   { value: '75343' },
   { value: '40866' },
   { value: '8564' },
-  { value: '/src/assets/model/Tileset/sampleBuilding/tileset.json' }
+  { value: 'src/assets/model/Tileset/sampleBuilding/tileset.json' }
 ]
 
 // 发送关闭弹窗的消息

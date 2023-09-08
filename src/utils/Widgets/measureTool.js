@@ -1,7 +1,7 @@
 /*
  * @Date: 2023-07-31 12:28:08
  * @LastEditors: ReBeX  420659880@qq.com
- * @LastEditTime: 2023-08-03 20:13:10
+ * @LastEditTime: 2023-09-08 08:57:54
  * @FilePath: \cesium-tyro-blog\src\utils\Widgets\measureTool.js
  * @Description: 测量工具
  * import { CoordinatePicker } from '@/utils/Widgets/measureTool.js'
@@ -290,7 +290,7 @@ class MeasureDistance {
     return point
   }
   createNodeLabel(cartesian) {
-    const label = viewer.entities.add({
+    return new Cesium.Entity({
       position: cartesian,
       label: {
         text: this.distance ? (this.distance).toFixed(2) + '米' : '起点',
@@ -301,7 +301,6 @@ class MeasureDistance {
         disableDepthTestDistance: Number.POSITIVE_INFINITY
       }
     })
-    return label
   }
   // 绘制：线
   createNormalLine(list) {

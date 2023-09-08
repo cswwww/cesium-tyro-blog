@@ -1,7 +1,7 @@
 /*
  * @Date: 2023-06-04 10:41:29
  * @LastEditors: ReBeX  420659880@qq.com
- * @LastEditTime: 2023-08-25 15:19:44
+ * @LastEditTime: 2023-09-07 14:31:42
  * @FilePath: \cesium-tyro-blog\src\utils\ImageryLayer\loadImagery.js
  * @Description: 加载影像图层
  * 各个provider的参考：https://zhuanlan.zhihu.com/p/340669216
@@ -26,6 +26,7 @@ export const loadImagery = {
   // 加载arcgis地图服务
   // 'http://server.arcgisonline.com/arcgis/rest/services/World_Topo_Map/MapServer'
   // 'https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer'
+  // 'https://sampleserver6.arcgisonline.com/arcgis/rest/services/World_Street_Map/MapServer'
   arcgis: (url, option, callback) => {
     const imageryProvider = new Cesium.ArcGisMapServerImageryProvider({
       url,
@@ -143,14 +144,14 @@ export const loadImagery = {
     viewer.imageryLayers.add(layer)
     return layer
   },
-  // TODO 未完成：加载WMTS
+  // 加载WMTS
   wmts: (option) => {
     const imageryProvider = new Cesium.WebMapTileServiceImageryProvider({
-      url: 'https://gibs.earthdata.nasa.gov/wmts/epsg4326/best/MODIS_Terra_CorrectedReflectance_TrueColor/default/{Time}/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}.jpg',
-      layer: 'MODIS_Terra_CorrectedReflectance_TrueColor', // 要显示图层
+      url: 'http://t0.tianditu.gov.cn/cia_c/wmts?tk=f70f0b1c42e7fdd3ba0e5e3fe6b99ec5',
+      layer: 'cia', // 要显示图层
       credit: '', // 于表示影像图层的来源及版权信息
       style: 'default',
-      tileMatrixSetID: '250m',
+      tileMatrixSetID: 'c',
       maximumLevel: 5,
       format: 'image/jpeg',
       clock: viewer.clock
@@ -160,11 +161,13 @@ export const loadImagery = {
     viewer.imageryLayers.add(layer)
     return layer
   },
-  // TODO 未完成：加载WMS
+  // 加载WMS
   wms: (option) => {
     const imageryProvider = new Cesium.WebMapServiceImageryProvider({
-      url: 'https://nationalmap.gov.au/proxy/http://geoserver.nationalmap.nicta.com.au/geotopo_250k/ows',
+      // url: 'https://nationalmap.gov.au/proxy/http://geoserver.nationalmap.nicta.com.au/geotopo_250k/ows',
+      url: 'http://geoserver.nationalmap.nicta.com.au/geotopo_250k/ows',
       layers: 'Hydrography:bores',
+      proxy: new Cesium.DefaultProxy('https://nationalmap.gov.au/proxy/'),
       parameters: {
         service: 'WMS',
         format: 'image/png',
@@ -176,14 +179,33 @@ export const loadImagery = {
     viewer.imageryLayers.add(layer)
     return layer
   },
+  // https://studio.mapbox.com/
+  // const mapIds = [
+  //   "mapbox.satellite",
+  //   "mapbox.streets",
+  //   "mapbox.streets-basic",
+  //   "mapbox.light",
+  //   "mapbox.streets-satellite",
+  //   "mapbox.wheatpaste",
+  //   "mapbox.comic",
+  //   "mapbox.outdoors",
+  //   "mapbox.run-bike-hike",
+  //   "mapbox.pencil",
+  //   "mapbox.pirates",
+  //   "mapbox.emerald",
+  //   "mapbox.high-contrast",
+  // ];
   mapbox: (option) => {
     const imageryProvider = new Cesium.MapboxStyleImageryProvider({
-      username: '你的账号名称',
-      styleId: '你的地图Id',
-      accessToken: '你的accessToken'
+      username: 'cswwww',
+      styleId: 'clm8scag1012z01pb8opldls1',
+      // accessToken: '你的accessToken'
+      accessToken: 'pk.eyJ1IjoiY3N3d3d3IiwiYSI6ImNsN3BobzdlczE4ZTUzd3A5d25qZ25nYnYifQ.oLgZQ0ks2NoDlH0VXlZzTw'
+
     })
     const layer = new Cesium.ImageryLayer(imageryProvider, option)
     // viewer.imageryLayers.add(layer, index) // 可以为图层设置index
+    layer.id = 'mapbox'
     viewer.imageryLayers.add(layer)
     return layer
   }
