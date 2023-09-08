@@ -72,6 +72,7 @@ async function action() {
       }
     })()
   } else {
+    emit('update:sceneFlag', '')
     reloadImageryLayers()
     flag.value = null
   }

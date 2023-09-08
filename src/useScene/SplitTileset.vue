@@ -1,7 +1,7 @@
 <!--
  * @Date: 2023-06-06 16:17:18
  * @LastEditors: ReBeX  420659880@qq.com
- * @LastEditTime: 2023-09-08 17:22:01
+ * @LastEditTime: 2023-09-08 19:46:08
  * @FilePath: \cesium-tyro-blog\src\useScene\SplitTileset.vue
  * @Description: 3D Tiles 瓦片集卷帘（分割）的功能（按钮）组件
 -->
@@ -21,9 +21,12 @@ const emit = defineEmits(['update:sceneFlag'])
 function action() {
   if (flag.value) {
     emit('update:sceneFlag', 'splitTileset')
+
     splitInstance.value.actionSplit()
     flag.value = false
   } else {
+    emit('update:sceneFlag', '')
+
     splitInstance.value.stopSplit()
     flag.value = true
   }

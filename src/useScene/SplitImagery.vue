@@ -26,6 +26,8 @@ function action() {
     splitInstance.value.actionSplit()
     flag.value = false
   } else {
+    emit('update:sceneFlag', '')
+
     splitInstance.value.stopSplit()
     flag.value = true
   }
