@@ -8,6 +8,7 @@
 
 import { viewer } from '@/utils/createCesium.js' // 引入地图对象
 import * as Cesium from 'cesium'
+let tempImageryLayer
 
 // viewer.imageryLayers.get(0) // 获取序列号为0的图层
 // viewer.imageryLayers.indexOf(layer) // 图层的索引（层级，大的在上层）
@@ -30,6 +31,30 @@ function showAllImagery(boolean = true) {
   }
 }
 
+// 获取当前场景中所有的影像图层并保存到数组中
+function saveImageryLayers() {
+  const layers = viewer.imageryLayers
+
+  tempImageryLayer = []
+  for (let i = 0; i < layers.length; i++) {
+    tempImageryLayer.push(layers.get(i))
+  }
+
+  layers.removeAll(false) // 移除所有 ImageryLayer
+}
+
+// 重新加载之前保存的影像图层
+function reloadImageryLayers() {
+  const layers = viewer.imageryLayers
+  layers.removeAll(false) // 移除所有 ImageryLayer
+
+  for (let i = 0; i < tempImageryLayer.length; i++) {
+    layers.add(tempImageryLayer[i])
+  }
+}
+
 export {
-  showAllImagery
+  showAllImagery,
+  saveImageryLayers,
+  reloadImageryLayers
 }

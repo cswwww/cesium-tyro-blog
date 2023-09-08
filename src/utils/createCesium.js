@@ -1,16 +1,16 @@
 /*
  * @Date: 2023-02-09 14:57:52
- * @LastEditTime: 2023-08-29 11:30:34
+ * @LastEditTime: 2023-09-08 15:58:26
  * @FilePath: \cesium-tyro-blog\src\utils\createCesium.js
  * @Description: 创建地图单例
  */
 import * as Cesium from 'cesium'
-import tycho2t380px from '@/assets/images/tycho2t3_80_px.jpg'
-import tycho2t380mx from '@/assets/images/tycho2t3_80_mx.jpg'
-import tycho2t380py from '@/assets/images/tycho2t3_80_py.jpg'
-import tycho2t380my from '@/assets/images/tycho2t3_80_my.jpg'
-import tycho2t380pz from '@/assets/images/tycho2t3_80_pz.jpg'
-import tycho2t380mz from '@/assets/images/tycho2t3_80_mz.jpg'
+// import tycho2t380px from '@/assets/images/tycho2t3_80_px.jpg'
+// import tycho2t380mx from '@/assets/images/tycho2t3_80_mx.jpg'
+// import tycho2t380py from '@/assets/images/tycho2t3_80_py.jpg'
+// import tycho2t380my from '@/assets/images/tycho2t3_80_my.jpg'
+// import tycho2t380pz from '@/assets/images/tycho2t3_80_pz.jpg'
+// import tycho2t380mz from '@/assets/images/tycho2t3_80_mz.jpg'
 
 let viewer = {} // 地图对象
 
@@ -112,7 +112,7 @@ class CesiumMap {
       // this.viewer.scene.globe.baseColor = Cesium.Color.TRANSPARENT // 基础色，默认是蓝色 Cesium.Color.BLUE
       // this.viewer.scene.globe.translucency.enabled = true // 一定要为 true，否则 undergroundColor 设置无效
       // this.viewer.scene.globe.undergroundColor = Cesium.Color.TRANSPARENT // 地下色，默认是黑色 Cesium.Color.BLACK
-      // this.viewer.scene.globe.showGroundAtmosphere = true//开启地表大气效果
+      this.viewer.scene.globe.showGroundAtmosphere = false // 开启地表大气效果
       // this.viewer.scene.globe.atmosphereLightIntensity = 10//设置地表大气亮度
       // 开启地形深度检测:
       // 控制在渲染场景时，相机是否进行深度测试以避免将被遮挡的物体绘制在前景

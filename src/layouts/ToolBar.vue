@@ -1,7 +1,7 @@
 <!--
  * @Date: 2023-06-06 18:31:24
  * @LastEditors: ReBeX  420659880@qq.com
- * @LastEditTime: 2023-07-28 19:46:06
+ * @LastEditTime: 2023-09-08 17:01:33
  * @FilePath: \cesium-tyro-blog\src\layouts\ToolBar.vue
  * @Description: 工具栏界面组件（用来放功能按钮的
 -->
@@ -10,8 +10,11 @@ import { ref, markRaw, onMounted } from 'vue'
 import EventBus from '@/common/EventBus.js'
 import { functionList } from '@/common/ButtonList.js'
 
-import SplitImagery from '@/components/SplitImagery.vue'
-import SplitTileset from '@/components/SplitTileset.vue'
+import SplitImagery from '@/useScene/SplitImagery.vue'
+import SplitTileset from '@/useScene/SplitTileset.vue'
+import AncientEarth from '@/useScene/AncientEarth.vue'
+
+const sceneFlag = ref('')
 
 function showIM(component) {
   EventBus.emit('PopUps', component)
@@ -26,8 +29,34 @@ function showIM(component) {
         <img :src="item.icon" alt="" srcset="">
       </el-button>
     </el-tooltip>
-    <SplitImagery />
-    <SplitTileset />
+
+    <el-popover :width="340" trigger="click"
+      popper-style="box-shadow: rgb(14 18 22 / 35%) 0px 10px 38px -10px, rgb(14 18 22 / 20%) 0px 10px 20px -15px; padding: 20px;">
+      <template #reference>
+        <el-button circle style="background-color: #ACB4C0;border: none;">
+          <img src="../assets/images/模式.svg">
+        </el-button>
+      </template>
+      <template #default>
+        <div style="font-size: 18px;font-weight: bold;">应用场景</div>
+        <el-divider />
+        <el-row :gutter="20">
+          <el-col :span="12">
+            <SplitImagery v-model:sceneFlag="sceneFlag" />
+          </el-col>
+          <el-col :span="12">
+            <SplitTileset v-model:sceneFlag="sceneFlag" />
+          </el-col>
+        </el-row>
+        <el-row :gutter="20" style="margin-top: 20px;">
+          <el-col :span="12">
+            <AncientEarth v-model:sceneFlag="sceneFlag" />
+          </el-col>
+          <el-col :span="12">
+          </el-col>
+        </el-row>
+      </template>
+    </el-popover>
   </div>
 </template>
 

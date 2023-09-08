@@ -1,40 +1,63 @@
 <!--
  * @Date: 2023-06-06 16:17:18
  * @LastEditors: ReBeX  420659880@qq.com
- * @LastEditTime: 2023-07-28 15:43:18
- * @FilePath: \cesium-tyro-blog\src\components\SplitTileset.vue
+ * @LastEditTime: 2023-09-08 17:22:01
+ * @FilePath: \cesium-tyro-blog\src\useScene\SplitTileset.vue
  * @Description: 3D Tiles 瓦片集卷帘（分割）的功能（按钮）组件
 -->
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, defineProps, watch } from 'vue'
 import { splitTileset } from '@/utils/ThreeDTiles/splitTileset.js'
-
+const props = defineProps({
+  sceneFlag: {
+    type: String,
+    required: true
+  }
+})
 const flag = ref(1)
 const splitInstance = ref(0)
+const emit = defineEmits(['update:sceneFlag'])
 
 function action() {
   if (flag.value) {
+    emit('update:sceneFlag', 'splitTileset')
     splitInstance.value.actionSplit()
+    flag.value = false
   } else {
     splitInstance.value.stopSplit()
+    flag.value = true
   }
-  flag.value = !flag.value
 }
 
 onMounted(() => {
   splitInstance.value = new splitTileset()
 })
+watch(
+  () => props.sceneFlag,
+  (val) => {
+    if (val === 'splitTileset') {
+      console.log('启动splitTileset')
+    } else {
+      if (!flag.value) {
+        console.log('关闭splitTileset')
+        splitInstance.value.stopSplit()
+        flag.value = true
+      }
+    }
+  }
+)
+
 </script>
 
 <template>
-  <div>
-    <el-tooltip :content="flag ? '点击开启模型卷帘' : '再次点击关闭卷帘'" placement="bottom" effect="light">
-      <el-button circle @click="action"><svg t="1690530131307" class="icon" viewBox="0 0 1024 1024" version="1.1"
-          xmlns="http://www.w3.org/2000/svg" p-id="13982" width="20" height="20">
-          <path
-            d="M112.96 576a446.592 446.592 0 0 1-4.576-64C108.384 282.24 282.24 112.512 512 112.512S916.608 282.24 916.608 512c0 21.76-1.568 43.136-4.608 64H112.96z"
-            fill="#FFFFFF" p-id="13983"></path>
-          <path
+  <el-card shadow="hover" @click="action" style="cursor: pointer;">
+    <div style="text-align: center;">
+      <svg t="1690530131307" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+        p-id="13982" width="20" height="20">
+        <path
+          d="M112.96 576a446.592 446.592 0 0 1-4.576-64C108.384 282.24 282.24 112.512 512 112.512S916.608 282.24 916.608 512c0 21.76-1.568 43.136-4.608 64H112.96z"
+          fill="#FFFFFF" p-id="13983"></path>
+        <path
           d="M100.896 576c-3.2-20.864-4.896-42.24-4.896-64C96 282.304 282.24 96 512.032 96 741.76 96 928 282.304 928 512c0 21.76-1.664 43.136-4.896 64h-32.416c3.52-20.8 5.312-42.208 5.312-64 0-212.064-171.936-384-384-384S128 299.936 128 512c0 21.792 1.824 43.2 5.312 64H100.896zM96 608h832v96H96v-96z"
           fill="#5D6D7E" p-id="13984"></path>
         <path
@@ -42,6 +65,7 @@ onMounted(() => {
           fill="#ACB4C0" p-id="13985"></path>
         <path d="M96 768h832v64H96z" fill="#808FA1" p-id="13986"></path>
       </svg>
-    </el-button>
-  </el-tooltip>
-</div></template>
+    </div>
+    <div style="text-align: center;">{{ flag ? '开启模型卷帘' : '关闭模型卷帘' }}</div>
+  </el-card>
+</template>
