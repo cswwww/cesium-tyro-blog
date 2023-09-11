@@ -1,7 +1,7 @@
 <!--
  * @Date: 2023-06-06 16:17:18
  * @LastEditors: ReBeX  420659880@qq.com
- * @LastEditTime: 2023-09-11 15:25:47
+ * @LastEditTime: 2023-09-11 17:14:29
  * @FilePath: \cesium-tyro-blog\src\useScene\ancientEarth.vue
  * @Description: 古地球场景
 -->
@@ -12,7 +12,7 @@ import { viewer } from '@/utils/createCesium.js' // 引入地图对象
 import * as Cesium from 'cesium'
 
 const flag = ref(null)
-
+const showAll = ref(true)
 const historyList = ref([
   { year: '6亿年前', file: '600Marect', name: 'Ediacaran Period', label: '埃迪卡拉纪', explain: '海洋生物开始进化，多细胞生物刚刚开始出现。' },
   { year: '5亿6千万年前', file: '560Marect', name: 'Late Ediacaran', label: '晚期埃迪卡拉纪', explain: '海洋生物开始进化，多细胞生物刚刚开始出现。一次大规模灭绝即将发生。' },
@@ -143,23 +143,28 @@ defineExpose({
       <el-card v-if="flag !== null" shadow="always"
         style="position: absolute; bottom: 16px; right: 16px; background-color: #f5f5f5; border-radius: 8px; padding: 16px;width:400px; max-width: 80vw;">
 
-        <el-dropdown max-height="200" trigger="click">
-          <div style="font-weight: bold; font-size: 18px; margin-bottom: 8px;cursor: pointer;">{{ historyList[flag].year
-          }} <el-icon class="el-icon--right"><arrow-down /></el-icon></div>
-          <template #dropdown>
-            <el-dropdown-menu>
-              <el-dropdown-item v-for="(item, index) in historyList" :key="item.label" @click="skip(index)">{{ item.label
-              }} • {{ item.year }}</el-dropdown-item>
-            </el-dropdown-menu>
-          </template>
-        </el-dropdown>
+        <div style="display: flex;justify-content: space-between;">
+          <el-dropdown max-height="200" trigger="click">
+            <div style="font-weight: bold; font-size: 18px; margin-bottom: 8px;cursor: pointer;">{{ historyList[flag].year
+            }} <el-icon class="el-icon--right"><arrow-down /></el-icon></div>
+            <template #dropdown>
+              <el-dropdown-menu>
+                <el-dropdown-item v-for="(item, index) in historyList" :key="item.label" @click="skip(index)">{{
+                  item.label
+                }} • {{ item.year }}</el-dropdown-item>
+              </el-dropdown-menu>
+            </template>
+          </el-dropdown>
+          <el-icon v-if="showAll" style="cursor: pointer;" @click="showAll = false"><Minus /></el-icon>
+          <el-icon v-else  style="cursor: pointer;" @click="showAll = true"><Plus /></el-icon>
+        </div>
 
         <div style="font-size: 16px; margin-bottom: 8px;"><span style="color: blueviolet;">{{ historyList[flag].label
         }}</span> • {{ historyList[flag].name }}
         </div>
-        <div style="font-size: 14px; margin-bottom: 12px;">{{ historyList[flag].explain }}</div>
-        <div style="font-size: 12px; color: #999;">注：该文本数据由AI生成，仅供参考。</div>
-        <div style="font-size: 12px; color: #999;">古代地理地图影像来源：<a href="http://www.scotese.com/"
+        <div v-if="showAll" style="font-size: 14px; margin-bottom: 12px;">{{ historyList[flag].explain }}</div>
+        <div v-if="showAll" style="font-size: 12px; color: #999;">注：该文本数据由AI生成，仅供参考。</div>
+        <div v-if="showAll" style="font-size: 12px; color: #999;">古代地理地图影像来源：<a href="http://www.scotese.com/"
             target="_blank">C.R.Scotese</a> </div>
         <el-divider style="margin: 12px 0 24px 0;" />
         <div style="display: flex;justify-content: space-between;">
