@@ -1,7 +1,7 @@
 <!--
  * @Date: 2023-09-11 11:56:32
  * @LastEditors: ReBeX  420659880@qq.com
- * @LastEditTime: 2023-09-11 17:02:09
+ * @LastEditTime: 2023-09-11 23:26:16
  * @FilePath: \cesium-tyro-blog\src\layouts\SceneGroup.vue
  * @Description: 场景应用功能组
 -->
@@ -12,12 +12,14 @@ import { ref, markRaw } from 'vue'
 import SplitImagery from '@/useScene/SplitImagery.vue'
 import SplitTileset from '@/useScene/SplitTileset.vue'
 import AncientEarth from '@/useScene/AncientEarth.vue'
+import LoadMaterial from '@/useScene/LoadMaterial.vue'
 
 const sceneFlag = ref('')
 const scenelist = markRaw([
   { components: SplitImagery, ref: ref(null) },
   { components: SplitTileset, ref: ref(null) },
-  { components: AncientEarth, ref: ref(null) }
+  { components: AncientEarth, ref: ref(null) },
+  { components: LoadMaterial, ref: ref(null) }
 ])
 
 const activateButton = (index) => {
@@ -84,12 +86,14 @@ const activateButton = (index) => {
   }
 }
 
-.active {
-  border: 1px solid red;
-}
-
 .sceneCard {
   display: inline-block;
   margin-right: 6px;
+  border: 1px solid rgba(255, 0, 0, 0);
+  user-select: none;
+}
+
+.active {
+  border: 1px solid red;
 }
 </style>

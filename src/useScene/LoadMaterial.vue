@@ -1,9 +1,19 @@
+<!--
+ * @Date: 2023-06-06 16:17:18
+ * @LastEditors: ReBeX  420659880@qq.com
+ * @LastEditTime: 2023-09-11 23:25:17
+ * @FilePath: \cesium-tyro-blog\src\useScene\LoadMaterial.vue
+ * @Description: 材质预览组件
+-->
+<script setup>
+import { ref, onMounted, defineProps, reactive } from 'vue'
 import { viewer } from '@/utils/createCesium.js' // 引入地图对象
 import * as Cesium from 'cesium'
 
-import FlowPictureMaterialProperty from '@/utils/Material/FlowPictureMaterialProperty.js'
+const flag = ref(1)
+const materialPreview = new Cesium.CustomDataSource('materialPreviewCollection')
 
-const position = Cesium.Cartesian3.fromDegrees(12, 34)
+import FlowPictureMaterialProperty from '@/utils/Material/FlowPictureMaterialProperty.js'
 
 const material = new FlowPictureMaterialProperty({
   color: Cesium.Color.WHITE, // new Cesium.Color(1.0, 1.0, 1.0, 1.0),
@@ -11,10 +21,8 @@ const material = new FlowPictureMaterialProperty({
   duration: 1500
 })
 
-// const material = Cesium.Color.RED
-
-export default function add() {
-  const box = viewer.entities.add({
+const addEntities = () => {
+  const box = materialPreview.entities.add({
     position: Cesium.Cartesian3.fromDegrees(12, 38),
     box: {
       show: true,
@@ -35,7 +43,7 @@ export default function add() {
     }
   })
 
-  const cylinder = viewer.entities.add({
+  const cylinder = materialPreview.entities.add({
     position: Cesium.Cartesian3.fromDegrees(16, 34),
     cylinder: {
       // show: true,
@@ -54,7 +62,7 @@ export default function add() {
     }
   })
 
-  const ellipse = viewer.entities.add({
+  const ellipse = materialPreview.entities.add({
     position: Cesium.Cartesian3.fromDegrees(24, 34),
     ellipse: {
       show: true,
@@ -87,7 +95,7 @@ export default function add() {
     }
   })
 
-  const ellipsoid = viewer.entities.add({
+  const ellipsoid = materialPreview.entities.add({
     position: Cesium.Cartesian3.fromDegrees(20, 38, 150000),
     ellipsoid: {
       show: true,
@@ -116,7 +124,7 @@ export default function add() {
     }
   })
 
-  const plane = viewer.entities.add({
+  const plane = materialPreview.entities.add({
     position: Cesium.Cartesian3.fromDegrees(11, 34),
     plane: {
       show: true,
@@ -132,7 +140,7 @@ export default function add() {
     }
   })
 
-  const polygon = viewer.entities.add({
+  const polygon = materialPreview.entities.add({
     polygon: {
       show: true,
       // 指定PolygonHierarchy
@@ -165,7 +173,7 @@ export default function add() {
     }
   })
 
-  const polyline = viewer.entities.add({
+  const polyline = materialPreview.entities.add({
     polyline: {
       show: true,
       positions: Cesium.Cartesian3.fromDegreesArray([17, 31, 23, 31]),
@@ -202,7 +210,7 @@ export default function add() {
     }
     return positions
   }
-  const polylineVolume = viewer.entities.add({
+  const polylineVolume = materialPreview.entities.add({
     polylineVolume: {
       show: true,
 
@@ -236,7 +244,7 @@ export default function add() {
     }
   })
 
-  const wall = viewer.entities.add({
+  const wall = materialPreview.entities.add({
     wall: {
       show: true,
 
@@ -273,21 +281,48 @@ export default function add() {
     }
   })
 
-  const best = viewer.entities.add({
-    position: Cesium.Cartesian3.fromDegrees(50, 50),
-    ellipse: {
-      semiMajorAxis: 150000.0, // 长半轴距离
-      semiMinorAxis: 150000.0, // 短半轴距离
-      material: new FlowPictureMaterialProperty({
-        color: Cesium.Color.WHITE, // new Cesium.Color(1.0, 1.0, 1.0, 1.0),
-        image: '/src/assets/images/redBar.png',
-        duration: 1500
-      }),
-      height: 60,
-      heightReference: Cesium.HeightReference.RELATIVE_TO_GROUND,
-      outline: true,
-      outlineColor: new Cesium.Color(1.0, 1.0, 0.0, 1.0)
-    }
+  viewer.camera.flyTo({
+    destination: Cesium.Cartesian3.fromDegrees(16, 34, 2800000)
   })
-  viewer.zoomTo(best)
 }
+
+const actionScene = () => {
+  if (!viewer.dataSources.contains(materialPreview)) {
+    viewer.dataSources.add(materialPreview)
+  }
+  console.log('viewer.dataSources: ', viewer.dataSources)
+
+  addEntities()
+  flag.value = false
+}
+const closeScene = () => {
+  materialPreview.entities.removeAll()
+  flag.value = true
+}
+onMounted(() => {
+})
+
+defineExpose({
+  actionScene,
+  closeScene
+})
+</script>
+
+<template>
+  <el-card shadow="hover" style="cursor: pointer;">
+    <div style="text-align: center;">
+      <svg t="1694443688293" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+        p-id="13680" width="20" height="20">
+        <path d="M512 112L928 320v384l-416 208L96 704V320z" fill="#C49F74" p-id="13681"></path>
+        <path d="M512 112l416 192v320L512 832 96 624v-320z" fill="#D3BB9E" p-id="13682"></path>
+        <path d="M512 112l416 192v192L512 704 96 496v-192z" fill="#FFDE9C" p-id="13683"></path>
+        <path d="M512 112l416 192v64L512 576 96 368v-64z" fill="#30AD98" p-id="13684"></path>
+        <path d="M512 118.816L928 304 512 512 96 304z" fill="#32BAA2" p-id="13685"></path>
+        <path
+          d="M512 96l416 208v416L512 928 96 720v-416L512 96z m0 35.776l-384 192v376.448l384 192 384-192V323.776l-384-192z"
+          fill="#5D6D7E" p-id="13686"></path>
+      </svg>
+    </div>
+    <div style="text-align: center;">{{ flag ? '开启材质预览' : '关闭材质预览' }}</div>
+  </el-card>
+</template>
