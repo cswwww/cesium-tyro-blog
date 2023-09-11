@@ -1,59 +1,40 @@
 <!--
  * @Date: 2023-06-06 16:17:18
  * @LastEditors: ReBeX  420659880@qq.com
- * @LastEditTime: 2023-09-08 17:28:50
+ * @LastEditTime: 2023-09-11 15:03:14
  * @FilePath: \cesium-tyro-blog\src\useScene\SplitImagery.vue
  * @Description: 影像图层卷帘（分割）的功能（按钮）组件
 -->
 <script setup>
-import { ref, onMounted, defineProps, watch } from 'vue'
+import { ref, onMounted } from 'vue'
 import { splitImagery } from '@/utils/ImageryLayer/splitImagery.js'
-const props = defineProps({
-  sceneFlag: {
-    type: String,
-    required: true
-  }
-})
-const emit = defineEmits(['update:sceneFlag'])
 
 const flag = ref(1)
 const splitInstance = ref(0)
 
-function action() {
-  if (flag.value) {
-    emit('update:sceneFlag', 'SplitImagery')
+const actionScene = () => {
+  splitInstance.value.actionSplit()
+  flag.value = false
+}
 
-    splitInstance.value.actionSplit()
-    flag.value = false
-  } else {
-    emit('update:sceneFlag', '')
-
-    splitInstance.value.stopSplit()
-    flag.value = true
-  }
+const closeScene = () => {
+  console.log('关闭SplitImagery')
+  splitInstance.value.stopSplit()
+  flag.value = true
 }
 
 onMounted(() => {
   splitInstance.value = new splitImagery()
 })
-watch(
-  () => props.sceneFlag,
-  (val) => {
-    if (val === 'SplitImagery') {
-      console.log('启动SplitImagery')
-    } else {
-      if (!flag.value) {
-        console.log('关闭SplitImagery')
-        splitInstance.value.stopSplit()
-        flag.value = true
-      }
-    }
-  }
-)
+
+defineExpose({
+  actionScene,
+  closeScene
+})
 </script>
 
 <template>
-  <el-card shadow="hover" @click="action" style="cursor: pointer;">
+  <el-card shadow="hover" style="cursor: pointer;">
     <div style="text-align: center;">
       <svg t="1690529118818" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
         p-id="13818" width="20" height="20">

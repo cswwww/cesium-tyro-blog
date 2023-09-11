@@ -1,24 +1,18 @@
 <!--
  * @Date: 2023-06-06 16:17:18
  * @LastEditors: ReBeX  420659880@qq.com
- * @LastEditTime: 2023-09-08 19:32:26
+ * @LastEditTime: 2023-09-11 15:25:47
  * @FilePath: \cesium-tyro-blog\src\useScene\ancientEarth.vue
  * @Description: 古地球场景
 -->
 <script setup>
-import { ref, onMounted, reactive, defineProps, watch } from 'vue'
+import { ref, reactive } from 'vue'
 import { saveImageryLayers, reloadImageryLayers } from '@/utils/ImageryLayer/setImagery.js'
 import { viewer } from '@/utils/createCesium.js' // 引入地图对象
 import * as Cesium from 'cesium'
-const props = defineProps({
-  sceneFlag: {
-    type: String,
-    required: true
-  }
-})
-const emit = defineEmits(['update:sceneFlag'])
 
 const flag = ref(null)
+
 const historyList = ref([
   { year: '6亿年前', file: '600Marect', name: 'Ediacaran Period', label: '埃迪卡拉纪', explain: '海洋生物开始进化，多细胞生物刚刚开始出现。' },
   { year: '5亿6千万年前', file: '560Marect', name: 'Late Ediacaran', label: '晚期埃迪卡拉纪', explain: '海洋生物开始进化，多细胞生物刚刚开始出现。一次大规模灭绝即将发生。' },
@@ -48,35 +42,7 @@ const historyList = ref([
   { year: '当今', file: '000present', name: 'Present', label: '当代', explain: '我们正处于当代时期，面临着许多全球性的挑战，如气候变化、生物多样性丧失和可持续发展问题。人类正在努力寻找解决方案，以确保地球的未来可持续发展。' }
 ])
 
-let bgImglayer = reactive(null)
-async function action() {
-  if (flag.value == null) {
-    emit('update:sceneFlag', 'ancientEarth')
-
-    viewer.camera.flyTo({
-      destination: Cesium.Cartesian3.fromDegrees(116.404269, 39.922793, 20000000)
-    })
-
-    flag.value = 0
-
-    saveImageryLayers()
-    const provider = await Cesium.SingleTileImageryProvider.fromUrl(`img/earth/${historyList.value[flag.value].file}.jpg`)
-    bgImglayer = viewer.imageryLayers.addImageryProvider(provider) // 加载背景底图
-    bgImglayer.id = historyList.value[flag.value].label;
-
-    (function roamingEvent() {
-      if (flag.value !== null) {
-        // 控制相机围绕 Z 轴旋转
-        viewer.camera.rotate(Cesium.Cartesian3.UNIT_Z, Cesium.Math.toRadians(0.1))
-        requestAnimationFrame(roamingEvent)
-      }
-    })()
-  } else {
-    emit('update:sceneFlag', '')
-    reloadImageryLayers()
-    flag.value = null
-  }
-}
+let bgImglayer = reactive({})
 
 const previous = async() => {
   flag.value = flag.value - 1
@@ -117,26 +83,44 @@ const skip = async(index) => {
   bgImglayer.id = historyList.value[flag.value].label
 }
 
-onMounted(() => {
-})
-watch(
-  () => props.sceneFlag,
-  (val) => {
-    if (val === 'ancientEarth') {
-      console.log('启动ancientEarth')
-    } else {
-      if (flag.value !== null) {
-        reloadImageryLayers()
-        flag.value = null
-        console.log('关闭ancientEarth')
-      }
+const actionScene = async() => {
+  viewer.camera.flyTo({
+    destination: Cesium.Cartesian3.fromDegrees(116.404269, 39.922793, 20000000)
+  })
+
+  flag.value = 0
+
+  saveImageryLayers()
+  const provider = await Cesium.SingleTileImageryProvider.fromUrl(`img/earth/${historyList.value[flag.value].file}.jpg`)
+  bgImglayer = viewer.imageryLayers.addImageryProvider(provider) // 加载背景底图
+  bgImglayer.id = historyList.value[flag.value].label;
+
+  (function roamingEvent() {
+    if (flag.value !== null) {
+      // 控制相机围绕 Z 轴旋转
+      viewer.camera.rotate(Cesium.Cartesian3.UNIT_Z, Cesium.Math.toRadians(0.1))
+      requestAnimationFrame(roamingEvent)
     }
+  })()
+}
+const closeScene = () => {
+  try {
+    reloadImageryLayers()
+  } catch (error) {
+    console.log(error)
   }
-)
+  flag.value = null
+  console.log('关闭ancientEarth')
+}
+
+defineExpose({
+  actionScene,
+  closeScene
+})
 </script>
 
 <template>
-  <el-card shadow="hover" @click="action" style="cursor: pointer;">
+  <el-card shadow="hover" style="cursor: pointer;">
     <div style="text-align: center;">
       <svg t="1694146694920" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
         p-id="13686" xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="20">
@@ -160,8 +144,8 @@ watch(
         style="position: absolute; bottom: 16px; right: 16px; background-color: #f5f5f5; border-radius: 8px; padding: 16px;width:400px; max-width: 80vw;">
 
         <el-dropdown max-height="200" trigger="click">
-          <div style="font-weight: bold; font-size: 18px; margin-bottom: 8px;cursor: pointer;">{{ historyList[flag].year }} <el-icon
-              class="el-icon--right"><arrow-down /></el-icon></div>
+          <div style="font-weight: bold; font-size: 18px; margin-bottom: 8px;cursor: pointer;">{{ historyList[flag].year
+          }} <el-icon class="el-icon--right"><arrow-down /></el-icon></div>
           <template #dropdown>
             <el-dropdown-menu>
               <el-dropdown-item v-for="(item, index) in historyList" :key="item.label" @click="skip(index)">{{ item.label

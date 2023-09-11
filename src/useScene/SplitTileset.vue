@@ -8,52 +8,31 @@
 <script setup>
 import { ref, onMounted, defineProps, watch } from 'vue'
 import { splitTileset } from '@/utils/ThreeDTiles/splitTileset.js'
-const props = defineProps({
-  sceneFlag: {
-    type: String,
-    required: true
-  }
-})
+
 const flag = ref(1)
 const splitInstance = ref(0)
-const emit = defineEmits(['update:sceneFlag'])
 
-function action() {
-  if (flag.value) {
-    emit('update:sceneFlag', 'splitTileset')
-
-    splitInstance.value.actionSplit()
-    flag.value = false
-  } else {
-    emit('update:sceneFlag', '')
-
-    splitInstance.value.stopSplit()
-    flag.value = true
-  }
+const actionScene = () => {
+  splitInstance.value.actionSplit()
+  flag.value = false
 }
-
+const closeScene = () => {
+  console.log('关闭splitTileset')
+  splitInstance.value.stopSplit()
+  flag.value = true
+}
 onMounted(() => {
   splitInstance.value = new splitTileset()
 })
-watch(
-  () => props.sceneFlag,
-  (val) => {
-    if (val === 'splitTileset') {
-      console.log('启动splitTileset')
-    } else {
-      if (!flag.value) {
-        console.log('关闭splitTileset')
-        splitInstance.value.stopSplit()
-        flag.value = true
-      }
-    }
-  }
-)
 
+defineExpose({
+  actionScene,
+  closeScene
+})
 </script>
 
 <template>
-  <el-card shadow="hover" @click="action" style="cursor: pointer;">
+  <el-card shadow="hover" style="cursor: pointer;">
     <div style="text-align: center;">
       <svg t="1690530131307" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
         p-id="13982" width="20" height="20">
