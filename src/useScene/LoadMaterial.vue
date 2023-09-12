@@ -1,7 +1,7 @@
 <!--
  * @Date: 2023-06-06 16:17:18
  * @LastEditors: ReBeX  420659880@qq.com
- * @LastEditTime: 2023-09-12 12:29:27
+ * @LastEditTime: 2023-09-12 17:11:48
  * @FilePath: \cesium-tyro-blog\src\useScene\LoadMaterial.vue
  * @Description: 材质预览组件
 -->
@@ -25,7 +25,7 @@ const currentMaterial = ref(null)
 const materialList = reactive({
   FlowPictureMaterialProperty: new FlowPictureMaterialProperty({
     color: Cesium.Color.WHITE, // new Cesium.Color(1.0, 1.0, 1.0, 1.0),
-    image: '/src/assets/images/redBar.png',
+    image: 'img/material/redBar.png',
     duration: 1500
   }),
   EllipsoidFadeMaterialProperty: new EllipsoidFadeMaterialProperty({
@@ -48,16 +48,16 @@ const materialList = reactive({
   }),
   SpritelineMaterialProperty: new SpritelineMaterialProperty({
     duration: 1000,
-    image: '/src/assets/images/spriteline.png'
+    image: 'img/material/spriteline.png'
   }),
   WallFlowMaterialProperty: new WallFlowMaterialProperty({
     color: new Cesium.Color(1.0, 0.0, 0.0, 1.0),
     speed: 10.0,
-    image: '/src/assets/images/spriteline.png'
+    image: 'img/material/spriteline.png'
   }),
   ColorMaterialProperty: new Cesium.ColorMaterialProperty(Cesium.Color.BLUE.withAlpha(0.5)),
   ImageMaterialProperty: new Cesium.ImageMaterialProperty({
-    image: '/src/assets/images/nyan-cat.jpg',
+    image: 'img/material/nyan-cat.jpg',
     repeat: new Cesium.Cartesian2(4, 4),
     color: new Cesium.Color(1.0, 0.0, 0.0, 1.0)
   }),
