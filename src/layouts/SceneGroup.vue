@@ -1,7 +1,7 @@
 <!--
  * @Date: 2023-09-11 11:56:32
  * @LastEditors: ReBeX  420659880@qq.com
- * @LastEditTime: 2023-09-12 08:16:18
+ * @LastEditTime: 2023-09-12 15:02:05
  * @FilePath: \cesium-tyro-blog\src\layouts\SceneGroup.vue
  * @Description: 场景应用功能组
 -->
@@ -41,7 +41,7 @@ const activateButton = (index) => {
 </script>
 
 <template>
-  <el-popover :width="340" trigger="click" :popper-options="{ boundariesElement: 'viewport', removeOnDestroy: true }"
+  <el-popover :width="320" trigger="click" :popper-options="{ boundariesElement: 'viewport', removeOnDestroy: true }"
     popper-style="box-shadow: rgb(14 18 22 / 35%) 0px 10px 38px -10px, rgb(14 18 22 / 20%) 0px 10px 20px -15px; padding: 20px;">
     <template #reference>
       <el-button circle style="background-color: #ACB4C0;border: none;">
@@ -51,10 +51,13 @@ const activateButton = (index) => {
     <template #default>
       <div style="font-size: 18px;font-weight: bold;">应用场景</div>
       <el-divider />
-      <div v-for="(item, index) in scenelist" :key="index" @click="activateButton(index)"
-        :class="['sceneCard', sceneFlag === index ? 'active' : '']">
-        <component :is="item.components" :ref="item.ref" />
+      <div style="width: 100%;margin: auto 0;text-align: center;">
+        <div v-for="(item, index) in scenelist" :key="index" @click="activateButton(index)"
+          :class="['sceneCard', sceneFlag === index ? 'active' : '']">
+          <component :is="item.components" :ref="item.ref" />
+        </div>
       </div>
+
     </template>
   </el-popover>
 

@@ -30,7 +30,7 @@ export const functionList = markRaw([
     icon: 静态模型,
     component: ManageTileset
   }, {
-    name: '画多段线',
+    name: '绘图工具',
     icon: 对象绘制,
     component: DrawPolyline
   }, {
