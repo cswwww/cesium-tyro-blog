@@ -1,8 +1,8 @@
 <!--
  * @Date: 2023-06-06 16:17:18
  * @LastEditors: ReBeX  420659880@qq.com
- * @LastEditTime: 2023-09-11 17:14:29
- * @FilePath: \cesium-tyro-blog\src\useScene\ancientEarth.vue
+ * @LastEditTime: 2023-09-12 09:15:21
+ * @FilePath: \cesium-tyro-blog\src\useScene\AncientEarth.vue
  * @Description: 古地球场景
 -->
 <script setup>
@@ -141,7 +141,7 @@ defineExpose({
   <Teleport to="body">
     <Transition>
       <el-card v-if="flag !== null" shadow="always"
-        style="position: absolute; bottom: 16px; right: 16px; background-color: #f5f5f5; border-radius: 8px; padding: 16px;width:400px; max-width: 80vw;">
+        style="position: absolute; bottom: 16px; right: 16px; background-color: #f5f5f5; border-radius: 8px; width:400px; max-width: 80vw;">
 
         <div style="display: flex;justify-content: space-between;">
           <el-dropdown max-height="200" trigger="click">

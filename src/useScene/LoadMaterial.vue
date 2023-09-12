@@ -1,28 +1,126 @@
 <!--
  * @Date: 2023-06-06 16:17:18
  * @LastEditors: ReBeX  420659880@qq.com
- * @LastEditTime: 2023-09-11 23:25:17
+ * @LastEditTime: 2023-09-12 12:29:27
  * @FilePath: \cesium-tyro-blog\src\useScene\LoadMaterial.vue
  * @Description: 材质预览组件
 -->
 <script setup>
-import { ref, onMounted, defineProps, reactive } from 'vue'
+import { ref, onMounted, reactive } from 'vue'
 import { viewer } from '@/utils/createCesium.js' // 引入地图对象
 import * as Cesium from 'cesium'
 
-const flag = ref(1)
+const flag = ref(null)
 const materialPreview = new Cesium.CustomDataSource('materialPreviewCollection')
 
 import FlowPictureMaterialProperty from '@/utils/Material/FlowPictureMaterialProperty.js'
+import EllipsoidFadeMaterialProperty from '@/utils/Material/EllipsoidFadeMaterialProperty.js'
+import LineFlickerMaterialProperty from '@/utils/Material/LineFlickerMaterialProperty.js'
+import LineFlowMaterialProperty from '@/utils/Material/LineFlowMaterialProperty.js'
+import RadarScanMaterialProperty from '@/utils/Material/RadarScanMaterialProperty.js'
+import SpritelineMaterialProperty from '@/utils/Material/SpritelineMaterialProperty.js'
+import WallFlowMaterialProperty from '@/utils/Material/WallFlowMaterialProperty.js'
 
-const material = new FlowPictureMaterialProperty({
-  color: Cesium.Color.WHITE, // new Cesium.Color(1.0, 1.0, 1.0, 1.0),
-  image: '/src/assets/images/redBar.png',
-  duration: 1500
+const currentMaterial = ref(null)
+const materialList = reactive({
+  FlowPictureMaterialProperty: new FlowPictureMaterialProperty({
+    color: Cesium.Color.WHITE, // new Cesium.Color(1.0, 1.0, 1.0, 1.0),
+    image: '/src/assets/images/redBar.png',
+    duration: 1500
+  }),
+  EllipsoidFadeMaterialProperty: new EllipsoidFadeMaterialProperty({
+    color: new Cesium.Color(1.0, 1.0, 0.0, 0.8),
+    duration: 3000
+  }),
+  LineFlickerMaterialProperty: new LineFlickerMaterialProperty({
+    color: Cesium.Color.YELLOW,
+    speed: 20 * Math.random() // 设置随机变化速度
+  }),
+  LineFlowMaterialProperty: new LineFlowMaterialProperty({
+    color: new Cesium.Color(1.0, 1.0, 0.0, 0.8),
+    speed: 15 * Math.random(),
+    percent: 0.1,
+    gradient: 0.01
+  }),
+  RadarScanMaterialProperty: new RadarScanMaterialProperty({
+    color: new Cesium.Color(1.0, 1.0, 0.0, 0.2),
+    speed: 20.0
+  }),
+  SpritelineMaterialProperty: new SpritelineMaterialProperty({
+    duration: 1000,
+    image: '/src/assets/images/spriteline.png'
+  }),
+  WallFlowMaterialProperty: new WallFlowMaterialProperty({
+    color: new Cesium.Color(1.0, 0.0, 0.0, 1.0),
+    speed: 10.0,
+    image: '/src/assets/images/spriteline.png'
+  }),
+  ColorMaterialProperty: new Cesium.ColorMaterialProperty(Cesium.Color.BLUE.withAlpha(0.5)),
+  ImageMaterialProperty: new Cesium.ImageMaterialProperty({
+    image: '/src/assets/images/nyan-cat.jpg',
+    repeat: new Cesium.Cartesian2(4, 4),
+    color: new Cesium.Color(1.0, 0.0, 0.0, 1.0)
+  }),
+  CheckerboardMaterialProperty: new Cesium.CheckerboardMaterialProperty({
+    evenColor: Cesium.Color.WHITE,
+    oddColor: Cesium.Color.BLACK,
+    repeat: new Cesium.Cartesian2(4, 4)
+  }),
+  StripeMaterialProperty: new Cesium.StripeMaterialProperty({
+    orientation: Cesium.StripeOrientation.VERTICAL,
+    evenColor: Cesium.Color.WHITE,
+    oddColor: Cesium.Color.BLACK,
+    repeat: 16
+  }),
+  GridMaterialProperty: new Cesium.GridMaterialProperty({
+    color: Cesium.Color.YELLOW,
+    cellAlpha: 0.5,
+    lineCount: new Cesium.Cartesian2(8, 8),
+    lineThickness: new Cesium.Cartesian2(2.0, 2.0),
+    lineOffset: new Cesium.Cartesian2(0.0, 0.0)
+  }),
+  PolylineGlowMaterialProperty: new Cesium.PolylineGlowMaterialProperty({
+    glowPower: 0.8,
+    taperPower: 0.5,
+    color: Cesium.Color.CORNFLOWERBLUE
+  }),
+  // PolylineOutlineMaterialProperty: new Cesium.PolylineOutlineMaterialProperty({
+  //   color: Cesium.Color.ORANGE,
+  //   outlineWidth: 5,
+  //   outlineColor: Cesium.Color.BLACK
+  // }),
+  PolylineArrowMaterialProperty: new Cesium.PolylineArrowMaterialProperty(Cesium.Color.PURPLE)
+  // PolylineDashMaterialProperty: new Cesium.PolylineDashMaterialProperty({
+  //   color: Cesium.Color.CYAN
+  // })
 })
 
-const addEntities = () => {
-  const box = materialPreview.entities.add({
+let box,
+  cylinder,
+  ellipse,
+  ellipsoid,
+  plane,
+  polygon,
+  polyline,
+  polylineVolume,
+  wall
+
+const addEntities = (newMaterial) => {
+  if (newMaterial) {
+    box.box.material = materialList[newMaterial]
+    cylinder.cylinder.material = materialList[newMaterial]
+    ellipse.ellipse.material = materialList[newMaterial]
+    ellipsoid.ellipsoid.material = materialList[newMaterial]
+    plane.plane.material = materialList[newMaterial]
+    polygon.polygon.material = materialList[newMaterial]
+    polyline.polyline.material = materialList[newMaterial]
+    polylineVolume.polylineVolume.material = materialList[newMaterial]
+    wall.wall.material = materialList[newMaterial]
+
+    return
+  }
+
+  box = materialPreview.entities.add({
     position: Cesium.Cartesian3.fromDegrees(12, 38),
     box: {
       show: true,
@@ -31,7 +129,7 @@ const addEntities = () => {
       // NONE	位置绝对；CLAMP_TO_GROUND	位置固定在地形上；RELATIVE_TO_GROUND 位置高度是指地形上方的高度。
       heightReference: Cesium.HeightReference.NONE,
       fill: true, // 指定是否使用所提供的材质填充框
-      material,
+      material: materialList[currentMaterial.value],
       outline: true,
       outlineColor: Cesium.Color.BLACK,
       outlineWidth: 1.0,
@@ -43,7 +141,7 @@ const addEntities = () => {
     }
   })
 
-  const cylinder = materialPreview.entities.add({
+  cylinder = materialPreview.entities.add({
     position: Cesium.Cartesian3.fromDegrees(16, 34),
     cylinder: {
       // show: true,
@@ -52,7 +150,7 @@ const addEntities = () => {
       bottomRadius: 200000.0, // 圆柱体底部半径
       heightReference: Cesium.HeightReference.NONE,
       fill: true,
-      material,
+      material: materialList[currentMaterial.value],
       outline: true,
       outlineColor: Cesium.Color.BLACK,
       outlineWidth: 1.0,
@@ -62,7 +160,7 @@ const addEntities = () => {
     }
   })
 
-  const ellipse = materialPreview.entities.add({
+  ellipse = materialPreview.entities.add({
     position: Cesium.Cartesian3.fromDegrees(24, 34),
     ellipse: {
       show: true,
@@ -77,7 +175,7 @@ const addEntities = () => {
       // rotation: Cesium.Math.toRadians(45), // 从北方逆时针旋转
       stRotation: 0.0, // 纹理从北方逆时针旋转
       granularity: Cesium.Math.RADIANS_PER_DEGREE, // 椭圆上各点之间的角距离
-      material,
+      material: materialList[currentMaterial.value],
       fill: true,
       outline: true,
       outlineColor: Cesium.Color.BLACK,
@@ -95,7 +193,7 @@ const addEntities = () => {
     }
   })
 
-  const ellipsoid = materialPreview.entities.add({
+  ellipsoid = materialPreview.entities.add({
     position: Cesium.Cartesian3.fromDegrees(20, 38, 150000),
     ellipsoid: {
       show: true,
@@ -107,7 +205,7 @@ const addEntities = () => {
       maximumCone: Math.PI, // 最大圆锥角
       heightReference: 150000, //  Cesium.HeightReference.NONE
       fill: true,
-      material,
+      material: materialList[currentMaterial.value],
       outline: false,
       outlineColor: Cesium.Color.BLACK,
       outlineWidth: 1.0,
@@ -124,7 +222,7 @@ const addEntities = () => {
     }
   })
 
-  const plane = materialPreview.entities.add({
+  plane = materialPreview.entities.add({
     position: Cesium.Cartesian3.fromDegrees(11, 34),
     plane: {
       show: true,
@@ -132,7 +230,7 @@ const addEntities = () => {
       plane: new Cesium.Plane(Cesium.Cartesian3.UNIT_Y, 0.0),
       dimensions: new Cesium.Cartesian2(400000.0, 300000.0), // 指定平面的宽度和高度
       fill: true,
-      material,
+      material: materialList[currentMaterial.value],
       outline: true,
       outlineColor: Cesium.Color.BLACK,
       outlineWidth: 1.0,
@@ -140,7 +238,7 @@ const addEntities = () => {
     }
   })
 
-  const polygon = materialPreview.entities.add({
+  polygon = materialPreview.entities.add({
     polygon: {
       show: true,
       // 指定PolygonHierarchy
@@ -157,7 +255,7 @@ const addEntities = () => {
       // stRotation: 0.0, // 多边形纹理从北方逆时针旋转
       // granularity: Cesium.Math.RADIANS_PER_DEGREE, // 每个纬度和经度点之间的角距离
       fill: true,
-      material, // Cesium.Color.fromRandom({ alpha: 1.0 })
+      material: materialList[currentMaterial.value], // Cesium.Color.fromRandom({ alpha: 1.0 })
       outline: true,
       outlineColor: Cesium.Color.BLACK
       // perPositionHeight: false, // 是否使用每个位置的高度
@@ -173,14 +271,14 @@ const addEntities = () => {
     }
   })
 
-  const polyline = materialPreview.entities.add({
+  polyline = materialPreview.entities.add({
     polyline: {
       show: true,
       positions: Cesium.Cartesian3.fromDegreesArray([17, 31, 23, 31]),
       width: 8,
       // 如果arcType不是ArcType.NONE，则指定每个纬度和经度之间的角距离
       // granularity: Cesium.Math.RADIANS_PER_DEGREE,
-      material,
+      material: materialList[currentMaterial.value],
       // 线低于地形时用于绘制折线的材质
       // depthFailMaterial: Cesium.Color.WHITE,
 
@@ -210,7 +308,7 @@ const addEntities = () => {
     }
     return positions
   }
-  const polylineVolume = materialPreview.entities.add({
+  polylineVolume = materialPreview.entities.add({
     polylineVolume: {
       show: true,
 
@@ -229,7 +327,7 @@ const addEntities = () => {
       // 如果arcType不是ArcType.NONE，则指定每个纬度和经度之间的角距离
       // granularity: Cesium.Math.RADIANS_PER_DEGREE,
       fill: true,
-      material,
+      material: materialList[currentMaterial.value],
       outline: false,
       outlineColor: Cesium.Color.BLACK,
       outlineWidth: 1.0,
@@ -244,7 +342,7 @@ const addEntities = () => {
     }
   })
 
-  const wall = materialPreview.entities.add({
+  wall = materialPreview.entities.add({
     wall: {
       show: true,
 
@@ -267,7 +365,7 @@ const addEntities = () => {
 
       granularity: Cesium.Math.RADIANS_PER_DEGREE, // 指定矩形上各点之间的角度距离
       fill: true,
-      material,
+      material: materialList[currentMaterial.value],
 
       outline: true,
       outlineColor: Cesium.Color.BLACK,
@@ -286,20 +384,25 @@ const addEntities = () => {
   })
 }
 
+const changeMaterial = () => {
+  // currentMaterial.value = materialList[currentMaterial.value]
+  console.log('currentMaterial.value: ', currentMaterial.value)
+  addEntities(currentMaterial.value)
+}
+
 const actionScene = () => {
   if (!viewer.dataSources.contains(materialPreview)) {
     viewer.dataSources.add(materialPreview)
   }
-  console.log('viewer.dataSources: ', viewer.dataSources)
-
   addEntities()
-  flag.value = false
+  flag.value = true
 }
 const closeScene = () => {
   materialPreview.entities.removeAll()
-  flag.value = true
+  flag.value = null
 }
 onMounted(() => {
+  currentMaterial.value = Object.keys(materialList)[0]
 })
 
 defineExpose({
@@ -323,6 +426,21 @@ defineExpose({
           fill="#5D6D7E" p-id="13686"></path>
       </svg>
     </div>
-    <div style="text-align: center;">{{ flag ? '开启材质预览' : '关闭材质预览' }}</div>
+    <div style="text-align: center;">{{ !flag ? '开启材质预览' : '关闭材质预览' }}</div>
   </el-card>
+
+  <Teleport to="body">
+    <Transition>
+      <el-card v-if="flag !== null" shadow="always"
+        style="position: absolute; bottom: 16px; right: 16px; background-color: #f5f5f5; border-radius: 8px; width:400px; max-width: 80vw;">
+        <div style="font-weight: bold; font-size: 18px;">MaterialProperty</div>
+        <div style="max-height: 30vh;overflow: auto;">
+          <el-radio-group v-model="currentMaterial" @change="changeMaterial">
+            <el-radio v-for="label in Object.keys(materialList)" :key="label" :label="label" size="large">{{ label
+            }}</el-radio>
+          </el-radio-group>
+        </div>
+      </el-card>
+    </Transition>
+  </Teleport>
 </template>

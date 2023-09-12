@@ -6,7 +6,7 @@
  * @Description: 3D Tiles 瓦片集卷帘（分割）的功能（按钮）组件
 -->
 <script setup>
-import { ref, onMounted, defineProps, watch } from 'vue'
+import { ref, onMounted } from 'vue'
 import { splitTileset } from '@/utils/ThreeDTiles/splitTileset.js'
 
 const flag = ref(1)

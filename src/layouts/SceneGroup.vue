@@ -1,7 +1,7 @@
 <!--
  * @Date: 2023-09-11 11:56:32
  * @LastEditors: ReBeX  420659880@qq.com
- * @LastEditTime: 2023-09-11 23:26:16
+ * @LastEditTime: 2023-09-12 08:16:18
  * @FilePath: \cesium-tyro-blog\src\layouts\SceneGroup.vue
  * @Description: 场景应用功能组
 -->
@@ -65,7 +65,7 @@ const activateButton = (index) => {
           p-id="13686" width="20" height="20">
           <path
             d="M557.248 512l339.424 339.424-45.248 45.248L512 557.248 172.576 896.672 127.36 851.424 466.752 512 127.328 172.576 172.576 127.36 512 466.752 851.424 127.328l45.248 45.248z"
-            fill="#5D6D7E" p-id="13687"></path>
+            fill="#fff" p-id="13687"></path>
         </svg>
       </el-button>
     </div>
