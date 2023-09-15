@@ -1,7 +1,7 @@
 /*
  * @Date: 2023-07-12 18:47:18
  * @LastEditors: ReBeX  420659880@qq.com
- * @LastEditTime: 2023-09-12 15:13:19
+ * @LastEditTime: 2023-09-15 11:32:26
  * @FilePath: \cesium-tyro-blog\src\utils\Entity\Draw\polygon.js
  * @Description: 绘制面
  */
@@ -101,6 +101,7 @@ export class PolygonDrawer {
 
       this.stop()
       this.start()
+      this.callback && this.callback(this.polygonCollection, pointList) // 如果需要，就把数据集合给回调函数
     }, Cesium.ScreenSpaceEventType.RIGHT_CLICK)
   }
 
@@ -110,8 +111,6 @@ export class PolygonDrawer {
     this.moveHandler.removeInputAction(Cesium.ScreenSpaceEventType.MOUSE_MOVE)
     this.finHandler.removeInputAction(Cesium.ScreenSpaceEventType.RIGHT_CLICK)
     viewer.entities.remove(this.activePoint) // 移除动态点
-
-    this.callback && this.callback(this.polygonCollection) // 如果需要，就把线集合给回调函数
   }
 
   // 绘制：动态点

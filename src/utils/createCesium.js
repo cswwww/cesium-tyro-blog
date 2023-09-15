@@ -130,6 +130,8 @@ class CesiumMap {
       // this.viewer.cesiumWidget.screenSpaceEventHandler.removeInputAction(Cesium.ScreenSpaceEventType.LEFT_DOUBLE_CLICK); // 取消默认双击事件
       // this.viewer.scene.globe.atmosphereLightIntensity = 10//设置地表大气亮度
       // this.viewer.pickTranslucentDepth = true // 控制是否在深度测试期间选择半透明对象
+      // this.viewer.scene.globe.backFaceCulling = false // 用于控制地球场景背面剔除
+      // this.viewer.scene.globe.showSkirts = false // 地球表面边缘显示
 
       viewer = this.viewer
 

@@ -1,7 +1,7 @@
 <!--
  * @Date: 2023-06-06 16:17:18
  * @LastEditors: ReBeX  420659880@qq.com
- * @LastEditTime: 2023-09-12 17:11:48
+ * @LastEditTime: 2023-09-13 08:56:12
  * @FilePath: \cesium-tyro-blog\src\useScene\LoadMaterial.vue
  * @Description: 材质预览组件
 -->
@@ -127,7 +127,7 @@ const addEntities = (newMaterial) => {
       dimensions: new Cesium.Cartesian3(400000.0, 300000.0, 500000.0), // Cartesian3类型，用于指定box的长度，宽度和高度
       // 指定距实体位置的高度是相对于什么的高度。 default: HeightReference.NONE
       // NONE	位置绝对；CLAMP_TO_GROUND	位置固定在地形上；RELATIVE_TO_GROUND 位置高度是指地形上方的高度。
-      heightReference: Cesium.HeightReference.NONE,
+      heightReference: Cesium.HeightReference.RELATIVE_TO_GROUND,
       fill: true, // 指定是否使用所提供的材质填充框
       material: materialList[currentMaterial.value],
       outline: true,
@@ -148,7 +148,7 @@ const addEntities = (newMaterial) => {
       length: 400000.0, // 圆柱体长度
       topRadius: 200000.0, // 圆柱体顶部半径
       bottomRadius: 200000.0, // 圆柱体底部半径
-      heightReference: Cesium.HeightReference.NONE,
+      heightReference: Cesium.HeightReference.RELATIVE_TO_GROUND,
       fill: true,
       material: materialList[currentMaterial.value],
       outline: true,
@@ -168,7 +168,7 @@ const addEntities = (newMaterial) => {
       semiMinorAxis: 150000.0, // 短半轴距离
 
       height: 20000.0,
-      heightReference: Cesium.HeightReference.NONE,
+      heightReference: Cesium.HeightReference.RELATIVE_TO_GROUND,
       extrudedHeight: 20000.0,
       extrudedHeightReference: Cesium.HeightReference.NONE,
 
@@ -227,7 +227,8 @@ const addEntities = (newMaterial) => {
     plane: {
       show: true,
       // 用于指定平面的法线和距离
-      plane: new Cesium.Plane(Cesium.Cartesian3.UNIT_Y, 0.0),
+      plane: new Cesium.Plane(Cesium.Cartesian3.UNIT_Y, 10.0),
+      heightReference: Cesium.HeightReference.RELATIVE_TO_GROUND,
       dimensions: new Cesium.Cartesian2(400000.0, 300000.0), // 指定平面的宽度和高度
       fill: true,
       material: materialList[currentMaterial.value],
