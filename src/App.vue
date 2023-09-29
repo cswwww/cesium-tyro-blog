@@ -9,12 +9,20 @@ import { loadTianditu } from '@/utils/ImageryLayer/loadTianditu.js'
 import ToolBar from './layouts/ToolBar.vue'
 import PopUps from './layouts/PopUps.vue'
 
+import { PolygonDrawer } from '@/utils/Entity/Draw/polygon.js'
+import { areaClipping } from '@/utils/Visualization/clippingToCanyon.js'
+
 onMounted(() => {
   new CesiumMap('cesiumContainer')
   // loadImagery.cartoVoyager()
   loadTianditu('img')
   loadTianditu('cia')
-  roaming() // 开启入场漫游
+  // roaming() // 开启入场漫游
+
+  const polygonDrawer = new PolygonDrawer((polygon, pointList) => {
+    areaClipping(pointList)
+  })
+  polygonDrawer.start()
 })
 </script>
 

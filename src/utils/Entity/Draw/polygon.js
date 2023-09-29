@@ -1,7 +1,7 @@
 /*
  * @Date: 2023-07-12 18:47:18
  * @LastEditors: ReBeX  420659880@qq.com
- * @LastEditTime: 2023-09-15 11:32:26
+ * @LastEditTime: 2023-09-28 19:31:51
  * @FilePath: \cesium-tyro-blog\src\utils\Entity\Draw\polygon.js
  * @Description: 绘制面
  */
@@ -37,7 +37,7 @@ export class PolygonDrawer {
     this.activePoint = this.createCursorPoint({ x: 0, y: 0, z: 0 }) // 默认显示动态点
     this.activePoint.position.setValue(undefined) // 隐藏指针点
 
-    const pointList = [] // 初始化当前的线坐标数组
+    const pointList = [] // 初始化当前的坐标数组
     // 事件：新增点
     this.addHandler.setInputAction(event => {
       // 获取地形表面经纬度和高度
@@ -48,13 +48,13 @@ export class PolygonDrawer {
 
       if (Cesium.defined(cartesian)) {
         this.nodeCollection.entities.add(this.createNodePoint(cartesian)) // 添加节点
-        // 绘制动态线：首次点击后触发
+        // 绘制动态面：首次点击后触发
         if (pointList.length === 0) {
           pointList.push(cartesian) // 加入一个动态点
         }
         if (pointList.length === 2) {
           const dynamicPositions = new Cesium.CallbackProperty(() => new Cesium.PolygonHierarchy(pointList), false)
-          this.polygonCollection.entities.add(this.createNormalPolygon(dynamicPositions)) // 绘制线
+          this.polygonCollection.entities.add(this.createNormalPolygon(dynamicPositions)) // 绘制面
         }
         pointList.push(cartesian)
       }
