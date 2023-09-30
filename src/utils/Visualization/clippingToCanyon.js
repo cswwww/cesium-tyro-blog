@@ -1,7 +1,7 @@
 /*
  * @Date: 2023-07-25 14:24:15
  * @LastEditors: ReBeX  420659880@qq.com
- * @LastEditTime: 2023-09-28 19:56:44
+ * @LastEditTime: 2023-09-30 14:45:07
  * @FilePath: \cesium-tyro-blog\src\utils\Visualization\clippingToCanyon.js
  * @Description: https://sandcastle.cesium.com/?src=Terrain%20Clipping%20Planes.html
  * https://blog.csdn.net/qq_36213352/article/details/122844540
@@ -52,8 +52,7 @@ export function loadGrandCanyon() {
   viewer.camera.lookAtTransform(Cesium.Matrix4.IDENTITY)
 }
 
-// type false:保留多边形外 true:保留多边形内
-// [
+// const points = [
 //   {
 //     "x": 831378.7404354169,
 //     "y": -4856690.379372356,
@@ -70,53 +69,62 @@ export function loadGrandCanyon() {
 //     "z": 1671946.9335355863
 //   }
 // ]
-export function areaClipping(points, type = true) {
-  const pointsCoor = points.map(({ x, y, z }) => new Cesium.Cartesian3(x, y, z))
 
+/**
+ * Calculates the area clipping of a set of points.
+ *
+ * @param {Array} points - The points to calculate the area clipping for.
+ * @param {boolean} [type=false] - The type of area clipping： false:保留多边形外，挖除 ; true:保留多边形内,挖出
+ * @return {void} This function does not return a value.
+ * import { areaClipping } from '@/utils/Visualization/clippingToCanyon.js'
+ */
+export function areaClipping(points, type = false) {
+  // 获取点坐标，计算
+  const pointsCoor = points.map(({ x, y, z }) => new Cesium.Cartesian3(x, y, z))
   let sum = 0
   for (let i = 0; i < pointsCoor.length; i++) {
     const pointA = pointsCoor[i]
     const pointB = pointsCoor[(i + 1) % pointsCoor.length]
-
-    const crossProduct = Cesium.Cartesian3.cross(pointA, pointB, new Cesium.Cartesian3())
-
+    const crossProduct = Cesium.Cartesian3.cross(pointA, pointB, new Cesium.Cartesian3()) // 计算pointA和pointB两个向量的叉乘
     sum += crossProduct.z
   }
 
-  if (sum > 0 && type) {
-    console.log('逆时针')
+  if (sum > 0 && type) { // 逆时针
     points.reverse()
-  } else if (sum < 0 && !type) {
-    console.log('顺时针')
+  } else if (sum < 0 && !type) { // 顺时针
     points.reverse()
   }
 
   const clippingPlanes = [] // 存储ClippingPlane集合
-
   for (let i = 0; i < points.length; ++i) {
     const nextIndex = (i + 1) % points.length
 
-    // Computes the componentwise sum of two Cartesians. 计算两个坐标点的分量和
+    // 计算两个坐标点的分量和，取中点。
     const midpoint = Cesium.Cartesian3.add(points[i], points[nextIndex], new Cesium.Cartesian3())
     Cesium.Cartesian3.multiplyByScalar(midpoint, 0.5, midpoint)
 
-    const up = Cesium.Cartesian3.normalize(midpoint, new Cesium.Cartesian3()) // 计算单位向量
+    // up 是指从地球中心（原点）到 midpoint 的向量，即一个指向地球正上方的单位向量。
+    const up = Cesium.Cartesian3.normalize(midpoint, new Cesium.Cartesian3())
 
-    const right = Cesium.Cartesian3.subtract(points[nextIndex], midpoint, new Cesium.Cartesian3()) // 建立空间向量
+    // 计算points[nextIndex]和midpoint的差值，得到一个表示从 points[nextIndex] 指向 midpoint 的向量
+    const right = Cesium.Cartesian3.subtract(points[nextIndex], midpoint, new Cesium.Cartesian3())
     Cesium.Cartesian3.normalize(right, right) // 计算单位向量
 
+    // 通过叉乘及归一化得到单位法向量
     const normal = Cesium.Cartesian3.cross(right, up, new Cesium.Cartesian3())
     Cesium.Cartesian3.normalize(normal, normal) // 计算单位向量
 
     const originCenteredPlane = new Cesium.Plane(normal, 0.0)
-    const distance = Cesium.Plane.getPointDistance(originCenteredPlane, midpoint)
+    const distance = Cesium.Plane.getPointDistance(originCenteredPlane, midpoint) // 计算平面到中点的距离
 
+    // 最后，我们得到一个平面，这个平面垂直于地球表面
     clippingPlanes.push(new Cesium.ClippingPlane(normal, distance))
   }
 
+  // 为地球添加裁剪面
   viewer.scene.globe.clippingPlanes = new Cesium.ClippingPlaneCollection({
     planes: clippingPlanes,
-    enabled: true, // Determines whether the clipping planes are active.
+    enabled: true,
     modelMatrix: Cesium.Matrix4.IDENTITY,
     unionClippingRegions: type, // 内 || 外
     edgeColor: Cesium.Color.YELLOW,

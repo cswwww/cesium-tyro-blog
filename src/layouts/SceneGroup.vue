@@ -1,7 +1,7 @@
 <!--
  * @Date: 2023-09-11 11:56:32
  * @LastEditors: ReBeX  420659880@qq.com
- * @LastEditTime: 2023-09-12 15:02:05
+ * @LastEditTime: 2023-09-30 15:11:34
  * @FilePath: \cesium-tyro-blog\src\layouts\SceneGroup.vue
  * @Description: 场景应用功能组
 -->
@@ -13,13 +13,17 @@ import SplitImagery from '@/useScene/SplitImagery.vue'
 import SplitTileset from '@/useScene/SplitTileset.vue'
 import AncientEarth from '@/useScene/AncientEarth.vue'
 import LoadMaterial from '@/useScene/LoadMaterial.vue'
+import ClipDigging from '@/useScene/ClipDigging.vue'
+import ClipDigOut from '@/useScene/ClipDigOut.vue'
 
 const sceneFlag = ref('')
 const scenelist = markRaw([
   { components: SplitImagery, ref: ref(null) },
   { components: SplitTileset, ref: ref(null) },
   { components: AncientEarth, ref: ref(null) },
-  { components: LoadMaterial, ref: ref(null) }
+  { components: LoadMaterial, ref: ref(null) },
+  { components: ClipDigging, ref: ref(null) },
+  { components: ClipDigOut, ref: ref(null) }
 ])
 
 const activateButton = (index) => {
