@@ -1,7 +1,7 @@
 /*
  * @Date: 2023-07-25 14:24:15
  * @LastEditors: ReBeX  420659880@qq.com
- * @LastEditTime: 2023-09-30 14:45:07
+ * @LastEditTime: 2023-10-07 16:53:54
  * @FilePath: \cesium-tyro-blog\src\utils\Visualization\clippingToCanyon.js
  * @Description: https://sandcastle.cesium.com/?src=Terrain%20Clipping%20Planes.html
  * https://blog.csdn.net/qq_36213352/article/details/122844540
@@ -114,11 +114,15 @@ export function areaClipping(points, type = false) {
     const normal = Cesium.Cartesian3.cross(right, up, new Cesium.Cartesian3())
     Cesium.Cartesian3.normalize(normal, normal) // 计算单位向量
 
-    const originCenteredPlane = new Cesium.Plane(normal, 0.0)
-    const distance = Cesium.Plane.getPointDistance(originCenteredPlane, midpoint) // 计算平面到中点的距离
+    // const originCenteredPlane = new Cesium.Plane(normal, 0.0)
+    // const distance = Cesium.Plane.getPointDistance(originCenteredPlane, midpoint) // 计算平面到中点的距离
 
     // 最后，我们得到一个平面，这个平面垂直于地球表面
-    clippingPlanes.push(new Cesium.ClippingPlane(normal, distance))
+    // clippingPlanes.push(new Cesium.ClippingPlane(normal, distance))
+
+    // 根据过平面的一点以及法向量构建Plane，再通过plane进一步构建clippingPlane
+    const planeTmp = Cesium.Plane.fromPointNormal(points[i], normal)
+    clippingPlanes.push(Cesium.ClippingPlane.fromPlane(planeTmp))
   }
 
   // 为地球添加裁剪面

@@ -1,6 +1,6 @@
 /*
  * @Date: 2023-02-09 14:57:52
- * @LastEditTime: 2023-09-12 15:48:18
+ * @LastEditTime: 2023-10-07 17:01:01
  * @FilePath: \cesium-tyro-blog\src\utils\createCesium.js
  * @Description: 创建地图单例
  */
@@ -144,7 +144,7 @@ class CesiumMap {
   }
 
   // 地形切换
-  changeTerrain(key) {
+  async changeTerrain(key) {
     // 水面、法向量、光照相关
     switch (key) {
       case 1:
@@ -159,8 +159,7 @@ class CesiumMap {
         })
         break
       case 3:
-        viewer.terrainProvider = new Cesium.ArcGISTiledElevationTerrainProvider({
-          url: 'https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer',
+        viewer.terrainProvider = await Cesium.ArcGISTiledElevationTerrainProvider.fromUrl('https://elevation3d.arcgis.com/arcgis/rest/services/WorldElevation3D/Terrain3D/ImageServer', {
           token: 'KED1aF_I4UzXOHy3BnhwyBHU4l5oY6rO6walkmHoYqGp4XyIWUd5YZUC1ZrLAzvV40pR6gBXQayh0eFA8m6vPg..'
         })
         break
