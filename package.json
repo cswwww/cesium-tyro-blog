@@ -12,7 +12,7 @@
   "dependencies": {
     "@babel/core": "^7.22.5",
     "@babel/eslint-parser": "^7.22.5",
-    "element-plus": "^2.3.6",
+    "element-plus": "^2.7.3",
     "eslint": "^8.42.0",
     "mitt": "^3.0.0",
     "vite-plugin-eslint": "^1.8.1",

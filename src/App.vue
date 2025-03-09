@@ -1,7 +1,7 @@
 <script setup>
-import { onMounted } from 'vue'
-import { CesiumMap } from '@/utils/createCesium.js'
-import { roaming } from '@/utils/Visualization/roaming.js'
+import { onMounted, ref } from 'vue'
+import { CesiumMap, viewer } from '@/utils/createCesium.js'
+// import { roaming } from '@/utils/Visualization/roaming.js'
 
 import { loadTianditu } from '@/utils/ImageryLayer/loadTianditu.js'
 
@@ -12,7 +12,7 @@ onMounted(() => {
   new CesiumMap('cesiumContainer')
   loadTianditu('img')
   loadTianditu('cia')
-  roaming()
+  // roaming()
 })
 </script>
 

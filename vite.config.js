@@ -6,10 +6,14 @@ import eslintPlugin from 'vite-plugin-eslint'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [vue(), cesium(), eslintPlugin({
-    include: ['src/**/*.ts', 'src/**/*.vue', 'src/*.ts', 'src/*.vue']
-  })],
-  base: '/v2/',
+  plugins: [
+    vue(),
+    cesium(),
+    eslintPlugin({
+      include: ['src/**/*.ts', 'src/**/*.vue', 'src/*.ts', 'src/*.vue']
+    })
+  ],
+  // base: '/v2/',
   resolve: {
     alias: {
       '@': path.resolve(__dirname, 'src')

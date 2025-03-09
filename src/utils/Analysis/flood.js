@@ -1,7 +1,7 @@
 /*
  * @Date: 2023-07-11 15:47:29
- * @LastEditors: ReBeX  420659880@qq.com
- * @LastEditTime: 2023-07-11 16:20:43
+ * @LastEditors: ReBeX  cswwww@163.com
+ * @LastEditTime: 2024-05-29 09:35:49
  * @FilePath: \cesium-tyro-blog\src\utils\Analysis\flood.js
  * @Description: 淹没分析效果（水面上升）
  * import {flood} from '@/utils/Analysis/flood.js'
@@ -39,7 +39,7 @@ function flood() {
     }
   })
 
-  viewer.entities.add({
+  const entity2 = viewer.entities.add({
     polygon: {
       hierarchy: new Cesium.PolygonHierarchy(positions),
       material: Cesium.Color.WHITE.withAlpha(0.3)
@@ -52,6 +52,8 @@ function flood() {
   })
 
   viewer.flyTo(entity)
+
+  return [entity, entity2]
 }
 
 export {

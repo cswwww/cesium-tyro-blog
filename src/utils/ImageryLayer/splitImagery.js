@@ -6,6 +6,7 @@
  * @Description: 影像图层卷帘功能（下面包含两个版本）
  * 博客参考：https://blog.csdn.net/weixin_45782925/article/details/123121883
  * 沙盒示例：https://sandcastle.cesium.com/?src=Imagery%20Layers%20Split.html
+ * import { ImagerySplit } from '@/utils/ImageryLayer/splitImagery.js'
  */
 import { viewer } from '@/utils/createCesium.js' // 引入地图对象
 import * as Cesium from 'cesium'
