@@ -1,8 +1,8 @@
 /*
  * @Date: 2023-06-04 10:41:29
- * @LastEditors: ReBeX  420659880@qq.com
- * @LastEditTime: 2023-06-09 13:04:26
- * @FilePath: \cesium-tyro-blog\src\utils\ImageryLayer\loadTianditu.js
+ * @LastEditors: ReBeX cswwwx@gmail.com
+ * @LastEditTime: 2025-04-03 10:57:11
+ * @FilePath: /cesium-tyro-blog/src/utils/ImageryLayer/loadTianditu.js
  * @Description: 加载天地图影像图层
  * 天地图地图服务：http://lbs.tianditu.gov.cn/server/MapService.html
  * import {loadTianditu } from '@/utils/ImageryLayer/loadTianditu.js'
@@ -23,7 +23,7 @@ const layerOption = {
   gamma: 1 // 伽马校正（0.01，5）
 }
 
-const token = 'ab1a5f73690be1ad06c60f819924b2a3' // 申请的key
+const token = '79949a020e54e2c239631b85e2222d9b' // 申请的key
 const subdomains = ['0', '1', '2', '3', '4', '5', '6', '7'] // 服务负载子域
 const projectionType = {
   '_c': '经纬度投影',

@@ -1,8 +1,8 @@
 <!--
  * @Date: 2023-06-06 16:17:18
- * @LastEditors: ReBeX  420659880@qq.com
- * @LastEditTime: 2023-09-13 08:56:12
- * @FilePath: \cesium-tyro-blog\src\useScene\LoadMaterial.vue
+ * @LastEditors: ReBeX cswwwx@gmail.com
+ * @LastEditTime: 2025-04-03 15:58:28
+ * @FilePath: /cesium-tyro-blog/src/useScene/LoadMaterial.vue
  * @Description: 材质预览组件
 -->
 <script setup>
@@ -20,6 +20,7 @@ import LineFlowMaterialProperty from '@/utils/Material/LineFlowMaterialProperty.
 import RadarScanMaterialProperty from '@/utils/Material/RadarScanMaterialProperty.js'
 import SpritelineMaterialProperty from '@/utils/Material/SpritelineMaterialProperty.js'
 import WallFlowMaterialProperty from '@/utils/Material/WallFlowMaterialProperty.js'
+import CircleRippleMaterialProperty from '@/utils/Material/CircleRippleMaterialProperty.js'
 
 const currentMaterial = ref(null)
 const materialList = reactive({
@@ -89,10 +90,16 @@ const materialList = reactive({
   //   outlineWidth: 5,
   //   outlineColor: Cesium.Color.BLACK
   // }),
-  PolylineArrowMaterialProperty: new Cesium.PolylineArrowMaterialProperty(Cesium.Color.PURPLE)
+  PolylineArrowMaterialProperty: new Cesium.PolylineArrowMaterialProperty(Cesium.Color.PURPLE),
   // PolylineDashMaterialProperty: new Cesium.PolylineDashMaterialProperty({
   //   color: Cesium.Color.CYAN
   // })
+  CircleRippleMaterialProperty: new CircleRippleMaterialProperty({
+    color: new Cesium.Color(1.0, 1.0, 0.0, 0.8),
+    speed: 5,
+    count: 3,
+    gradient: 0
+  })
 })
 
 let box,
